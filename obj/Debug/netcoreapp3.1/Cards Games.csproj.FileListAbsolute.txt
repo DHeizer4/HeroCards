@@ -1,0 +1,13 @@
+C:\DevBuild4\Games\Cards\Cards Games\bin\Debug\netcoreapp3.1\Cards Games.exe
+C:\DevBuild4\Games\Cards\Cards Games\bin\Debug\netcoreapp3.1\Cards Games.deps.json
+C:\DevBuild4\Games\Cards\Cards Games\bin\Debug\netcoreapp3.1\Cards Games.runtimeconfig.json
+C:\DevBuild4\Games\Cards\Cards Games\bin\Debug\netcoreapp3.1\Cards Games.runtimeconfig.dev.json
+C:\DevBuild4\Games\Cards\Cards Games\bin\Debug\netcoreapp3.1\Cards Games.dll
+C:\DevBuild4\Games\Cards\Cards Games\bin\Debug\netcoreapp3.1\Cards Games.pdb
+C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.csprojAssemblyReference.cache
+C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.AssemblyInfoInputs.cache
+C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.AssemblyInfo.cs
+C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.csproj.CoreCompileInputs.cache
+C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.dll
+C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.pdb
+C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.genruntimeconfig.cache
