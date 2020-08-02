@@ -7,9 +7,9 @@ namespace Cards_Games
     {
         static void Main(string[] args)
         {
-
+            RPGCard.MakeLibrary();
             string name = Console.ReadLine();
-            Player player1 = new Player(name);
+            IRPGPlayer player1 = new HumanRPG(name);
 
 
             RPGCardGame Game = new RPGCardGame();

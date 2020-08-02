@@ -9,13 +9,30 @@ namespace Cards_Games
 {
     class RPGCardGame
     {
-        public void StartGame(Player player1)
+        public void StartGame(IRPGPlayer player1)
         {
-            RPGCard.MakeLibrary();
+            
+            List<IRPGPlayer> players = new List<IRPGPlayer>();
             HumanRPG RPG1 = new HumanRPG(player1.Name);
+            players.Add(RPG1);
             CompTopRPG comp1 = new CompTopRPG("That guy");
-            RPG1.OpeningHand();
+            players.Add(comp1);
+            
+            PlayGame(players);
+
+        }
+
+        static void PlayGame(List<IRPGPlayer> participants)
+        {
+            
+            foreach (IRPGPlayer player in participants)
+            {
+                player.OpeningHand();
+                player.DisplayPlayer();
+            }
+            
             //RPG1.DisplayHand();
+
             bool win = false;
             while (!win)
             {
@@ -24,23 +41,15 @@ namespace Cards_Games
                 ActionCheck();
                 LoseCheck();
                 WinCheck();
-                if (RPG1.Action.Count < 1)
-                {
-                    RPG1.Action.Add(RPG1.PlayCard());
-                }
-                if (comp1.Action.Count < 1)
-                {
-                    comp1.Action.Add(comp1.PlayCard());
-                }
+                win = true;
             }
-
         }
-         
+
         public static void ActionCheck()
         {
-            GetActions();
-            ActionReady();
-            ExecuteActions();
+            //GetActions();
+            //ActionReady();
+            //ExecuteActions();
         }
 
         public static void LoseCheck()

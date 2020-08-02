@@ -12,13 +12,14 @@ namespace Cards_Games
     public enum CardResource { Health, Time, Mana}
     public enum Target { Self, Party, Enemy, AllEnemys, All}
 
-    class RPGCard : Card
+    class RPGCard
     {
         public string CardType { get; set; }
         public string Name { get; set; }
         private CardResource Resource { get; set; }
         private int _cost;
         private int _attack;
+        public int duration;
         public int Speed { get; set; }
         private AttackType _attacktype;
         private Target _target;
@@ -26,13 +27,13 @@ namespace Cards_Games
         private string _phrase;
         public static Dictionary<string, RPGCard> Library = new Dictionary<string, RPGCard>();
 
-        public RPGCard(bool faceup, string cardtype, int alevel, string name, CardResource resource, int cost,  int attack, int speed, AttackType Atype, Target target, string aphrase)
+        public RPGCard(string cardtype, int alevel, string name, CardResource resource, int cost,  int attack, int aduration ,int speed, AttackType Atype, Target target, string aphrase)
         {
-            FaceUp = faceup;
             CardType = cardtype;
             _level = alevel;
             Name = name;
             _attack = attack;
+            duration = aduration;
             Speed = speed;
             _attacktype = Atype;
             _target = target;
@@ -59,7 +60,7 @@ namespace Cards_Games
 
         public static void MakeLibrary()
         {
-            Library.Add("0 Punch", new RPGCard(true, "Generic", 0, "Punch",  CardResource.Time, 0, 2, 2, AttackType.Bludgedeon, Target.Enemy,"hits the opponet with thier fist"));
+            Library.Add("0 Punch", new RPGCard("Generic", 0, "Punch",  CardResource.Time, 0, 2, 1, 2, AttackType.Bludgedeon, Target.Enemy,"hits the opponet with thier fist"));
         }
 
 

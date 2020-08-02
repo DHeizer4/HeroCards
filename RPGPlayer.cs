@@ -5,47 +5,52 @@ using System.Text;
 
 namespace Cards_Games
 {
-    abstract class RPGplayer : Player
+    interface IRPGPlayer
     {
-        public int Time { get; set; }
-        public int Health { get; set; }
-        public List<RPGCard> Action;
-        public Deck decklist;
+        string Name { get; set; }
+        int Team { get; set; }
+        int Time { get; set; }
+        int Health { get; set; }
+        int Mana { get; set; }
+        List<RPGCard> Action { get; set; }
+        Deck Decklist { get; set; }
+        List<RPGCard> Hand { get; set; }
 
-        public RPGplayer(string aName) : base(aName)
-        {
 
-        }
-
-        public override void DisplayPlayer()
-        {
-            base.DisplayPlayer();
-        }
-
-        public abstract RPGCard PlayCard();
+        void OpeningHand();
+        void DisplayPlayer();
+        RPGCard PlayCard();
 
     }
 
-    class HumanRPG : RPGplayer
+    class HumanRPG : IRPGPlayer
     {
-        public List<RPGCard> _hand;
-        
-        public HumanRPG(string aName) : base(aName)
+        public string Name { get; set; }
+        public int Team { get; set; }
+        public int Time { get; set; }
+        public int Health { get; set; }
+        public int Mana { get; set; }
+        public List<RPGCard> Action { get; set; }
+        public Deck Decklist { get; set; }
+        public List<RPGCard> Hand { get; set; }
+
+        public HumanRPG(string aName)
         {
-            decklist = new Deck("Starter Deck", RPGCard.StartList());
-            _hand = new List<RPGCard>();
+            Name = aName;
+
+            Decklist = new Deck("Starter Deck", RPGCard.StartList());
+            Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
         }
 
-        public void OpeningHand()
+        public void DisplayPlayer()
         {
-            for(int i = 0; i<5; i++)
-            {
-                _hand.Add((RPGCard)decklist.DealCard());
-            }
+            Console.WriteLine($"Name = {Name}");
+            Console.WriteLine($"Health: {Health}   Mana: {Mana}   Time: {Time}");
         }
 
-        public override RPGCard PlayCard()
+
+        public RPGCard PlayCard()
         {
             int input;
             bool isValid = false;
@@ -55,10 +60,10 @@ namespace Cards_Games
                 Console.Write("What card would you like to play: ");
                 isValid = int.TryParse(Console.ReadLine(), out input);
 
-                if (isValid && input > 0 && input < _hand.Count)
+                if (isValid && input > 0 && input < Hand.Count)
                 {
-                    RPGCard played = _hand[input];
-                    _hand.RemoveAt(input);
+                    RPGCard played = Hand[input];
+                    Hand.RemoveAt(input);
                     Console.WriteLine($"{Name} will be playing {played}");
                     return played;
                 }
@@ -70,29 +75,61 @@ namespace Cards_Games
             }
         }
 
+        public void OpeningHand()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Hand.Add((RPGCard)Decklist.DealCard());
+            }
+        }
+
+
         public void DisplayHand()
         {
-            for (int i = 0; i < _hand.Count; i++)
+            for (int i = 0; i < Hand.Count; i++)
             {
-                Console.WriteLine($"{i}: {_hand[i]}");
+                Console.WriteLine($"{i}: {Hand[i]}");
             }
         }
 
     }
 
-    class CompTopRPG : RPGplayer
+    class CompTopRPG : IRPGPlayer
     {
-        public List<RPGCard> _hand;
-        public CompTopRPG(string aName) : base(aName)
+        public string Name { get; set; }
+        public int Team { get; set; }
+        public int Time { get; set; }
+        public int Health { get; set; }
+        public int Mana { get; set; }
+        public List<RPGCard> Action { get; set; }
+        public Deck Decklist { get; set; }
+        public List<RPGCard> Hand { get; set; }
+        
+        public CompTopRPG(string aName)
         {
-            decklist = new Deck("Starter Deck", RPGCard.StartList());
-            _hand = new List<RPGCard>();
+            Name = aName;
+            Decklist = new Deck("Starter Deck", RPGCard.StartList());
+            Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
         }
 
-        public override RPGCard PlayCard()
+        public void OpeningHand()
         {
-            RPGCard played = decklist.DealCard();
+            for (int i = 0; i < 5; i++)
+            {
+                Hand.Add((RPGCard)Decklist.DealCard());
+            }
+        }
+
+        public void DisplayPlayer()
+        {
+            Console.WriteLine($"Name = {Name}");
+            Console.WriteLine($"Health: {Health}   Mana: {Mana}   Time: {Time}");
+        }
+
+        public RPGCard PlayCard()
+        {
+            RPGCard played = Decklist.DealCard();
             Console.WriteLine($"The computer will be playing {played}");
             return played;
         }
