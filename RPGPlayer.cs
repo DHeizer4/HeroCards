@@ -12,6 +12,11 @@ namespace Cards_Games
         int Time { get; set; }
         int Health { get; set; }
         int Mana { get; set; }
+        int Weapon { get; set; }
+        int Concentrate { get; set; }
+        int Armor { get; set; }
+        int Block { get; set; }
+        int MagicShield { get; set; }
         List<RPGCard> Action { get; set; }
         Deck Decklist { get; set; }
         List<RPGCard> Hand { get; set; }
@@ -30,6 +35,11 @@ namespace Cards_Games
         public int Time { get; set; }
         public int Health { get; set; }
         public int Mana { get; set; }
+        public int Weapon { get; set; }
+        public int Concentrate { get; set; }
+        public int Armor { get; set; }
+        public int Block { get; set; }
+        public int MagicShield { get; set; }
         public List<RPGCard> Action { get; set; }
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
@@ -101,6 +111,11 @@ namespace Cards_Games
         public int Time { get; set; }
         public int Health { get; set; }
         public int Mana { get; set; }
+        public int Weapon { get; set; }
+        public int Concentrate { get; set; }
+        public int Armor { get; set; }
+        public int Block { get; set; }
+        public int MagicShield { get; set; }
         public List<RPGCard> Action { get; set; }
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }

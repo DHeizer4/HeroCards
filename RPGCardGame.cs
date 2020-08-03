@@ -51,6 +51,10 @@ namespace Cards_Games
             ExecuteActions(participants, turnNum);
         }
 
+
+        // Rewrite Get Action to convert card to RPGaction item
+        // Convert Card to Action should be a function
+        // This also means changing player class removing Acton List and making a single Action List
         public static void GetAction(List<IRPGPlayer> particpants, int turnNum)
         {
             foreach (IRPGPlayer player in particpants)
@@ -65,6 +69,7 @@ namespace Cards_Games
             }
         } 
 
+        //Need to change to work with RPG Action Class
         public static void ExecuteActions(List<IRPGPlayer> particpants, int turnNum)
         {
             foreach (IRPGPlayer player in particpants)
@@ -79,6 +84,7 @@ namespace Cards_Games
             }
         }
 
+        //Will this be needed still?
         public static void ExecuteCard(IRPGPlayer activePlayer, List<IRPGPlayer> partcipants, RPGCard card)
         {
             Console.WriteLine($"{activePlayer}, plays {card}");
@@ -92,7 +98,7 @@ namespace Cards_Games
 
         public static void WinCheck()
         {
-            // Is only 1 plaer left
+            // Is only 1 team is left
         }
 
     }
