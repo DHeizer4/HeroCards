@@ -37,7 +37,7 @@ namespace Cards_Games
         public HumanRPG(string aName)
         {
             Name = aName;
-
+            Health = 10;
             Decklist = new Deck("Starter Deck", RPGCard.StartList());
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
@@ -108,6 +108,7 @@ namespace Cards_Games
         public CompTopRPG(string aName)
         {
             Name = aName;
+            Health = 10;
             Decklist = new Deck("Starter Deck", RPGCard.StartList());
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();

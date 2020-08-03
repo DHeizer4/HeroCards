@@ -30,26 +30,58 @@ namespace Cards_Games
                 player.OpeningHand();
                 player.DisplayPlayer();
             }
-            
-            //RPG1.DisplayHand();
 
+            //RPG1.DisplayHand();
+            int turnNum = 1;
             bool win = false;
             while (!win)
             {
-                int turnNum = 1;
                 Console.WriteLine($"Turn {turnNum}");
-                ActionCheck();
+                ActionCheck(participants, turnNum);
                 LoseCheck();
                 WinCheck();
+                turnNum++;
                 win = true;
             }
         }
 
-        public static void ActionCheck()
+        public static void ActionCheck(List<IRPGPlayer> participants, int turnNum)
         {
-            //GetActions();
-            //ActionReady();
-            //ExecuteActions();
+            GetAction(participants, turnNum);
+            ExecuteActions(participants, turnNum);
+        }
+
+        public static void GetAction(List<IRPGPlayer> particpants, int turnNum)
+        {
+            foreach (IRPGPlayer player in particpants)
+            {
+                if (player.Action.Count < 1)
+                {
+                    RPGCard card = player.PlayCard();
+                    card.Speed = card.Speed + turnNum;
+                    Console.WriteLine($"Card will take place on turn {card.Speed}");
+                    player.Action.Add(card);
+                }
+            }
+        } 
+
+        public static void ExecuteActions(List<IRPGPlayer> particpants, int turnNum)
+        {
+            foreach (IRPGPlayer player in particpants)
+            {
+                foreach(RPGCard card in player.Action)
+                {
+                    if (card.Speed < turnNum)
+                    {
+                        ExecuteCard(player, particpants, card);
+                    }
+                }
+            }
+        }
+
+        public static void ExecuteCard(IRPGPlayer activePlayer, List<IRPGPlayer> partcipants, RPGCard card)
+        {
+            Console.WriteLine($"{activePlayer}, plays {card}");
         }
 
         public static void LoseCheck()

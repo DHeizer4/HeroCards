@@ -16,30 +16,30 @@ namespace Cards_Games
     {
         public string CardType { get; set; }
         public string Name { get; set; }
-        private CardResource Resource { get; set; }
-        private int _cost;
-        private int _attack;
-        public int duration;
+        public CardResource Resource { get; set; }
+        public int Cost { get; set; }
+        public int Attack { get; set; }
+        public int Duration { get; set; }
         public int Speed { get; set; }
-        private AttackType _attacktype;
-        private Target _target;
-        private int _level;
-        private string _phrase;
+        public AttackType AttackType { get; set; }
+        public Target Target { get; set; }
+        public int Level { get; set; }
+        public string Phrase { get; set; }
         public static Dictionary<string, RPGCard> Library = new Dictionary<string, RPGCard>();
 
         public RPGCard(string cardtype, int alevel, string name, CardResource resource, int cost,  int attack, int aduration ,int speed, AttackType Atype, Target target, string aphrase)
         {
             CardType = cardtype;
-            _level = alevel;
+            Level = alevel;
             Name = name;
-            _attack = attack;
-            duration = aduration;
+            Attack = attack;
+            Duration = aduration;
             Speed = speed;
-            _attacktype = Atype;
-            _target = target;
-            _cost = cost;
+            AttackType = Atype;
+            Target = target;
+            Cost = cost;
             Resource = resource;
-            _phrase = aphrase;
+            Phrase = aphrase;
         }
 
         public static List<RPGCard> StartList()
