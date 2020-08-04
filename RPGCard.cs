@@ -10,7 +10,7 @@ namespace Cards_Games
 {
     public enum AttackType { Piercing, Slashing, Bludgedeon, Fire, Ice, Electric, Heal}
     public enum CardResource { Health, Time, Mana}
-    public enum Target { Self, Party, Enemy, AllEnemys, All}
+    public enum Target { Self, Party, Ally, Enemy, AllEnemys, All}
 
     class RPGCard
     {

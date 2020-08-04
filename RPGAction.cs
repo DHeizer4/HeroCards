@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Cards_Games
@@ -10,19 +11,16 @@ namespace Cards_Games
     class RPGAction
     {
         public IRPGPlayer Actor { get; set; }
-        public IRPGPlayer Target { get; set; }
-        public int Detonation { get; set; }
-        public int Amount { get; set; }
-        public Stat Modify { get; set; }
-        public AttackType Discipline { get; set; }
+        public IRPGPlayer ActedUpon { get; set; }
+        public bool Original { get; set; }
+        public RPGCard Card { get; set; }
 
-        public RPGAction(IRPGPlayer aActor, IRPGPlayer aTarget, int aAmount, Stat aModify, AttackType aDiscipline)
+        public RPGAction(IRPGPlayer aActor, IRPGPlayer aTarget, bool orgin, RPGCard aCard)
         {
             Actor = aActor;
-            Target = aTarget;
-            Amount = aAmount;
-            Modify = aModify;
-            Discipline = aDiscipline;
+            ActedUpon = aTarget;
+            Original = orgin;
+            Card = aCard;
         }
     }
 

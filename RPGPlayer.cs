@@ -25,6 +25,7 @@ namespace Cards_Games
         void OpeningHand();
         void DisplayPlayer();
         RPGCard PlayCard();
+        IRPGPlayer GetTarget( IRPGPlayer self, List<IRPGPlayer> participants, Target targetType);
 
     }
 
@@ -44,9 +45,10 @@ namespace Cards_Games
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
 
-        public HumanRPG(string aName)
+        public HumanRPG(string aName, int aTeam)
         {
             Name = aName;
+            Team = aTeam;
             Health = 10;
             Decklist = new Deck("Starter Deck", RPGCard.StartList());
             Hand = new List<RPGCard>();
@@ -59,6 +61,32 @@ namespace Cards_Games
             Console.WriteLine($"Health: {Health}   Mana: {Mana}   Time: {Time}");
         }
 
+        public IRPGPlayer GetTarget(IRPGPlayer self, List<IRPGPlayer> participants, Target targetType)
+        {
+            for (int i = 0; i < participants.Count; i++)
+            {
+                if (participants[i].Team == self.Team && targetType == Target.Ally)
+                {
+                    Console.WriteLine($"{i}: Ally  {participants[i].Name}");
+                }
+                else
+                {
+                    Console.WriteLine($"{i}: Enemy {participants[i].Name}");
+                }
+            }
+            bool isValid = false;
+            int number = -1;
+            while (!isValid)
+            {
+                Console.Write("Please choose a target: ");
+                isValid = int.TryParse(Console.ReadLine(), out number);
+                if (number < 0 || number > participants.Count - 1)
+                {
+                    isValid = false;
+                }
+            }
+            return participants[number];
+        }
 
         public RPGCard PlayCard()
         {
@@ -120,13 +148,34 @@ namespace Cards_Games
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
         
-        public CompTopRPG(string aName)
+        public CompTopRPG(string aName, int aTeam)
         {
             Name = aName;
+            Team = aTeam;
             Health = 10;
             Decklist = new Deck("Starter Deck", RPGCard.StartList());
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
+        }
+
+        public IRPGPlayer GetTarget(IRPGPlayer self, List<IRPGPlayer> participants, Target targetType)
+        {
+            for (int i = 0; i < participants.Count; i++)
+            {
+                if (participants[i].Team != self.Team && targetType == Target.Enemy)
+                {
+                    return participants[i];
+                }
+                else if (participants[i].Team == self.Team && targetType == Target.Ally)
+                {
+                    return participants[i];
+                }
+                else
+                {
+                    return self;
+                }
+            }
+            return self;
         }
 
         public void OpeningHand()
