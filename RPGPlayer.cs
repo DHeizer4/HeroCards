@@ -17,6 +17,7 @@ namespace Cards_Games
         int Armor { get; set; }
         int Block { get; set; }
         int MagicShield { get; set; }
+        int Speed { get; set; }
         List<RPGCard> Action { get; set; }
         Deck Decklist { get; set; }
         List<RPGCard> Hand { get; set; }
@@ -25,7 +26,7 @@ namespace Cards_Games
         void OpeningHand();
         void DisplayPlayer();
         RPGCard PlayCard();
-        IRPGPlayer GetTarget( IRPGPlayer self, List<IRPGPlayer> participants, Target targetType);
+        IRPGPlayer GetTarget(List<IRPGPlayer> participants);
 
     }
 
@@ -41,6 +42,7 @@ namespace Cards_Games
         public int Armor { get; set; }
         public int Block { get; set; }
         public int MagicShield { get; set; }
+        public int Speed { get; set; }
         public List<RPGCard> Action { get; set; }
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
@@ -53,6 +55,7 @@ namespace Cards_Games
             Decklist = new Deck("Starter Deck", RPGCard.StartList());
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
+            Speed = 1;
         }
 
         public void DisplayPlayer()
@@ -61,31 +64,16 @@ namespace Cards_Games
             Console.WriteLine($"Health: {Health}   Mana: {Mana}   Time: {Time}");
         }
 
-        public IRPGPlayer GetTarget(IRPGPlayer self, List<IRPGPlayer> participants, Target targetType)
+        public IRPGPlayer GetTarget(List<IRPGPlayer> possibleTargets)
         {
-            for (int i = 0; i < participants.Count; i++)
-            {
-                if (participants[i].Team == self.Team && targetType == Target.Ally)
-                {
-                    Console.WriteLine($"{i}: Ally  {participants[i].Name}");
-                }
-                else
-                {
-                    Console.WriteLine($"{i}: Enemy {participants[i].Name}");
-                }
-            }
-            bool isValid = false;
-            int number = -1;
-            while (!isValid)
-            {
-                Console.Write("Please choose a target: ");
-                isValid = int.TryParse(Console.ReadLine(), out number);
-                if (number < 0 || number > participants.Count - 1)
-                {
-                    isValid = false;
-                }
-            }
-            return participants[number];
+            int choice = 0;
+            IRPGPlayer target;
+            Display.PlayerList(possibleTargets, "The possible targets are...");
+            choice = UserInput.GetListOption("Please choose a target: ", possibleTargets.Count);
+
+            target = possibleTargets[choice - 1];
+            
+            return target;
         }
 
         public RPGCard PlayCard()
@@ -144,6 +132,7 @@ namespace Cards_Games
         public int Armor { get; set; }
         public int Block { get; set; }
         public int MagicShield { get; set; }
+        public int Speed { get; set; }
         public List<RPGCard> Action { get; set; }
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
@@ -156,26 +145,12 @@ namespace Cards_Games
             Decklist = new Deck("Starter Deck", RPGCard.StartList());
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
+            Speed = 2;
         }
 
-        public IRPGPlayer GetTarget(IRPGPlayer self, List<IRPGPlayer> participants, Target targetType)
+        public IRPGPlayer GetTarget(List<IRPGPlayer> possibleTargets)
         {
-            for (int i = 0; i < participants.Count; i++)
-            {
-                if (participants[i].Team != self.Team && targetType == Target.Enemy)
-                {
-                    return participants[i];
-                }
-                else if (participants[i].Team == self.Team && targetType == Target.Ally)
-                {
-                    return participants[i];
-                }
-                else
-                {
-                    return self;
-                }
-            }
-            return self;
+            return possibleTargets[0];
         }
 
         public void OpeningHand()

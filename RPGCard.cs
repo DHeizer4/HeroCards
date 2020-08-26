@@ -19,7 +19,8 @@ namespace Cards_Games
         public CardResource Resource { get; set; }
         public int Cost { get; set; }
         public int Attack { get; set; }
-        public int Duration { get; set; }
+        public int Duration { get; set; }  // item lasts for x turns
+        public int Durability { get; set; }  // item can be used x times
         public int Speed { get; set; }
         public AttackType AttackType { get; set; }
         public Target Target { get; set; }
