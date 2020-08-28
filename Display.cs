@@ -11,6 +11,11 @@ namespace Cards_Games
             Console.WriteLine($"Turn \u001b[031{turnnumber}\u001b[");
         } 
 
+        public static void InvalidChoice()
+        {
+            Console.WriteLine("That was not a valid option");
+        }
+
         public static void PlayerList(List<IRPGPlayer> players, string header)
         {
             int i = 1;

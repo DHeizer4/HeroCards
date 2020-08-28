@@ -8,7 +8,32 @@ namespace Cards_Games
     {
         public static int GetListOption(string prompt, int listLength)
         {
+            bool isValid;
+            bool inRange;
+            int choice = 0;
 
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine();
+                isValid = int.TryParse(input, out choice);
+                if (isValid)
+                {
+                    inRange = Validate.ValidateIntInRange(choice, 1, listLength);
+                    if (inRange)
+                    {
+                        return choice;
+                    }
+                    else
+                    {
+                        Display.InvalidChoice();
+                    }
+                }
+                else
+                {
+                    Display.InvalidChoice();
+                }
+            }
         }
 
 

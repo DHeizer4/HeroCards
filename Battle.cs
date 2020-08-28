@@ -14,6 +14,7 @@ namespace Cards_Games
 
             // Get battle doll list once implemented
             players = Battle.SpeedSort(players);
+            GetOpeningHands(players);
             OpeningActions(players);
 
 
