@@ -12,7 +12,12 @@ namespace Cards_Games
             players.Add(RPG1);
             CompTopRPG comp1 = new CompTopRPG("That guy", 2);
             players.Add(comp1);
-            
+            CompTopRPG comp2 = new CompTopRPG("Goblin 1", 2);
+            CompTopRPG comp3 = new CompTopRPG("Goblin 2", 2);
+            CompTopRPG comp4 = new CompTopRPG("Helper", 1);
+            players.Add(comp2);
+            players.Add(comp3);
+            players.Add(comp4);
             Battle.Start(players);
         }
 

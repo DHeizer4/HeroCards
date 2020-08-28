@@ -14,6 +14,7 @@ namespace Cards_Games
 
             while (true)
             {
+                Console.CursorLeft = 20;
                 Console.Write(prompt);
                 string input = Console.ReadLine();
                 isValid = int.TryParse(input, out choice);

@@ -24,7 +24,6 @@ namespace Cards_Games
 
 
         void OpeningHand();
-        void DisplayPlayer();
         RPGCard PlayCard();
         IRPGPlayer GetTarget(List<IRPGPlayer> participants);
 
@@ -47,6 +46,8 @@ namespace Cards_Games
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
 
+        // Can a caster cast faster than a fighter and vise versa....
+
         public HumanRPG(string aName, int aTeam)
         {
             Name = aName;
@@ -58,12 +59,6 @@ namespace Cards_Games
             Speed = 1;
         }
 
-        public void DisplayPlayer()
-        {
-            Console.WriteLine($"Name = {Name}");
-            Console.WriteLine($"Health: {Health}   Mana: {Mana}   Time: {Time}");
-        }
-
         public IRPGPlayer GetTarget(List<IRPGPlayer> possibleTargets)
         {
             int choice = 0;
@@ -72,7 +67,7 @@ namespace Cards_Games
             choice = UserInput.GetListOption("Please choose a target: ", possibleTargets.Count);
 
             target = possibleTargets[choice - 1];
-            
+            Console.Clear();
             return target;
         }
 
@@ -80,22 +75,24 @@ namespace Cards_Games
         {
             int input;
             bool isValid = false;
-            DisplayHand();
+            DisplayHand(20);
             while (true)
             {
+                Console.SetCursorPosition(20, 0);
                 Console.Write("What card would you like to play: ");
                 isValid = int.TryParse(Console.ReadLine(), out input);
 
-                if (isValid && input > 0 && input < Hand.Count)
+                if (isValid && input >= 0 && input < Hand.Count)
                 {
                     RPGCard played = Hand[input];
                     Hand.RemoveAt(input);
+                    Console.CursorLeft = 20;
                     Console.WriteLine($"{Name} will be playing {played}");
                     return played;
                 }
                 else
                 {
-                    Console.WriteLine("That was not a Valid choice");
+                    Display.InvalidChoice();
                     continue;
                 }
             }
@@ -109,11 +106,11 @@ namespace Cards_Games
             }
         }
 
-
-        public void DisplayHand()
+        public void DisplayHand(int xCoord)
         {
             for (int i = 0; i < Hand.Count; i++)
             {
+                Console.SetCursorPosition(xCoord , i+1);
                 Console.WriteLine($"{i}: {Hand[i]}");
             }
         }
@@ -170,7 +167,8 @@ namespace Cards_Games
         public RPGCard PlayCard()
         {
             RPGCard played = Decklist.DealCard();
-            Console.WriteLine($"The computer will be playing {played}");
+            Console.CursorLeft = 20;
+            Console.WriteLine($"{Name} will be playing {played}");
             return played;
         }
 

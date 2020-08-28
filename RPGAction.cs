@@ -14,6 +14,16 @@ namespace Cards_Games
         public IRPGPlayer ActedUpon { get; set; }
         public bool Original { get; set; }
         public RPGCard Card { get; set; }
+        public int When { get; set; }
+
+        public RPGAction(IRPGPlayer aActor, IRPGPlayer aTarget, bool orgin, RPGCard aCard, int when)
+        {
+            Actor = aActor;
+            ActedUpon = aTarget;
+            Original = orgin;
+            Card = aCard;
+            When = when;
+        }
 
         public RPGAction(IRPGPlayer aActor, IRPGPlayer aTarget, bool orgin, RPGCard aCard)
         {
@@ -21,6 +31,7 @@ namespace Cards_Games
             ActedUpon = aTarget;
             Original = orgin;
             Card = aCard;
+            When = aCard.Speed;
         }
 
         public static List<RPGAction> ConvertCardToAction(RPGCard card, IRPGPlayer activePlayer ,List<IRPGPlayer> allPlayers)
