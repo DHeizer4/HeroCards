@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cards_Games.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,15 +7,15 @@ namespace Cards_Games
 {
     class UserInput
     {
-        public static int GetListOption(string prompt, int listLength)
-        {
+        public static int GetListOption(string prompt, int listLength, XYLocation location)
+        {            
             bool isValid;
             bool inRange;
             int choice = 0;
 
             while (true)
             {
-                Console.CursorLeft = 20;
+                Console.SetCursorPosition(location.XLocation, location.YLocation);
                 Console.Write(prompt);
                 string input = Console.ReadLine();
                 isValid = int.TryParse(input, out choice);
@@ -27,11 +28,13 @@ namespace Cards_Games
                     }
                     else
                     {
+                        Console.CursorLeft = location.XLocation;
                         Display.InvalidChoice();
                     }
                 }
                 else
                 {
+                    Console.CursorLeft = location.XLocation;
                     Display.InvalidChoice();
                 }
             }

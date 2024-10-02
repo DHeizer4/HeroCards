@@ -1,9 +1,9 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\DHeizer\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\DHeizer\\.nuget\\packages",
-      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      "C:\\Users\\heize\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\heize\\.nuget\\packages",
+      "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ]
   }
 }

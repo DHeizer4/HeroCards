@@ -11,3 +11,17 @@ C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.csproj.
 C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.dll
 C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.pdb
 C:\DevBuild4\Games\Cards\Cards Games\obj\Debug\netcoreapp3.1\Cards Games.genruntimeconfig.cache
+C:\Users\heize\Source\Repos\HeroCards\bin\Debug\netcoreapp3.1\Cards Games.exe
+C:\Users\heize\Source\Repos\HeroCards\bin\Debug\netcoreapp3.1\Cards Games.deps.json
+C:\Users\heize\Source\Repos\HeroCards\bin\Debug\netcoreapp3.1\Cards Games.runtimeconfig.json
+C:\Users\heize\Source\Repos\HeroCards\bin\Debug\netcoreapp3.1\Cards Games.runtimeconfig.dev.json
+C:\Users\heize\Source\Repos\HeroCards\bin\Debug\netcoreapp3.1\Cards Games.dll
+C:\Users\heize\Source\Repos\HeroCards\bin\Debug\netcoreapp3.1\Cards Games.pdb
+C:\Users\heize\Source\Repos\HeroCards\obj\Debug\netcoreapp3.1\Cards Games.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\heize\Source\Repos\HeroCards\obj\Debug\netcoreapp3.1\Cards Games.AssemblyInfoInputs.cache
+C:\Users\heize\Source\Repos\HeroCards\obj\Debug\netcoreapp3.1\Cards Games.AssemblyInfo.cs
+C:\Users\heize\Source\Repos\HeroCards\obj\Debug\netcoreapp3.1\Cards Games.csproj.CoreCompileInputs.cache
+C:\Users\heize\Source\Repos\HeroCards\obj\Debug\netcoreapp3.1\Cards Games.sourcelink.json
+C:\Users\heize\Source\Repos\HeroCards\obj\Debug\netcoreapp3.1\Cards Games.dll
+C:\Users\heize\Source\Repos\HeroCards\obj\Debug\netcoreapp3.1\Cards Games.pdb
+C:\Users\heize\Source\Repos\HeroCards\obj\Debug\netcoreapp3.1\Cards Games.genruntimeconfig.cache

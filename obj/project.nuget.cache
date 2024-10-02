@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "DPV6mrJxMgOpgX+TmzyflezDzvCPhbDzpK/iMO7WSpH4kuE8Rp3ympta89qKbnQ71B0Uzn5RvC8/2GGR10xk7w==",
+  "dgSpecHash": "jqUFW207qXZCt6Q0h6YrMWh6nn+QIHyQ0bxeQT8481AI2TnmfFNeQi2qQ0nk/FuB7ya93YC9hb4iu2Iu/ZVk2Q==",
   "success": true,
-  "projectFilePath": "C:\\DevBuild4\\Games\\Cards\\Cards Games\\Cards Games.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\heize\\source\\repos\\HeroCards\\Cards Games.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\heize\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\heize\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\heize\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\heize\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.32\\microsoft.netcore.app.host.win-x64.3.1.32.nupkg.sha512"
+  ],
   "logs": []
 }

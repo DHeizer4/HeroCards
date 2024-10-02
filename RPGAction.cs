@@ -1,13 +1,9 @@
-﻿using System;
+﻿using Cards_Games.Players;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+using static Cards_Games.Enumerations.TargetEnum;
 
 namespace Cards_Games
 {
-   
-    public enum Stat {Time, Health, Mana, Weapon, Concentrate, Armor, Block, MagicShield }
-    
     class RPGAction
     {
         public IRPGPlayer Actor { get; set; }
@@ -34,11 +30,11 @@ namespace Cards_Games
             When = aCard.Speed;
         }
 
-        public static List<RPGAction> ConvertCardToAction(RPGCard card, IRPGPlayer activePlayer ,List<IRPGPlayer> allPlayers)
+        public static List<RPGAction> ConvertCardToAction(RPGCard card, IRPGPlayer activePlayer, List<IRPGPlayer> allPlayers)
         {
             List<RPGAction> playerActions = new List<RPGAction>();
             switch (card.Target)
-            {
+            {   //RandomTarget   ChainRandomTarget   ChainTarget (chance to jump to another target)
                 case Target.All:
                     playerActions = AllTargets(card, activePlayer, allPlayers);
                     break;

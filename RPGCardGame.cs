@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cards_Games.Players;
 
 namespace Cards_Games
 {
@@ -15,10 +16,10 @@ namespace Cards_Games
             CompTopRPG comp2 = new CompTopRPG("Goblin 1", 2);
             CompTopRPG comp3 = new CompTopRPG("Goblin 2", 2);
             CompTopRPG comp4 = new CompTopRPG("Helper", 1);
-            players.Add(comp2);
-            players.Add(comp3);
-            players.Add(comp4);
-            Battle.Start(players);
+           // players.Add(comp2);
+           // players.Add(comp3);
+           // players.Add(comp4);
+            BattleOrchestrator.Start(players);
         }
 
     }
