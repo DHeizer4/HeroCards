@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net;
 using System.Text;
 using Cards_Games.Players;
 using static Cards_Games.Enumerations.CardResourceEnum;
@@ -51,7 +52,7 @@ namespace Cards_Games
                 //  Display.SimpleDialogBox(new List<string>());1               
                 Display.BattleActionGrid(battleActions);
                 Display.Players(players);
-
+                AddTime(players);
                 turn++;
             } while (CheckForWin(players) == -1);
 
@@ -69,6 +70,15 @@ namespace Cards_Games
                 action.When = action.When - 1;
             }
         }
+
+        public static void AddTime(List<IRPGPlayer> players)
+        {
+            foreach (IRPGPlayer player in players)
+            {
+                player.Time = player.Time + 1;
+            }
+
+        } 
 
         public static List<IRPGPlayer> CheckForAction(List<IRPGPlayer> players) 
         {

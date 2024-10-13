@@ -1,5 +1,5 @@
-﻿using Cards_Games.Models;
-using System;
+﻿using Cards_Games.Enumerations;
+using Cards_Games.Models;
 using System.Collections.Generic;
 
 namespace Cards_Games.Players
@@ -7,15 +7,24 @@ namespace Cards_Games.Players
     class HumanRPG : IRPGPlayer
     {
         public string Name { get; set; }
+        public List<StatusEnum> Statuses { get; set; }
         public int Team { get; set; }
         public int Time { get; set; }
         public int Health { get; set; }
+        public int MaxHealth { get; set; }
         public int Mana { get; set; }
-        public int Weapon { get; set; }
+        public int MaxMana { get; set; }
+        public Weapon Weapon { get; set; }
+        public List<Equipment> Equipment { get; set; } = new List<Equipment>();
+        public int Strength { get; set; }
+        public int Intellect { get; set; }
+        public int Agility { get; set; }
+        public int Dexterity { get; set; }
         public int Concentrate { get; set; }
         public int Armor { get; set; }
         public int Block { get; set; }
         public int MagicShield { get; set; }
+        public int Shield { get; set; }
         public int Speed { get; set; }
         public int NextMove { get; set; }
         public List<RPGCard> Action { get; set; }

@@ -138,6 +138,15 @@ namespace Cards_Games
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
                 Console.WriteLine($"                  ");
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                Console.WriteLine($"                  ");
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                Console.WriteLine($"                  ");
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                Console.WriteLine($"                  ");
                 offset += 2;
             }
 
@@ -148,10 +157,19 @@ namespace Cards_Games
                 Console.WriteLine($"Name: {player.Name}");
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"Health: {player.Health}");
+                Console.WriteLine($"Health: {player.Health} / {player.MaxHealth}");
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"Mana: {player.Mana}");
+                Console.WriteLine($"Mana: {player.Mana} / {player.MaxMana}");
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                Console.WriteLine($"Strength: {player.Strength}");
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                Console.WriteLine($"Interllect: {player.Intellect}");
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                Console.WriteLine($"Armor: {player.Armor}");
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
                 Console.WriteLine($"Time: {player.Time}");

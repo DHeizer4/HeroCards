@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Cards_Games.Enumerations;
+using Cards_Games.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -21,6 +23,16 @@ namespace Cards_Games.Players
         public List<RPGCard> Action { get; set; }
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
+        public List<StatusEnum> Statuses { get; set; }
+        public int MaxHealth { get; set; }
+        public int MaxMana { get; set; }
+        Weapon IRPGPlayer.Weapon { get; set; }
+        public List<Equipment> Equipment { get; set; }
+        public int Strength { get; set; }
+        public int Intellect { get; set; }
+        public int Agility { get; set; }
+        public int Dexterity { get; set; }
+        public int Shield { get; set; }
 
         public CompTopRPG(string aName, int aTeam)
         {
