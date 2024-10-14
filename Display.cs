@@ -19,7 +19,7 @@ namespace Cards_Games
             Console.WriteLine($"Turn: {turn}");
         }
 
-        public static void BattleActionGrid(List<RPGAction> battleActions)
+        public static void BattleActionGrid(List<RPGAction> battleActions, int currentTurnNumber)
         {
             int xCoord = BattleBoxDisplay.XLocation;
             int yCoord = BattleBoxDisplay.YLocation;
@@ -35,10 +35,10 @@ namespace Cards_Games
             {
                 yIncrement = 0;
                 Console.SetCursorPosition(xCoord + (turnIncrement - 1) * xSpacing, yCoord - 1);
-                Display.BattleTurn(turnIncrement);
+                Display.BattleTurn(currentTurnNumber + turnIncrement);
                 foreach (RPGAction action in battleActions)
                 {
-                    if (action.When == turnIncrement)
+                    if (action.When == turnIncrement + currentTurnNumber)
                     {
                         Console.SetCursorPosition(xCoord + (turnIncrement - 1) * xSpacing, yCoord + yIncrement);
                         Console.WriteLine($"{action.Actor.Name} {action.Card.Name} {action.ActedUpon.Name}");
@@ -90,7 +90,7 @@ namespace Cards_Games
 
         public static void BattleTurn(int turnNumber)
         {
-            Console.WriteLine($"{turnNumber} turns from now");
+            Console.WriteLine($"Turn: {turnNumber}");
         }
 
         public static void InvalidChoice()
