@@ -1,9 +1,5 @@
-﻿using System;
+﻿using Cards_Games.Players;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Net;
-using System.Text;
-using Cards_Games.Players;
 using static Cards_Games.Enumerations.CardResourceEnum;
 
 namespace Cards_Games
@@ -43,7 +39,7 @@ namespace Cards_Games
 
                 players = BattleOrchestrator.CheckForAction(players, Turn);
 
-           
+
                 Display.BattleActionGrid(battleActions, Turn);
                 Display.Players(players);
                 AddTime(players);
@@ -59,7 +55,7 @@ namespace Cards_Games
 
         public static void BattleMovesOn()
         {
-            foreach(RPGAction action in battleActions)
+            foreach (RPGAction action in battleActions)
             {
                 action.When = action.When - 1;
             }
@@ -72,9 +68,9 @@ namespace Cards_Games
                 player.Time = player.Time + 1;
             }
 
-        } 
+        }
 
-        public static List<IRPGPlayer> CheckForAction(List<IRPGPlayer> players, int turnNumber) 
+        public static List<IRPGPlayer> CheckForAction(List<IRPGPlayer> players, int turnNumber)
         {
             List<RPGAction> currentAction = new List<RPGAction>();
             foreach (RPGAction action in battleActions)
@@ -84,16 +80,16 @@ namespace Cards_Games
                     currentAction.Add(action);
                 }
             }
-            
+
             ExecuteActions(currentAction, players);
             return players;
-        } 
+        }
 
         public static List<IRPGPlayer> ExecuteActions(List<RPGAction> actions, List<IRPGPlayer> players)
         {
             List<string> linesOfDialog = new List<string>();
 
-            foreach(RPGAction action in actions)
+            foreach (RPGAction action in actions)
             {
                 string dialog = $"{action.Actor.Name} {action.Card.Phrase} {action.ActedUpon.Name}";
                 linesOfDialog.Add(dialog);
@@ -101,7 +97,7 @@ namespace Cards_Games
                 action.ActedUpon.Health = action.ActedUpon.Health - action.Card.Attack;
                 if (action.Card.Duration > 1)
                 {
-                    for (int x=1; x<=action.Card.Duration; x++)
+                    for (int x = 1; x <= action.Card.Duration; x++)
                     {
                         RPGCard durationCard = new RPGCard(action.Card.CardType, action.Card.Level, action.Card.Name + " effect", CardResource.Time, 0, action.Card.Attack, 0, 0, action.Card.AttackType, action.Card.Target, action.Card.Phrase + " continues on ");
                         battleActions.Add(new RPGAction(action.Actor, action.ActedUpon, false, durationCard, x, Turn));
@@ -179,7 +175,7 @@ namespace Cards_Games
             return false;
         }
 
-        public static List<IRPGPlayer> SpeedSort (List<IRPGPlayer> players)
+        public static List<IRPGPlayer> SpeedSort(List<IRPGPlayer> players)
         {
             players.Sort((x, y) => x.Speed.CompareTo(y.Speed));
             return players;
@@ -190,9 +186,9 @@ namespace Cards_Games
         public static int CheckForWin(List<IRPGPlayer> players)
         {
             List<int> teamNumbersWithLivingPlayers = new List<int>();
-            foreach(IRPGPlayer player in players)
+            foreach (IRPGPlayer player in players)
             {
-                if(player.Health > 0)
+                if (player.Health > 0)
                 {
                     teamNumbersWithLivingPlayers.Add(player.Team);
                 }
@@ -200,15 +196,15 @@ namespace Cards_Games
 
             int compare = -1;
 
-            for (int i = 0;i < teamNumbersWithLivingPlayers.Count;i++)
+            for (int i = 0; i < teamNumbersWithLivingPlayers.Count; i++)
             {
-                
-                
-                if(compare == -1)
+
+
+                if (compare == -1)
                 {
                     compare = teamNumbersWithLivingPlayers[i];
                 }
-                else if(compare != teamNumbersWithLivingPlayers[i])
+                else if (compare != teamNumbersWithLivingPlayers[i])
                 {
                     return -1;
                 }
