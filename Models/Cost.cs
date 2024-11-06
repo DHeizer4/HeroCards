@@ -11,5 +11,11 @@ namespace Cards_Games.Models
         // Cost must be able to be paid to use a card
         public CardResource Resource { get; set; }
         public int Amount { get; set; }
+
+        public Cost(CardResource resource, int amount)
+        {
+            Resource = resource;
+            Amount = amount;
+        }
     }
 }

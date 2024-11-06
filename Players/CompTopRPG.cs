@@ -23,7 +23,7 @@ namespace Cards_Games.Players
         public List<RPGCard> Action { get; set; }
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
-        public List<StatusEnum> Statuses { get; set; }
+        public List<StatusEnumeration> Statuses { get; set; }
         public int MaxHealth { get; set; }
         public int MaxMana { get; set; }
         Weapon IRPGPlayer.Weapon { get; set; }

@@ -6,16 +6,16 @@ namespace Cards_Games
 {
     class BattleOrchestrator
     {
-        private static List<RPGAction> battleActions = new List<RPGAction>();
-        private static int Turn = 0;
+        private static List<RPGAction> _TimeLine = new List<RPGAction>();
+        private static int _Turn = 0;
 
         public static void Start(List<IRPGPlayer> players)
         {
             // Preperation For Battle
-            battleActions.Clear();
+            _TimeLine.Clear();
 
             GetOpeningHands(players);
-            Display.BattleActionGrid(battleActions, Turn);
+            Display.BattleActionGrid(_TimeLine, _Turn);
 
             // Console.SetWindowSize(175, 50);
 
@@ -30,20 +30,27 @@ namespace Cards_Games
 
             do
             {
-                Display.GameInfo(Turn);
+                Display.GameInfo(_Turn);
                 Display.Players(players);
 
                 players = BattleOrchestrator.SpeedSort(players);
+                ExecuteActions();
                 BattleOrchestrator.GetNextActions(players);
+                
+                
                 Display.Players(players);             // this is sorting the players every time need to set teams once and then handle as teams.  Also need to set display positions.  Also limitation currently here to only have 2 teams
 
-                players = BattleOrchestrator.CheckForAction(players, Turn);
+
+                // Are any actions happening this round / turn
+                // This also executes those actions
+                //players = BattleOrchestrator.CheckForAction(players, _Turn);
 
 
-                Display.BattleActionGrid(battleActions, Turn);
+                Display.BattleActionGrid(_TimeLine, _Turn);
                 Display.Players(players);
-                AddTime(players);
-                Turn++;
+
+                EndOfTurn(players);
+                _Turn++;
             } while (CheckForWin(players) == -1);
 
             List<string> winMessage = new List<string>();
@@ -55,11 +62,18 @@ namespace Cards_Games
 
         public static void BattleMovesOn()
         {
-            foreach (RPGAction action in battleActions)
+            foreach (RPGAction action in _TimeLine)
             {
                 action.When = action.When - 1;
             }
         }
+
+        public static void EndOfTurn(List<IRPGPlayer> players)
+        {
+            AddTime(players);
+          //  CreateLogEntry(); // This needs to say everything that took place on a given turn
+        }
+
 
         public static void AddTime(List<IRPGPlayer> players)
         {
@@ -67,24 +81,24 @@ namespace Cards_Games
             {
                 player.Time = player.Time + 1;
             }
-
         }
 
-        public static List<IRPGPlayer> CheckForAction(List<IRPGPlayer> players, int turnNumber)
-        {
-            List<RPGAction> currentAction = new List<RPGAction>();
-            foreach (RPGAction action in battleActions)
-            {
-                if (action.When == turnNumber)
-                {
-                    currentAction.Add(action);
-                }
-            }
+        //public static List<IRPGPlayer> CheckForAction(List<IRPGPlayer> players, int turnNumber)
+        //{
+        //    List<RPGAction> currentAction = new List<RPGAction>();
+        //    foreach (RPGAction action in _TimeLine)
+        //    {
+        //        if (action.When == turnNumber)
+        //        {
+        //            currentAction.Add(action);
+        //        }
+        //    }
 
-            ExecuteActions(currentAction, players);
-            return players;
-        }
+        //    ExecuteActions(currentAction, players);
+        //    return players;
+        //}
 
+        //This whole function needs to be rewritten for new card structure
         public static List<IRPGPlayer> ExecuteActions(List<RPGAction> actions, List<IRPGPlayer> players)
         {
             List<string> linesOfDialog = new List<string>();
@@ -100,7 +114,7 @@ namespace Cards_Games
                     for (int x = 1; x <= action.Card.Duration; x++)
                     {
                         RPGCard durationCard = new RPGCard(action.Card.CardType, action.Card.Level, action.Card.Name + " effect", CardResource.Time, 0, action.Card.Attack, 0, 0, action.Card.AttackType, action.Card.Target, action.Card.Phrase + " continues on ");
-                        battleActions.Add(new RPGAction(action.Actor, action.ActedUpon, false, durationCard, x, Turn));
+                        _TimeLine.Add(new RPGAction(action.Actor, action.ActedUpon, false, durationCard, x, _Turn));
                     }
                 }
             }
@@ -108,16 +122,6 @@ namespace Cards_Games
             Display.SimpleDialogBox(linesOfDialog);
 
             return players;
-        }
-
-        public static void GetAction(IRPGPlayer player, List<IRPGPlayer> players)
-        {
-            RPGCard playerCard = player.PlayCard();
-            List<RPGAction> playerAction = RPGAction.ConvertCardToAction(playerCard, player, players, Turn);
-            for (int i = 0; i < playerAction.Count; i++)
-            {
-                battleActions.Add(playerAction[i]);
-            }
         }
 
         public static void GetOpeningHands(List<IRPGPlayer> players)
@@ -128,19 +132,6 @@ namespace Cards_Games
             }
         }
 
-        public static void GetPlayerActions(List<IRPGPlayer> players)
-        {
-            bool anyaction = false;
-            foreach (IRPGPlayer player in players)
-            {
-                anyaction = BattleOrchestrator.PlayerActionCheck(player);
-                if (!anyaction)
-                {
-                    BattleOrchestrator.GetAction(player, players);
-                }
-            }
-        }
-
         public static void GetNextActions(List<IRPGPlayer> players)
         {
             foreach (IRPGPlayer player in players)
@@ -148,11 +139,11 @@ namespace Cards_Games
                 if (player.NextMove == 0)
                 {
                     RPGCard playerCard = player.PlayCard();
-                    List<RPGAction> playerAction = RPGAction.ConvertCardToAction(playerCard, player, players, Turn);
+                    List<RPGAction> playerAction = RPGAction.GetTarget(playerCard, player, players, _Turn);
                     player.DrawCard();
                     for (int i = 0; i < playerAction.Count; i++)
                     {
-                        battleActions.Add(playerAction[i]);
+                        _TimeLine.Add(playerAction[i]);
                         player.NextMove = playerCard.Speed + 1;
                     }
                 }
@@ -165,7 +156,7 @@ namespace Cards_Games
 
         public static bool PlayerActionCheck(IRPGPlayer player)
         {
-            foreach (RPGAction action in battleActions)
+            foreach (RPGAction action in _TimeLine)
             {
                 if (action.Actor == player)
                 {

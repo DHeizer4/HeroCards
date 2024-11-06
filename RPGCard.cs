@@ -1,7 +1,9 @@
-﻿using Cards_Games.Models;
+﻿using Cards_Games.Enumerations;
+using Cards_Games.Models;
 using System.Collections.Generic;
 using static Cards_Games.Enumerations.AttackTypeEnum;
 using static Cards_Games.Enumerations.CardResourceEnum;
+using static Cards_Games.Enumerations.StatusEnumeration;
 using static Cards_Games.Enumerations.TargetEnum;
 
 namespace Cards_Games
@@ -10,50 +12,52 @@ namespace Cards_Games
     {
         public string CardType { get; set; }
         public string Name { get; set; }
-        public CardResource Resource { get; set; }
-        public int Cost { get; set; }
         public List<Cost> Costs { get; set; }
-        public List<Effect> Effects { get; set; }
-        public int Attack { get; set; }
-        public int Duration { get; set; }  // item lasts for x turns
+        public List<StatusEffect> Effects { get; set; } 
+        public List<DamageEffect> DamageEffects { get; set; }
         public int Durability { get; set; }  // item can be used x times
         public int Speed { get; set; }
-        public AttackType AttackType { get; set; }
-        public Target Target { get; set; }
         public int Level { get; set; }
         public string Phrase { get; set; }
+        public string Description { get; set; }
+        public int ChanceToHit { get; set; }
+        public int When { get; set; }
+
+
         public static Dictionary<string, RPGCard> Library = new Dictionary<string, RPGCard>();
 
-        public RPGCard(string cardtype, int alevel, string name, CardResource resource, int cost, int attack, int aduration, int speed, AttackType Atype, Target target, string aphrase)
+        public RPGCard(string cardtype, int alevel, string name, int speed, int durability, List<Cost> costs, List<DamageEffect> damageEffects, List<StatusEffect> statusEffects, string aphrase)
         {
             CardType = cardtype;
             Level = alevel;
             Name = name;
-            Attack = attack;
-            Duration = aduration;
             Speed = speed;
-            AttackType = Atype;
-            Target = target;
-            Cost = cost;
-            Resource = resource;
+            Durability = durability;
+            Costs = costs;
+            DamageEffects = damageEffects;
+            Effects = statusEffects;
             Phrase = aphrase;
         }
 
         public static List<RPGCard> StartList()
         {
             List<RPGCard> start = new List<RPGCard>();
-            start.Add(RPGCard.Library["0 Heal"]);
-            start.Add(RPGCard.Library["0 Burn"]);
-            start.Add(RPGCard.Library["2 Group Heal"]);
-            start.Add(RPGCard.Library["1 Cleave"]);
-            start.Add(RPGCard.Library["P Mana Potion"]);
+            start.Add(RPGCard.Library["Heal"]);
+            start.Add(RPGCard.Library["Burn"]);
+            start.Add(RPGCard.Library["Group Heal"]);
+            start.Add(RPGCard.Library["Cleave"]);
+            start.Add(RPGCard.Library["Mana Potion"]);
             for (int i = 0; i < 12; i++)
             {
-                start.Add(RPGCard.Library["0 Punch"]);
+                start.Add(RPGCard.Library["Punch"]);
             }
             return start;
         }
 
+        public static string GetDescription(RPGCard card)
+        {
+            return "";
+        }
 
         public override string ToString()
         {
@@ -62,17 +66,83 @@ namespace Cards_Games
 
         public static void MakeLibrary()
         {
-            Library.Add("0 Punch", new RPGCard("Generic", 0, "Punch", CardResource.Time, 0, 2, 1, 1, AttackType.Bludgedeon, Target.Enemy, "punches "));
-            Library.Add("0 Heal", new RPGCard("Cleric", 0, "Heal", CardResource.Mana, 1, -3, 1, 3, AttackType.Heal, Target.Ally, "uses the power of light to heal "));
-            Library.Add("4 Cataclysm", new RPGCard("Mage", 0, "Cataclysm", CardResource.Mana, 5, 10, 3, 5, AttackType.Fire, Target.All, "splits the earth and lava erupts burning "));
-            Library.Add("2 Group Heal", new RPGCard("Cleric", 0, "Group Heal", CardResource.Mana, 5, -2, 1, 3, AttackType.Heal, Target.Party, "causes light to shine on his allies healing "));
-            Library.Add("1 Cleave", new RPGCard("Warrior", 0, "Cleave", CardResource.Time, 2, 3, 1, 2, AttackType.Slashing, Target.AllEnemys, "swings his weapon cleaving "));
-            Library.Add("P Mana Potion", new RPGCard("Generic", 0, "Mana Potion", CardResource.Time, 0, 5, 1, 1, AttackType.ManaModify, Target.Self, "drinks the potion and gain mana"));
-            Library.Add("0 Burn", new RPGCard("Mage", 0, "Burn", CardResource.Mana, 1, 1, 3, 2, AttackType.Fire, Target.Enemy, "burns"));
+            RPGCard punch = new RPGCard("Generic", 0, "Punch", 1, 1, 
+                new List<Cost>(), 
+                new List<DamageEffect> { 
+                    new DamageEffect(Target.Enemy, 1, AttackType.Bludgedeon) 
+                }, 
+                new List<StatusEffect>(), 
+                "punches");
 
+            RPGCard heal = new RPGCard("Cleric", 0, "Heal", 10, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 2)
+                },
+                new List<DamageEffect> {
+                    new DamageEffect(Target.Ally, -3, AttackType.Heal)
+                },
+                new List<StatusEffect>(),
+                "uses the power of light to heal ");
 
+            RPGCard cataclysm = new RPGCard("Warlock", 0, "Cataclysm", 10, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 10)
+                },
+                new List<DamageEffect> {
+                    new DamageEffect(Target.All, 10, AttackType.Shadow)
+                },
+                new List<StatusEffect>(),
+                "splits the earth and lava erupts burning ");
 
+            RPGCard groupHeal = new RPGCard("Cleric", 0, "Group Heal", 4, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 6)
+                },
+                new List<DamageEffect> {
+                    new DamageEffect(Target.Party, -3, AttackType.Heal)
+                },
+                new List<StatusEffect>(),
+                "causes light to shine on his allies healing ");
 
+            RPGCard cleave = new RPGCard("Warrior", 0, "Cleave", 5, 1,
+                new List<Cost>(),
+                new List<DamageEffect> {
+                    new DamageEffect(Target.AllEnemys, 3, AttackType.Slashing)
+                },
+                new List<StatusEffect>(),
+                "swings his weapon cleaving ");
+
+            RPGCard manaPotion = new RPGCard("Generic", 0, "Mana Potion", 1, 4,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, -10)
+                },
+                new List<DamageEffect>(),
+                new List<StatusEffect>(),
+                "drinks the potion and gains mana");
+
+            RPGCard burn = new RPGCard("Mage", 0, "Burn", 2, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 2)
+                },
+                new List<DamageEffect>(),
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.Enemy, StatusEnum.Burning, 1, 3, 1, AttackType.Fire, false, true)
+                },
+                "burns ");
+
+            Library.Add("Punch", punch);
+            Library.Add("Heal", heal);
+            Library.Add("Group Heal", groupHeal);
+            Library.Add("Cataclysm", cataclysm);
+            Library.Add("Cleave", cleave);
+            Library.Add("Mana Potion", manaPotion);
+            Library.Add("Burn", burn);
         }
 
 

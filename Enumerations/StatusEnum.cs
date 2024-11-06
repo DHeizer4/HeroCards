@@ -4,13 +4,18 @@ using System.Text;
 
 namespace Cards_Games.Enumerations
 {
-    public class StatusEnum
+    public class StatusEnumeration
     {
-        public enum Status { Taunting, 
+        public enum StatusEnum { Taunting, // cards being played
+                            Redirecting,  // actions already played to be redirected to this charater
                             Burning, 
                             Stunned, 
                             Enraged, 
-                            Bezerk }
+                            Bezerk, 
+                            Strengthen, 
+                            SuperSpeed, // Time ticks faster for player 
+                            Slow,    // Slow down time for a player 
+                            Poisoned}   
 
 
     }

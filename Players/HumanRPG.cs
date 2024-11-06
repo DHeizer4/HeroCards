@@ -7,7 +7,7 @@ namespace Cards_Games.Players
     class HumanRPG : IRPGPlayer
     {
         public string Name { get; set; }
-        public List<StatusEnum> Statuses { get; set; }
+        public List<StatusEffect> Statuses { get; set; }
         public int Team { get; set; }
         public int Time { get; set; }
         public int Health { get; set; }

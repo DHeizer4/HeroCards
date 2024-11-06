@@ -7,7 +7,7 @@ namespace Cards_Games.Players
     interface IRPGPlayer
     {
         string Name { get; set; }
-        List<StatusEnum> Statuses { get; set; }
+        List<StatusEnumeration> Statuses { get; set; }
         int Team { get; set; }
         int Time { get; set; }
         int Health { get; set; }
@@ -30,6 +30,7 @@ namespace Cards_Games.Players
         List<RPGCard> Action { get; set; }
         Deck Decklist { get; set; }
         List<RPGCard> Hand { get; set; }
+        int Prescence { get; set; }
 
 
         void OpeningHand();
