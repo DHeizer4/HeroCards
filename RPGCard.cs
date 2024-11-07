@@ -69,7 +69,7 @@ namespace Cards_Games
             RPGCard punch = new RPGCard("Generic", 0, "Punch", 1, 1, 
                 new List<Cost>(), 
                 new List<DamageEffect> { 
-                    new DamageEffect(Target.Enemy, 1, AttackType.Bludgedeon) 
+                    new DamageEffect(Target.Enemy, 1, AttackType.Bludgedeon, CardResource.Health) 
                 }, 
                 new List<StatusEffect>(), 
                 "punches");
@@ -80,7 +80,7 @@ namespace Cards_Games
                     new Cost(CardResource.Mana, 2)
                 },
                 new List<DamageEffect> {
-                    new DamageEffect(Target.Ally, -3, AttackType.Heal)
+                    new DamageEffect(Target.Ally, -3, AttackType.Heal, CardResource.Health)
                 },
                 new List<StatusEffect>(),
                 "uses the power of light to heal ");
@@ -91,7 +91,7 @@ namespace Cards_Games
                     new Cost(CardResource.Mana, 10)
                 },
                 new List<DamageEffect> {
-                    new DamageEffect(Target.All, 10, AttackType.Shadow)
+                    new DamageEffect(Target.All, 10, AttackType.Fire, CardResource.Health)
                 },
                 new List<StatusEffect>(),
                 "splits the earth and lava erupts burning ");
@@ -102,7 +102,7 @@ namespace Cards_Games
                     new Cost(CardResource.Mana, 6)
                 },
                 new List<DamageEffect> {
-                    new DamageEffect(Target.Party, -3, AttackType.Heal)
+                    new DamageEffect(Target.Party, -3, AttackType.Heal, CardResource.Health)
                 },
                 new List<StatusEffect>(),
                 "causes light to shine on his allies healing ");
@@ -110,7 +110,7 @@ namespace Cards_Games
             RPGCard cleave = new RPGCard("Warrior", 0, "Cleave", 5, 1,
                 new List<Cost>(),
                 new List<DamageEffect> {
-                    new DamageEffect(Target.AllEnemys, 3, AttackType.Slashing)
+                    new DamageEffect(Target.AllEnemys, 3, AttackType.Slashing, CardResource.Health)
                 },
                 new List<StatusEffect>(),
                 "swings his weapon cleaving ");

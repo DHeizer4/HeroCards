@@ -34,7 +34,7 @@ namespace Cards_Games
                 Display.Players(players);
 
                 players = BattleOrchestrator.SpeedSort(players);
-                ExecuteActions();
+                ActionOrchestrator.ExecuteActions(_TimeLine, players, _Turn);
                 BattleOrchestrator.GetNextActions(players);
                 
                 
@@ -98,31 +98,31 @@ namespace Cards_Games
         //    return players;
         //}
 
-        //This whole function needs to be rewritten for new card structure
-        public static List<IRPGPlayer> ExecuteActions(List<RPGAction> actions, List<IRPGPlayer> players)
-        {
-            List<string> linesOfDialog = new List<string>();
+        ////This whole function needs to be rewritten for new card structure
+        //public static List<IRPGPlayer> ExecuteActions(List<RPGAction> actions, List<IRPGPlayer> players)
+        //{
+        //    List<string> linesOfDialog = new List<string>();
 
-            foreach (RPGAction action in actions)
-            {
-                string dialog = $"{action.Actor.Name} {action.Card.Phrase} {action.ActedUpon.Name}";
-                linesOfDialog.Add(dialog);
+        //    foreach (RPGAction action in actions)
+        //    {
+        //        string dialog = $"{action.Actor.Name} {action.Card.Phrase} {action.ActedUpon.Name}";
+        //        linesOfDialog.Add(dialog);
 
-                action.ActedUpon.Health = action.ActedUpon.Health - action.Card.Attack;
-                if (action.Card.Duration > 1)
-                {
-                    for (int x = 1; x <= action.Card.Duration; x++)
-                    {
-                        RPGCard durationCard = new RPGCard(action.Card.CardType, action.Card.Level, action.Card.Name + " effect", CardResource.Time, 0, action.Card.Attack, 0, 0, action.Card.AttackType, action.Card.Target, action.Card.Phrase + " continues on ");
-                        _TimeLine.Add(new RPGAction(action.Actor, action.ActedUpon, false, durationCard, x, _Turn));
-                    }
-                }
-            }
+        //        action.ActedUpon.Health = action.ActedUpon.Health - action.Card.Attack;
+        //        if (action.Card.Duration > 1)
+        //        {
+        //            for (int x = 1; x <= action.Card.Duration; x++)
+        //            {
+        //                RPGCard durationCard = new RPGCard(action.Card.CardType, action.Card.Level, action.Card.Name + " effect", CardResource.Time, 0, action.Card.Attack, 0, 0, action.Card.AttackType, action.Card.Target, action.Card.Phrase + " continues on ");
+        //                _TimeLine.Add(new RPGAction(action.Actor, action.ActedUpon, false, durationCard, x, _Turn));
+        //            }
+        //        }
+        //    }
 
-            Display.SimpleDialogBox(linesOfDialog);
+        //    Display.SimpleDialogBox(linesOfDialog);
 
-            return players;
-        }
+        //    return players;
+        //}
 
         public static void GetOpeningHands(List<IRPGPlayer> players)
         {

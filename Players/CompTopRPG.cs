@@ -23,7 +23,7 @@ namespace Cards_Games.Players
         public List<RPGCard> Action { get; set; }
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
-        public List<StatusEnumeration> Statuses { get; set; }
+        public List<Status> Statuses { get; set; } = new List<Status>();
         public int MaxHealth { get; set; }
         public int MaxMana { get; set; }
         Weapon IRPGPlayer.Weapon { get; set; }
@@ -33,6 +33,8 @@ namespace Cards_Games.Players
         public int Agility { get; set; }
         public int Dexterity { get; set; }
         public int Shield { get; set; }
+        public int Prescence { get; set; }
+
 
         public CompTopRPG(string aName, int aTeam)
         {

@@ -7,7 +7,7 @@ namespace Cards_Games.Players
     interface IRPGPlayer
     {
         string Name { get; set; }
-        List<StatusEnumeration> Statuses { get; set; }
+        List<Status> Statuses { get; set; }
         int Team { get; set; }
         int Time { get; set; }
         int Health { get; set; }

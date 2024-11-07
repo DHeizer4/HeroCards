@@ -15,7 +15,8 @@ namespace Cards_Games.Enumerations
                             Strengthen, 
                             SuperSpeed, // Time ticks faster for player 
                             Slow,    // Slow down time for a player 
-                            Poisoned}   
+                            Poisoned,
+                            Death}   
 
 
     }

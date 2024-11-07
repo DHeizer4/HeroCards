@@ -7,7 +7,7 @@ namespace Cards_Games.Players
     class HumanRPG : IRPGPlayer
     {
         public string Name { get; set; }
-        public List<StatusEffect> Statuses { get; set; }
+        public List<Status> Statuses { get; set; } = new List<Status>();
         public int Team { get; set; }
         public int Time { get; set; }
         public int Health { get; set; }
@@ -30,6 +30,7 @@ namespace Cards_Games.Players
         public List<RPGCard> Action { get; set; }
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
+        public int Prescence { get; set; }
 
         // Can a caster cast faster than a fighter and vise versa....
 
