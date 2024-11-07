@@ -147,6 +147,15 @@ namespace Cards_Games
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
                 Console.WriteLine($"                  ");
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                Console.WriteLine($"                  ");
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                Console.WriteLine($"                  ");
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                Console.WriteLine($"                  ");
                 offset += 2;
             }
 
@@ -173,6 +182,11 @@ namespace Cards_Games
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
                 Console.WriteLine($"Time: {player.Time}");
+                foreach (Status status in player.Statuses)
+                {
+                    Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                    Console.WriteLine($"{status.StatusType.ToString()} Duration {status.Duration} Amount {status.Amount}");
+                }
                 offset += 2;
             }
         }
