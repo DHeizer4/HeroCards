@@ -1,5 +1,4 @@
-﻿using Cards_Games.Enumerations;
-using Cards_Games.Models;
+﻿using Cards_Games.Models;
 using System.Collections.Generic;
 
 namespace Cards_Games.Players
@@ -68,23 +67,31 @@ namespace Cards_Games.Players
 
         public RPGCard PlayCard()
         {
+            bool canAfford = false;
+            int choice = 0;
+            List<RPGCard> played = new List<RPGCard>();
             List<string> ListOfCards = CardsInHand();
             string header = "You have the following cards in your hand.";
             string prompt = "What card would you like to play: ";
 
-            while (true)
+            while (!canAfford)
             {
-                int response = Display.DialogWithInput(header, ListOfCards, prompt);
+                choice = Display.DialogWithInput(header, ListOfCards, prompt);
 
-                RPGCard played = Hand[response - 1];
-                Hand.RemoveAt(response - 1);
-                List<string> dialog = new List<string>();
-                dialog.Add($"{Name} will be playing {played}");
-
-                Display.SimpleDialogBox(dialog);
-                return played;
-
+                played.Add(Hand[choice - 1]);
+                canAfford = PlayerUtilities.CardCostUtil.CanAfford(this, played[0]);
             }
+
+            // We do not want to pay the costs before confirming all costs for the card can be paid
+            PlayerUtilities.CardCostUtil.PayCosts(this, played[0]);
+
+            Hand.RemoveAt(choice - 1);
+            List<string> dialog = new List<string>();
+            dialog.Add($"{Name} will be playing {played[0]}");
+
+            Display.SimpleDialogBox(dialog);
+            return played[0];
+
         }
 
         public void OpeningHand()
