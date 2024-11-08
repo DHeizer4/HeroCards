@@ -73,14 +73,29 @@ namespace Cards_Games.Players
 
         public RPGCard PlayCard()
         {
-            RPGCard played = Hand[0];
-            Hand.RemoveAt(0);
+            List<RPGCard> played = new List<RPGCard>();
+            bool canAfford = false;
+            int cardInHand = 0;
+
+            for (cardInHand = 0; cardInHand < Hand.Count; cardInHand++)
+            {
+                played.Add(Hand[cardInHand]);
+                canAfford = PlayerUtilities.CardCostUtil.CanAfford(this, played[0]);
+
+                if (canAfford)
+                {
+                    break;
+                }
+            }
+
+            PlayerUtilities.CardCostUtil.PayCosts(this, played[0]);
+            Hand.RemoveAt(cardInHand);
 
             List<string> dialog = new List<string>();
             dialog.Add($"{Name} will be playing {played}");
 
             Display.SimpleDialogBox(dialog);
-            return played;
+            return played[0];
         }
 
     }
