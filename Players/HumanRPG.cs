@@ -5,6 +5,7 @@ namespace Cards_Games.Players
 {
     class HumanRPG : IRPGPlayer
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public List<Status> Statuses { get; set; } = new List<Status>();
         public int Team { get; set; }
@@ -79,7 +80,7 @@ namespace Cards_Games.Players
                 choice = Display.DialogWithInput(header, ListOfCards, prompt);
 
                 played.Add(Hand[choice - 1]);
-                canAfford = PlayerUtilities.CardCostUtil.CanAfford(this, played[0]);
+                canAfford = PlayerUtilities.CardCost.CanAfford(this, played[0]);
 
                 if (canAfford == false)
                 {
@@ -90,7 +91,7 @@ namespace Cards_Games.Players
             } while (!canAfford);
 
             // We do not want to pay the costs before confirming all costs for the card can be paid
-            PlayerUtilities.CardCostUtil.PayCosts(this, played[0]);
+            PlayerUtilities.CardCost.PayCosts(this, played[0]);
 
             Hand.RemoveAt(choice - 1);
             List<string> dialog = new List<string>();
