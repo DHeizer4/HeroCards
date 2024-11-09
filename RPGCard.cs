@@ -74,13 +74,13 @@ namespace Cards_Games
                 new List<StatusEffect>(), 
                 "punches");
 
-            RPGCard heal = new RPGCard("Cleric", 0, "Heal", 10, 1,
+            RPGCard heal = new RPGCard("Cleric", 0, "Heal", 5, 1,
                 new List<Cost>
                 {
                     new Cost(CardResource.Mana, 2)
                 },
                 new List<DamageEffect> {
-                    new DamageEffect(Target.Ally, -3, AttackType.Heal, CardResource.Health)
+                    new DamageEffect(Target.Ally, -7, AttackType.Heal, CardResource.Health)
                 },
                 new List<StatusEffect>(),
                 "uses the power of light to heal ");
@@ -102,7 +102,7 @@ namespace Cards_Games
                     new Cost(CardResource.Mana, 6)
                 },
                 new List<DamageEffect> {
-                    new DamageEffect(Target.Party, -3, AttackType.Heal, CardResource.Health)
+                    new DamageEffect(Target.Party, -20, AttackType.Heal, CardResource.Health)
                 },
                 new List<StatusEffect>(),
                 "causes light to shine on his allies healing ");
