@@ -8,6 +8,7 @@ namespace Cards_Games.Players
 {
     class CompTopRPG : IRPGPlayer
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public int Team { get; set; }
         public int Time { get; set; }
@@ -80,7 +81,7 @@ namespace Cards_Games.Players
             for (cardInHand = 0; cardInHand < Hand.Count; cardInHand++)
             {
                 played.Add(Hand[cardInHand]);
-                canAfford = PlayerUtilities.CardCostUtil.CanAfford(this, played[0]);
+                canAfford = PlayerUtilities.CardCost.CanAfford(this, played[0]);
 
                 if (canAfford)
                 {
@@ -90,7 +91,7 @@ namespace Cards_Games.Players
                 played.RemoveAt(0);
             }
 
-            PlayerUtilities.CardCostUtil.PayCosts(this, played[0]);
+            PlayerUtilities.CardCost.PayCosts(this, played[0]);
             Hand.RemoveAt(cardInHand);
 
             List<string> dialog = new List<string>();

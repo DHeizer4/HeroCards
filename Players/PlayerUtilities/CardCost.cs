@@ -6,7 +6,7 @@ using static Cards_Games.Enumerations.CardResourceEnum;
 
 namespace Cards_Games.Players.PlayerUtilities
 {
-    class CardCostUtil
+    class CardCost
     {
         public static bool CanAfford(IRPGPlayer player, RPGCard card)
         {

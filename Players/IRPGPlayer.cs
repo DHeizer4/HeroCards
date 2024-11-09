@@ -6,6 +6,7 @@ namespace Cards_Games.Players
 {
     interface IRPGPlayer
     {
+        string Id { get; set; }  
         string Name { get; set; }
         List<Status> Statuses { get; set; }
         int Team { get; set; }
