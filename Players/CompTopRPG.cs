@@ -86,13 +86,15 @@ namespace Cards_Games.Players
                 {
                     break;
                 }
+
+                played.RemoveAt(0);
             }
 
             PlayerUtilities.CardCostUtil.PayCosts(this, played[0]);
             Hand.RemoveAt(cardInHand);
 
             List<string> dialog = new List<string>();
-            dialog.Add($"{Name} will be playing {played}");
+            dialog.Add($"{Name} will be playing {played[0]}");
 
             Display.SimpleDialogBox(dialog);
             return played[0];

@@ -75,6 +75,10 @@ namespace Cards_Games
             {
                 playerActions = AllyTarget(card, activePlayer, allPlayers, turn);
             }
+            else
+            {
+                playerActions = MultiTarget(card, activePlayer, turn);
+            }
 
             return playerActions;
 
@@ -155,6 +159,15 @@ namespace Cards_Games
             }
              
             playerActions.Add(new RPGAction(activePlayer, target, true, card, turnNumber));
+            return playerActions;
+        }
+
+        public static List<RPGAction> MultiTarget(RPGCard card, IRPGPlayer activePlayer, int turnNumber)
+        {
+            List<RPGAction> playerActions = new List<RPGAction>
+            {
+                new RPGAction(activePlayer, null, true, card, turnNumber)
+            };
             return playerActions;
         }
 
