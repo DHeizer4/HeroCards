@@ -116,11 +116,11 @@ namespace Cards_Games
                 "swings his weapon cleaving ");
 
             RPGCard manaPotion = new RPGCard("Generic", 0, "Mana Potion", 1, 4,
-                new List<Cost>
+                new List<Cost>(),
+                new List<DamageEffect>
                 {
-                    new Cost(CardResource.Mana, -10)
+                    new DamageEffect(Target.Self, -10, AttackType.StatModify, CardResource.Mana)
                 },
-                new List<DamageEffect>(),
                 new List<StatusEffect>(),
                 "drinks the potion and gains mana");
 

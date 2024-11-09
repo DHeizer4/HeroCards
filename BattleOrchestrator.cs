@@ -97,7 +97,7 @@ namespace Cards_Games
                     for (int i = 0; i < playerAction.Count; i++)
                     {
                         _TimeLine.Add(playerAction[i]);
-                        player.NextMove = playerCard.Speed + 1;
+                        player.NextMove = playerCard.Speed;
                     }
                 }
                 else

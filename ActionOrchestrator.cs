@@ -21,36 +21,10 @@ namespace Cards_Games
             List<RPGAction> actionsToBeExecuted = CheckForAction(timeLine, players, time);
 
             //Execute Buffs / debuffs
-            foreach (var action in actionsToBeExecuted)
-            {
                ApplyBuffs(actionsToBeExecuted, players, linesOfDialog);
-            }
-
+            
             //Execute dmg actions
-            foreach (var action in actionsToBeExecuted)
-            {
                 ApplyDamage(actionsToBeExecuted, players, linesOfDialog);
-            }
-
-
-
-            //List<string> linesOfDialog = new List<string>();
-
-            //foreach (RPGAction action in actions)
-            //{
-            //    string dialog = $"{action.Actor.Name} {action.Card.Phrase} {action.ActedUpon.Name}";
-            //    linesOfDialog.Add(dialog);
-
-            //    action.ActedUpon.Health = action.ActedUpon.Health - action.Card.Attack;
-            //    if (action.Card.Duration > 1)
-            //    {
-            //        for (int x = 1; x <= action.Card.Duration; x++)
-            //        {
-            //            RPGCard durationCard = new RPGCard(action.Card.CardType, action.Card.Level, action.Card.Name + " effect", CardResource.Time, 0, action.Card.Attack, 0, 0, action.Card.AttackType, action.Card.Target, action.Card.Phrase + " continues on ");
-            //            _TimeLine.Add(new RPGAction(action.Actor, action.ActedUpon, false, durationCard, x, _Turn));
-            //        }
-            //    }
-            //}
 
             Display.SimpleDialogBox(linesOfDialog);
 
@@ -87,7 +61,7 @@ namespace Cards_Games
                             if (action.ActedUpon == player)
                             {
                                 player.Statuses.Add(status);
-                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {action.ActedUpon.Name}");
+                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {player.Name}");
                             }
                         }
                     }
@@ -98,7 +72,7 @@ namespace Cards_Games
                             if (action.Actor == player)
                             {
                                 player.Statuses.Add(status);
-                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {action.ActedUpon.Name}");
+                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {player.Name}");
                             }
                         }
                     }
@@ -109,7 +83,7 @@ namespace Cards_Games
                             if (action.Actor.Team != player.Team)
                             {
                                 player.Statuses.Add(status);
-                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {action.ActedUpon.Name}");
+                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {player.Name}");
                             }
                         }
                     }
@@ -120,7 +94,7 @@ namespace Cards_Games
                             if (action.Actor.Team == player.Team)
                             {
                                 player.Statuses.Add(status);
-                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {action.ActedUpon.Name}");
+                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {player.Name}");
                             }
                         }
                     }
@@ -129,7 +103,7 @@ namespace Cards_Games
                         foreach (IRPGPlayer player in players)
                         {
                             player.Statuses.Add(status);
-                            linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {action.ActedUpon.Name}");
+                            linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {player.Name}");
                         }
                     }
                 }
@@ -155,6 +129,7 @@ namespace Cards_Games
 
         public static void ApplyDamage(List<RPGAction> ActionsToBeExecuted, List<IRPGPlayer> players, List<string> linesOfDialog)
         {
+            
             foreach (var action in ActionsToBeExecuted)
             {
                 List<IRPGPlayer> filteredPlayers = new List<IRPGPlayer>();
@@ -171,7 +146,9 @@ namespace Cards_Games
                             }
                         }
                     }
-                    else if (damageEffect.Target == TargetEnum.Target.Self)
+                    else 
+                    
+                    if (damageEffect.Target == TargetEnum.Target.Self)
                     {
                         foreach (IRPGPlayer player in players)
                         {
@@ -232,20 +209,8 @@ namespace Cards_Games
                     }
 
                 }
-
-                
-
-
-
-
-
-
-
             }
+
         }
-
-
-
-
     }
 }

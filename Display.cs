@@ -41,7 +41,14 @@ namespace Cards_Games
                     if (action.When == turnIncrement + currentTurnNumber)
                     {
                         Console.SetCursorPosition(xCoord + (turnIncrement - 1) * xSpacing, yCoord + yIncrement);
-                        Console.WriteLine($"{action.Actor.Name} {action.Card.Name} {action.ActedUpon.Name}");
+                        if (action.ActedUpon == null)
+                        {
+                            Console.WriteLine($"{action.Actor.Name} {action.Card.Name}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{action.Actor.Name} {action.Card.Name} {action.ActedUpon.Name}");
+                        }
                         yIncrement++;
                     }
                 }
@@ -208,14 +215,17 @@ namespace Cards_Games
             ClearDialogBox(LinesOfDialog);
         }
 
-        public static int DialogWithInput(string header, List<String> ListOfChoices, string Prompt)
+        public static int DialogWithInput(List<string> header, List<String> ListOfChoices, string Prompt)
         {
             int yOffset = 0;
             int i = 1;
             List<string> FullDialog = new List<string>();
-            if (!string.IsNullOrEmpty(header))
+            if (header.Count > 0)
             {
-                FullDialog.Add(header);
+                foreach (var line in header)
+                {
+                    FullDialog.Add(line);
+                }
             }
 
             foreach (String choice in ListOfChoices)
@@ -227,11 +237,14 @@ namespace Cards_Games
 
             ClearDialogBox(FullDialog);
 
-            if (!string.IsNullOrEmpty(header))
+            if (header.Count > 0)
             {
-                Console.SetCursorPosition(DialogBoxLocation.XLocation, DialogBoxLocation.YLocation + yOffset);
-                Console.WriteLine(header);
-                yOffset++;
+                foreach (var line in header)
+                {
+                    Console.SetCursorPosition(DialogBoxLocation.XLocation, DialogBoxLocation.YLocation + yOffset);
+                    Console.WriteLine(line);
+                    yOffset++;
+                }
             }
 
             foreach (String line in ListOfChoices)

@@ -55,7 +55,7 @@ namespace Cards_Games.Players
                 listOfPlayers.Add(possibleTarget.Name);
             }
 
-            string header = "The possible targets are...";
+            List<string> header = new List<string>() { "The possible targets are..." };
             string prompt = "Please choose a target: ";
 
             choice = Display.DialogWithInput(header, listOfPlayers, prompt);
@@ -67,20 +67,27 @@ namespace Cards_Games.Players
 
         public RPGCard PlayCard()
         {
-            bool canAfford = false;
+            bool canAfford = true;
             int choice = 0;
             List<RPGCard> played = new List<RPGCard>();
             List<string> ListOfCards = CardsInHand();
-            string header = "You have the following cards in your hand.";
+            List<string> header = new List<string>() { "You have the following cards in your hand." };
             string prompt = "What card would you like to play: ";
 
-            while (!canAfford)
+            do
             {
                 choice = Display.DialogWithInput(header, ListOfCards, prompt);
 
                 played.Add(Hand[choice - 1]);
                 canAfford = PlayerUtilities.CardCostUtil.CanAfford(this, played[0]);
-            }
+
+                if (canAfford == false)
+                {
+                    header.Insert(0, "You cannot afford that choice");
+                    played.RemoveAt(0);
+                }
+
+            } while (!canAfford);
 
             // We do not want to pay the costs before confirming all costs for the card can be paid
             PlayerUtilities.CardCostUtil.PayCosts(this, played[0]);
