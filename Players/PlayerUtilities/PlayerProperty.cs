@@ -72,9 +72,15 @@ namespace Cards_Games.Players.PlayerUtilities
 
         public static int DoDamageToPlayer(IRPGPlayer player, DamageEffect damageEffect, int modifiedDamageAmt)
         {
+            int startingHealth = player.Health;
+            player.Health -= modifiedDamageAmt;
+            
+            if (player.Health > player.MaxHealth) 
+            { 
+                player.Health = player.MaxHealth; 
+            }
 
-
-            return 0;
+            return startingHealth - player.Health;
         }
 
     }

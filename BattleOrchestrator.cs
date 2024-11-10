@@ -1,6 +1,7 @@
-﻿using Cards_Games.Players;
+﻿using Cards_Games.Models;
+using Cards_Games.Players;
+using Cards_Games.Players.PlayerUtilities;
 using System.Collections.Generic;
-using static Cards_Games.Enumerations.CardResourceEnum;
 
 namespace Cards_Games
 {
@@ -14,19 +15,11 @@ namespace Cards_Games
             // Preperation For Battle
             _TimeLine.Clear();
 
+            ResetPlayerStartingHealth(players);
             GetOpeningHands(players);
             Display.BattleActionGrid(_TimeLine, _Turn);
 
             // Console.SetWindowSize(175, 50);
-
-            // Get battle doll list once implemented
-            // OpeningActions(players);
-
-            // need to display players up here 
-
-            // Battle happens here should be in a loop
-            // For testing doing 10 rounds of battle
-            //for (int x=0; x<10; x++)
 
             do
             {
@@ -36,8 +29,8 @@ namespace Cards_Games
                 players = BattleOrchestrator.SpeedSort(players);
                 ActionOrchestrator.ExecuteActions(_TimeLine, players, _Turn);
                 BattleOrchestrator.GetNextActions(players);
-                
-                
+
+
                 Display.Players(players);             // this is sorting the players every time need to set teams once and then handle as teams.  Also need to set display positions.  Also limitation currently here to only have 2 teams
 
                 Display.BattleActionGrid(_TimeLine, _Turn);
@@ -62,19 +55,49 @@ namespace Cards_Games
             }
         }
 
-        public static void EndOfTurn(List<IRPGPlayer> players)
-        {
-            AddTime(players);
-          //  CreateLogEntry(); // This needs to say everything that took place on a given turn
-        }
-
-
-        public static void AddTime(List<IRPGPlayer> players)
+        public static void ResetPlayerStartingHealth(List<IRPGPlayer> players)
         {
             foreach (IRPGPlayer player in players)
             {
-                player.Time = player.Time + 1;
+                player.Health = player.MaxHealth;
             }
+        }
+
+        public static void EndOfTurn(List<IRPGPlayer> players)
+        {
+            foreach (IRPGPlayer player in players)
+            {
+                PlayerBuff.ResolveBurningDebuffs(player);
+                AddTime(player);
+                RemoveDurationFromBuffs(player);
+            }
+
+            //  CreateLogEntry(); // This needs to say everything that took place on a given turn
+        }
+
+
+        public static void RemoveDurationFromBuffs(IRPGPlayer player)
+        {
+            List<Status> statusesToRemove = new List<Status>();
+
+            foreach(Status status in player.Statuses)
+            {
+                status.Duration -= 1;
+                if (status.Duration <= 0)
+                {
+                    statusesToRemove.Add(status);
+                }
+            }
+
+            foreach (Status status in statusesToRemove)
+            {
+                player.Statuses.Remove(status);
+            }
+        }
+
+        public static void AddTime(IRPGPlayer player)
+        {
+            player.Time = player.Time + 1;
         }
 
         public static void GetOpeningHands(List<IRPGPlayer> players)

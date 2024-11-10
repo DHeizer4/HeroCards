@@ -22,5 +22,6 @@ namespace Cards_Games.Models
             Amount = amount;
             Resource = resource;
         }
+
     }
 }

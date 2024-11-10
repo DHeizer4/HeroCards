@@ -13,5 +13,6 @@ namespace Cards_Games.Models
         public AttackType AttackType { get; set; }
         public bool IsStackable { get; set; }
         public bool IsPercent { get; set; }
+        public int InternalTracker { get; set; }
     }
 }

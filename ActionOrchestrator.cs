@@ -1,11 +1,11 @@
 ﻿using Cards_Games.Enumerations;
 using Cards_Games.Models;
 using Cards_Games.Players;
+using Cards_Games.Players.PlayerUtilities;
 using System.Collections.Generic;
 using System.Linq;
 using static Cards_Games.Enumerations.CardResourceEnum;
 using static Cards_Games.Enumerations.StatusEnumeration;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Cards_Games
 {
@@ -21,10 +21,10 @@ namespace Cards_Games
             List<RPGAction> actionsToBeExecuted = CheckForAction(timeLine, players, time);
 
             //Execute Buffs / debuffs
-               ApplyBuffs(actionsToBeExecuted, players, linesOfDialog);
-            
+            ApplyBuffs(actionsToBeExecuted, players, linesOfDialog);
+
             //Execute dmg actions
-                ApplyDamage(actionsToBeExecuted, players, linesOfDialog);
+            ApplyDamage(actionsToBeExecuted, players, linesOfDialog);
 
             Display.SimpleDialogBox(linesOfDialog);
 
@@ -60,8 +60,8 @@ namespace Cards_Games
                         {
                             if (action.ActedUpon == player)
                             {
-                                player.Statuses.Add(status);
-                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {player.Name}");
+                                string dialog = PlayerBuff.ApplyStatusEffect(action.Actor.Name, player, status);
+                                linesOfDialog.Add(dialog);
                             }
                         }
                     }
@@ -71,8 +71,8 @@ namespace Cards_Games
                         {
                             if (action.Actor == player)
                             {
-                                player.Statuses.Add(status);
-                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {player.Name}");
+                                string dialog = PlayerBuff.ApplyStatusEffect(action.Actor.Name, player, status);
+                                linesOfDialog.Add(dialog);
                             }
                         }
                     }
@@ -82,8 +82,8 @@ namespace Cards_Games
                         {
                             if (action.Actor.Team != player.Team)
                             {
-                                player.Statuses.Add(status);
-                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {player.Name}");
+                                string dialog = PlayerBuff.ApplyStatusEffect(action.Actor.Name, player, status);
+                                linesOfDialog.Add(dialog);
                             }
                         }
                     }
@@ -93,8 +93,8 @@ namespace Cards_Games
                         {
                             if (action.Actor.Team == player.Team)
                             {
-                                player.Statuses.Add(status);
-                                linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {player.Name}");
+                                string dialog = PlayerBuff.ApplyStatusEffect(action.Actor.Name, player, status);
+                                linesOfDialog.Add(dialog);
                             }
                         }
                     }
@@ -102,8 +102,8 @@ namespace Cards_Games
                     {
                         foreach (IRPGPlayer player in players)
                         {
-                            player.Statuses.Add(status);
-                            linesOfDialog.Add($"{action.Actor.Name} applies {status.StatusType.ToString()} to {player.Name}");
+                            string dialog = PlayerBuff.ApplyStatusEffect(action.Actor.Name, player, status);
+                            linesOfDialog.Add(dialog);
                         }
                     }
                 }
@@ -129,7 +129,7 @@ namespace Cards_Games
 
         public static void ApplyDamage(List<RPGAction> ActionsToBeExecuted, List<IRPGPlayer> players, List<string> linesOfDialog)
         {
-            
+
             foreach (var action in ActionsToBeExecuted)
             {
                 List<IRPGPlayer> filteredPlayers = new List<IRPGPlayer>();
@@ -146,8 +146,8 @@ namespace Cards_Games
                             }
                         }
                     }
-                    else 
-                    
+                    else
+
                     if (damageEffect.Target == TargetEnum.Target.Self)
                     {
                         foreach (IRPGPlayer player in players)
@@ -188,11 +188,12 @@ namespace Cards_Games
 
                     foreach (IRPGPlayer player in filteredPlayers)
                     {
-                        if(!player.Statuses.Any(s => s.StatusType == StatusEnum.Death))
+                        if (!player.Statuses.Any(s => s.StatusType == StatusEnum.Death))
                         {
                             if (damageEffect.Resource == CardResource.Health)
                             {
-                                player.Health = player.Health - damageEffect.Amount;
+                                PlayerProperty.DoDamageToPlayer(player, damageEffect, damageEffect.Amount);
+
                             }
                             else if (damageEffect.Resource == CardResource.Mana)
                             {
