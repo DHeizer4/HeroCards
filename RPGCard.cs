@@ -1,5 +1,4 @@
-﻿using Cards_Games.Enumerations;
-using Cards_Games.Models;
+﻿using Cards_Games.Models;
 using System.Collections.Generic;
 using static Cards_Games.Enumerations.AttackTypeEnum;
 using static Cards_Games.Enumerations.CardResourceEnum;
@@ -13,7 +12,7 @@ namespace Cards_Games
         public string CardType { get; set; }
         public string Name { get; set; }
         public List<Cost> Costs { get; set; }
-        public List<StatusEffect> Effects { get; set; } 
+        public List<StatusEffect> Effects { get; set; }
         public List<DamageEffect> DamageEffects { get; set; }
         public int Durability { get; set; }  // item can be used x times
         public int Speed { get; set; }
@@ -66,12 +65,12 @@ namespace Cards_Games
 
         public static void MakeLibrary()
         {
-            RPGCard punch = new RPGCard("Generic", 0, "Punch", 1, 1, 
-                new List<Cost>(), 
-                new List<DamageEffect> { 
-                    new DamageEffect(Target.Enemy, 1, AttackType.Bludgedeon, CardResource.Health) 
-                }, 
-                new List<StatusEffect>(), 
+            RPGCard punch = new RPGCard("Generic", 0, "Punch", 1, 1,
+                new List<Cost>(),
+                new List<DamageEffect> {
+                    new DamageEffect(Target.Enemy, 1, AttackType.Bludgedeon, CardResource.Health)
+                },
+                new List<StatusEffect>(),
                 "punches");
 
             RPGCard heal = new RPGCard("Cleric", 0, "Heal", 5, 1,
@@ -136,6 +135,21 @@ namespace Cards_Games
                 },
                 "burns ");
 
+            RPGCard fireBall = new RPGCard("Mage", 0, "Burn", 4, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 4)
+                },
+                new List<DamageEffect>
+                {
+                    new DamageEffect(Target.Enemy, 5, AttackType.Fire, CardResource.Health)
+                },
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.AllEnemys, StatusEnum.Burning, 2, 4, 2, AttackType.Fire, false, true)
+                },
+                "casts fireball at ");
+
             Library.Add("Punch", punch);
             Library.Add("Heal", heal);
             Library.Add("Group Heal", groupHeal);
@@ -143,6 +157,7 @@ namespace Cards_Games
             Library.Add("Cleave", cleave);
             Library.Add("Mana Potion", manaPotion);
             Library.Add("Burn", burn);
+            Library.Add("FireBall", fireBall);
         }
 
 

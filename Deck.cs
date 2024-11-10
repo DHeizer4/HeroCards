@@ -47,6 +47,7 @@ namespace Cards_Games
 
         public RPGCard DealCard()
         {
+            
             RPGCard top = _cards[0];
             _cards.RemoveAt(0);
             return top;

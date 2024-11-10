@@ -11,6 +11,7 @@ namespace Cards_Games.Enumerations
                             Ally, 
                             Enemy, 
                             AllEnemys, 
-                            All }
+                            All,
+                            None}
     }
 }

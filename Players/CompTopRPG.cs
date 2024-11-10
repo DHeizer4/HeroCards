@@ -41,7 +41,7 @@ namespace Cards_Games.Players
         {
             Name = aName;
             Team = aTeam;
-            Health = 10;
+            MaxHealth = 10;
             Decklist = new Deck("Starter Deck", RPGCard.StartList());
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
