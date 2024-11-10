@@ -19,8 +19,6 @@ namespace Cards_Games
             GetOpeningHands(players);
             Display.BattleActionGrid(_TimeLine, _Turn);
 
-            // Console.SetWindowSize(175, 50);
-
             do
             {
                 Display.GameInfo(_Turn);

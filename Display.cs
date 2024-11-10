@@ -176,7 +176,7 @@ namespace Cards_Games
                 Console.WriteLine($"Health: {player.Health} / {player.MaxHealth}");
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"Mana: {player.Mana} / {player.MaxMana}");
+                Console.WriteLine($"Mana: {Blue(player.Mana.ToString())} / {player.MaxMana}");
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
                 Console.WriteLine($"Strength: {player.Strength}");
@@ -273,6 +273,20 @@ namespace Cards_Games
                 Console.WriteLine(blanks);
                 yOffset++;
             }
+        }
+
+        private static string Blue(string text)
+        {
+            text = $"\u001b[34m{text}\u001b[0m";
+
+            return text;
+        }
+
+        private static string Red(string text)
+        {
+            text = $"\u001b[31m{text}\u001b[0m";
+
+            return text;
         }
 
     }
