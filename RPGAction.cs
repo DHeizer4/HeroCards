@@ -2,6 +2,7 @@
 using Cards_Games.Players;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static Cards_Games.Enumerations.TargetEnum;
 
 namespace Cards_Games
@@ -34,12 +35,16 @@ namespace Cards_Games
             When = aCard.Speed + turnNumber;
         }
 
-        public static List<RPGAction> GetTarget(RPGCard card, IRPGPlayer activePlayer, List<IRPGPlayer> allPlayers, int turn)
+        public static string GetTarget(RPGCard card, IRPGPlayer activePlayer, List<IRPGPlayer> allPlayers, int turn, ref List<RPGAction> playerActions)
         {
-            List<RPGAction> playerActions = new List<RPGAction>();
             List<Target> targets = new List<Target>();
-            int Ally = 0;
-            int Enemy = 0;
+            int ally = 0;
+            int enemy = 0;
+            int allEnemies = 0;
+            int allAllies = 0;
+            int everyone = 0;
+            int self = 0;
+            string actedUpon = "Nobody";
 
             foreach (DamageEffect damageEffect in card.DamageEffects) 
             {
@@ -55,32 +60,96 @@ namespace Cards_Games
             {
                 if (target == Target.Ally)
                 {
-                    Ally++;
+                    ally++;
                 }
                 else if (target == Target.Enemy)
                 {
-                    Enemy++;
+                    enemy++;
+                }
+                else if (target == Target.Self)
+                {
+                    self++;
+                }
+                else if (target == Target.Party)
+                {
+                    allAllies++;
+                }
+                else if (target == Target.AllEnemys)
+                {
+                    allEnemies++;
+                }
+                else if (target == Target.All)
+                {
+                    everyone++;
                 }
             }
 
-            if(Ally > 0 && Enemy > 0) 
+            if(self > 0)
+            {
+                actedUpon = "him or herself ";
+            }
+
+            if(ally > 0 && enemy > 0) 
             {
                 throw new Exception($"{card.Name} has a Enemy target and an Ally target specific targets this is not supported");
             }
-            else if(Enemy > 0)
+            else if(enemy > 0)
             {
                 playerActions = EnemyTarget(card, activePlayer, allPlayers, turn);
+                if (actedUpon == "Nobody")
+                {
+                    actedUpon = $"{playerActions[0].ActedUpon.Name} ";
+                }
+                else
+                {
+                    actedUpon = actedUpon + $"{playerActions[0].ActedUpon.Name} ";
+                }
             }
-            else if(Ally > 0)
+            else if(ally > 0)
             {
                 playerActions = AllyTarget(card, activePlayer, allPlayers, turn);
+                if (actedUpon == "Nobody")
+                {
+                    actedUpon = $"{playerActions[0].ActedUpon.Name} ";
+                }
+                else
+                {
+                    actedUpon = actedUpon + $"and {playerActions[0].ActedUpon.Name} ";
+                }
             }
             else
             {
                 playerActions = MultiTarget(card, activePlayer, turn);
             }
 
-            return playerActions;
+            if(everyone > 0 || (allEnemies > 0 && allAllies > 0))
+            {
+                actedUpon = "everyone ";
+            }
+            else if( allAllies > 0)
+            {
+                if (actedUpon == "Nobody")
+                {
+                    actedUpon = "his or her own team ";
+                }
+                else
+                {
+                    actedUpon = actedUpon + $" and his or her own team ";
+                }
+            }
+            else if (allEnemies > 0)
+            {
+                if (actedUpon == "Nobody")
+                {
+                    actedUpon = "the enemy team ";
+                }
+                else
+                {
+                    actedUpon = actedUpon + $"and the enemy team ";
+                }
+            }
+
+            return actedUpon;
 
             //switch (card.Target)
             //{   //RandomTarget   ChainRandomTarget   ChainTarget (chance to jump to another target)
