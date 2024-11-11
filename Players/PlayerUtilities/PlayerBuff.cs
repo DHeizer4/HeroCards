@@ -16,21 +16,21 @@ namespace Cards_Games.Players.PlayerUtilities
             switch (status.StatusType)
             {
                 case StatusEnum.Burning:
-                    ApplyBurning(player, status);
-
+                    dialog = ApplyBurning(actor, player, status);
                     break;
                 default:
                     player.Statuses.Add(status);
-                    dialog = ($"{actor} applies {status.StatusType.ToString()} to {player.Name}");
+                    dialog = ($"{actor} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
                     break;
             }
 
             return dialog;
         }
 
-        private static void ApplyBurning(IRPGPlayer player, Status status)
+        private static string ApplyBurning(string actor, IRPGPlayer player, Status status)
         {
             bool preexisting = false;
+            string dialog = string.Empty;
 
             foreach (Status existing in player.Statuses)
             {
@@ -41,6 +41,7 @@ namespace Cards_Games.Players.PlayerUtilities
                     existing.Interval = status.Interval;
 
                     preexisting = true;
+                    dialog = ($"{actor} modifies {status.StatusType.ToString()} (Amt: {existing.Amount}, Dur: {existing.Duration}, int: {existing.Interval}) on {player.Name}");
                 }
             }
 
@@ -48,12 +49,14 @@ namespace Cards_Games.Players.PlayerUtilities
             {
                 status.InternalTracker = status.Interval;
                 player.Statuses.Add(status);
+                dialog = ($" applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
             }
+
+            return dialog;
         }
 
-        public static List<string> ResolveBurningDebuffs(IRPGPlayer player)
+        public static void ResolveBurningDebuffs(IRPGPlayer player, List<string> turnLog)
         {
-            List<string> linesOFDialog = new List<string>();
 
             foreach (Status status in player.Statuses)
             {
@@ -63,7 +66,7 @@ namespace Cards_Games.Players.PlayerUtilities
                     {
                         DamageEffect damageEffect = new DamageEffect(Target.None, status.Amount, AttackType.Fire, CardResource.Health);
                         int amt = PlayerProperty.DoDamageToPlayer(player, damageEffect, status.Amount);
-                        linesOFDialog.Add($"{player.Name} takes {amt} Burning Damage");
+                        turnLog.Add($"{player.Name} takes {amt} Burning Damage");
                         status.InternalTracker = status.Interval - 1;
                     }
                     else
@@ -72,8 +75,6 @@ namespace Cards_Games.Players.PlayerUtilities
                     }
                 }
             }
-
-            return linesOFDialog;
         }
 
     }

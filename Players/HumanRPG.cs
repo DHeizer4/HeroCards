@@ -97,7 +97,7 @@ namespace Cards_Games.Players
             List<string> dialog = new List<string>();
             dialog.Add($"{Name} will be playing {played[0]}");
 
-            Display.SimpleDialogBox(dialog);
+           // Display.SimpleDialogBox(dialog);
             return played[0];
 
         }

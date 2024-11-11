@@ -21,12 +21,15 @@ namespace Cards_Games
 
             do
             {
+                List<string> turnLog = new List<string>() { $"---- Turn: {_Turn} ----"};
                 Display.GameInfo(_Turn);
+
+
                 Display.Players(players);
 
                 players = BattleOrchestrator.SpeedSort(players);
-                ActionOrchestrator.ExecuteActions(_TimeLine, players, _Turn);
-                BattleOrchestrator.GetNextActions(players);
+                ActionOrchestrator.ExecuteActions(_TimeLine, players, _Turn, turnLog);
+                BattleOrchestrator.GetNextActions(players, turnLog);
 
 
                 Display.Players(players);             // this is sorting the players every time need to set teams once and then handle as teams.  Also need to set display positions.  Also limitation currently here to only have 2 teams
@@ -34,7 +37,9 @@ namespace Cards_Games
                 Display.BattleActionGrid(_TimeLine, _Turn);
                 Display.Players(players);
 
-                EndOfTurn(players);
+                EndOfTurn(players, turnLog);
+
+                Display.SimpleDialogBox(turnLog);
                 _Turn++;
             } while (CheckForWin(players) == -1);
 
@@ -61,11 +66,11 @@ namespace Cards_Games
             }
         }
 
-        public static void EndOfTurn(List<IRPGPlayer> players)
+        public static void EndOfTurn(List<IRPGPlayer> players, List<string> turnLog)
         {
             foreach (IRPGPlayer player in players)
             {
-                PlayerBuff.ResolveBurningDebuffs(player);
+                PlayerBuff.ResolveBurningDebuffs(player, turnLog);
                 AddTime(player);
                 RemoveDurationFromBuffs(player);
             }
@@ -106,20 +111,24 @@ namespace Cards_Games
             }
         }
 
-        public static void GetNextActions(List<IRPGPlayer> players)
+        public static void GetNextActions(List<IRPGPlayer> players, List<string> turnLog)
         {
             foreach (IRPGPlayer player in players)
             {
                 if (player.NextMove == 0)
                 {
                     RPGCard playerCard = player.PlayCard();
-                    List<RPGAction> playerAction = RPGAction.GetTarget(playerCard, player, players, _Turn);
+                    List<RPGAction> playerActions = new List<RPGAction>();
+                    string actedUpon = RPGAction.GetTarget(playerCard, player, players, _Turn, ref playerActions);
                     player.DrawCard();
-                    for (int i = 0; i < playerAction.Count; i++)
+                    for (int i = 0; i < playerActions.Count; i++)
                     {
-                        _TimeLine.Add(playerAction[i]);
+                        _TimeLine.Add(playerActions[i]);
                         player.NextMove = playerCard.Speed;
                     }
+
+                    string playerEvent = $"{player.Name} plays {playerActions[0].Card.Name} targeting {actedUpon}will happen on turn: {playerActions[0].When}";
+                    turnLog.Add(playerEvent);
                 }
                 else
                 {
