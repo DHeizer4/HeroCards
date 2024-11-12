@@ -2,19 +2,24 @@
 {
     public class CharacterStatEnum
     {
-        public enum CharacterStat { Intellect, 
-                                    Strength, 
+        public enum CharacterStat { Strength, 
+                                    Intellect,
+                                    Agility,
+                                    Dexterity,
+                                    Endurance,
+                                    Concentrate,
                                     Speed, 
-                                    Stamina, 
-                                    Agility, 
-                                    Dexterity, 
+                                    Haste, 
                                     Armor, 
                                     Resistance, 
+                                    Block,
+                                    MagicShield,
+                                    Shield,
+                                    Presence,
                                     Health, 
                                     Mana, 
-                                    Time, 
-                                    Concentrate, 
-                                    Block, 
-                                    MagicShield }
+                                    Time,
+                                    Energy
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Cards_Games
             // Preperation For Battle
             _TimeLine.Clear();
 
-            ResetPlayerStartingHealth(players);
+            ResetPlayers(players);
             GetOpeningHands(players);
             Display.BattleActionGrid(_TimeLine, _Turn);
 
@@ -24,16 +24,13 @@ namespace Cards_Games
                 List<string> turnLog = new List<string>() { $"---- Turn: {_Turn} ----"};
                 Display.GameInfo(_Turn);
 
-
                 Display.Players(players);
 
                 players = BattleOrchestrator.SpeedSort(players);
                 ActionOrchestrator.ExecuteActions(_TimeLine, players, _Turn, turnLog);
                 BattleOrchestrator.GetNextActions(players, turnLog);
 
-
                 Display.Players(players);             // this is sorting the players every time need to set teams once and then handle as teams.  Also need to set display positions.  Also limitation currently here to only have 2 teams
-
                 Display.BattleActionGrid(_TimeLine, _Turn);
                 Display.Players(players);
 
@@ -50,19 +47,13 @@ namespace Cards_Games
 
         }
 
-        public static void BattleMovesOn()
-        {
-            foreach (RPGAction action in _TimeLine)
-            {
-                action.When = action.When - 1;
-            }
-        }
-
-        public static void ResetPlayerStartingHealth(List<IRPGPlayer> players)
+        public static void ResetPlayers(List<IRPGPlayer> players)
         {
             foreach (IRPGPlayer player in players)
             {
                 player.Health = player.MaxHealth;
+                player.Mana = player.MaxMana;
+                player.Statuses = new List<Status>();
             }
         }
 
@@ -137,18 +128,6 @@ namespace Cards_Games
             }
         }
 
-        public static bool PlayerActionCheck(IRPGPlayer player)
-        {
-            foreach (RPGAction action in _TimeLine)
-            {
-                if (action.Actor == player)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public static List<IRPGPlayer> SpeedSort(List<IRPGPlayer> players)
         {
             players.Sort((x, y) => x.Speed.CompareTo(y.Speed));
@@ -172,8 +151,6 @@ namespace Cards_Games
 
             for (int i = 0; i < teamNumbersWithLivingPlayers.Count; i++)
             {
-
-
                 if (compare == -1)
                 {
                     compare = teamNumbersWithLivingPlayers[i];
