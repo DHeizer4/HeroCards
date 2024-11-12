@@ -150,29 +150,6 @@ namespace Cards_Games
             }
 
             return actedUpon;
-
-            //switch (card.Target)
-            //{   //RandomTarget   ChainRandomTarget   ChainTarget (chance to jump to another target)
-            //    case Target.All:
-            //        playerActions = AllTargets(card, activePlayer, allPlayers, turn);
-            //        break;
-            //    case Target.AllEnemys:
-            //        playerActions = AllEnemies(card, activePlayer, allPlayers, turn);
-            //        break;
-            //    case Target.Party:
-            //        playerActions = AllAllies(card, activePlayer, allPlayers, turn);
-            //        break;
-            //    case Target.Enemy:
-            //        playerActions = EnemyTarget(card, activePlayer, allPlayers, turn);
-            //        break;
-            //    case Target.Ally:
-            //        playerActions = AllyTarget(card, activePlayer, allPlayers, turn);
-            //        break;
-            //    default:  // Default target is Target.Self
-            //        playerActions.Add(new RPGAction(activePlayer, activePlayer, true, card, turn));
-            //        break;
-            //}
-
         }
 
         public static List<RPGAction> AllyTarget(RPGCard card, IRPGPlayer activePlayer, List<IRPGPlayer> allPlayers, int turnNumber)
@@ -240,44 +217,6 @@ namespace Cards_Games
             return playerActions;
         }
 
-        public static List<RPGAction> AllTargets(RPGCard card, IRPGPlayer activePlayer, List<IRPGPlayer> allPlayers, int turnNumber)
-        {
-            List<RPGAction> playerActions = new List<RPGAction>();
-            foreach (IRPGPlayer player in allPlayers)
-            {
-                playerActions.Add(new RPGAction(activePlayer, player, true, card, turnNumber));
-            }
-            return playerActions;
-        }
-
-        public static List<RPGAction> AllEnemies(RPGCard card, IRPGPlayer activePlayer, List<IRPGPlayer> allPlayers, int turnNumber)
-        {
-            List<RPGAction> playerActions = new List<RPGAction>();
-            foreach (IRPGPlayer player in allPlayers)
-            {
-                if (player.Team != activePlayer.Team)
-                {
-                    playerActions.Add(new RPGAction(activePlayer, player, true, card, turnNumber));
-                }
-            }
-            return playerActions;
-        }
-
-        public static List<RPGAction> AllAllies(RPGCard card, IRPGPlayer activePlayer, List<IRPGPlayer> allPlayers, int turnNumber)
-        {
-            List<RPGAction> playerActions = new List<RPGAction>();
-            List<IRPGPlayer> allies = new List<IRPGPlayer>();
-            foreach (IRPGPlayer player in allPlayers)
-            {
-                if (player.Team == activePlayer.Team)
-                {
-                    playerActions.Add(new RPGAction(activePlayer, player, true, card, turnNumber));
-                }
-            }
-            return playerActions;
-        }
-
     }
-
 
 }

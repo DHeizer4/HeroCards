@@ -6,6 +6,15 @@ namespace Cards_Games.Enumerations
 {
     public class AttackTypeEnum
     {
-        public enum AttackType { Piercing, Slashing, Bludgedeon, Fire, Ice, Electric, Heal, Shadow, StatModify }
+        public enum AttackType { Piercing,  // Phyiscal ignore armor
+                            Slashing,       // Phyiscal modified by Dex
+                            Bludgedeon,     // Phyiscal modified by Str
+                            Fire,           // Magical
+                            Ice,            // Magical
+                            Electric,       // Magical
+                            Shadow,         // Magical
+                            Heal,           // Generic
+                            StatModify      // Generic
+        }
     }
 }

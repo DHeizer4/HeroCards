@@ -182,7 +182,7 @@ namespace Cards_Games
                 Console.WriteLine($"Strength: {player.Strength}");
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"Interllect: {player.Intellect}");
+                Console.WriteLine($"Intellect: {player.Intellect}");
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
                 Console.WriteLine($"Armor: {player.Armor}");
@@ -280,7 +280,7 @@ namespace Cards_Games
             text = $"\u001b[34m{text}\u001b[0m";
 
             return text;
-        }
+        }0
 
         private static string Red(string text)
         {

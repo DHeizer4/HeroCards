@@ -7,30 +7,38 @@ namespace Cards_Games.Players
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Race { get; set; }
+        public List<string> Skills { get; set; }
         public List<Status> Statuses { get; set; } = new List<Status>();
         public int Team { get; set; }
+        public int Money { get; set; }
         public int Time { get; set; }
         public int Health { get; set; }
         public int MaxHealth { get; set; }
         public int Mana { get; set; }
         public int MaxMana { get; set; }
+        public int Energy { get; set; }
         public Weapon Weapon { get; set; }
         public List<Equipment> Equipment { get; set; } = new List<Equipment>();
         public int Strength { get; set; }
         public int Intellect { get; set; }
         public int Agility { get; set; }
         public int Dexterity { get; set; }
+        public int Endurance { get; set; }
         public int Concentrate { get; set; }
+        public int Speed { get; set; }
+        public int Haste { get; set; }
         public int Armor { get; set; }
+        public int Resistance { get; set; }
         public int Block { get; set; }
         public int MagicShield { get; set; }
         public int Shield { get; set; }
-        public int Speed { get; set; }
+        public int Presence { get; set; }
         public int NextMove { get; set; }
         public List<RPGCard> Action { get; set; }
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
-        public int Prescence { get; set; }
+        
 
         // Can a caster cast faster than a fighter and vise versa....
 
