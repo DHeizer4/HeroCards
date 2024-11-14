@@ -8,7 +8,7 @@ namespace Cards_Games.Enumerations
     {
         public enum AttackType { Piercing,  // Phyiscal ignore armor
                             Slashing,       // Phyiscal modified by Dex
-                            Bludgedeon,     // Phyiscal modified by Str
+                            Bludgeon,     // Phyiscal modified by Str
                             Fire,           // Magical
                             Ice,            // Magical
                             Electric,       // Magical

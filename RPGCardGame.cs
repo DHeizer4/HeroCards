@@ -9,8 +9,8 @@ namespace Cards_Games
         public void StartGame(IRPGPlayer player1)
         {
             List<IRPGPlayer> players = new List<IRPGPlayer>();
-            HumanRPG RPG1 = new HumanRPG(player1.Name, 1);
-            players.Add(RPG1);
+            player1.Team = 1;
+            players.Add(player1);
             CompTopRPG comp1 = new CompTopRPG("That guy", 2);
             players.Add(comp1);
             CompTopRPG comp2 = new CompTopRPG("Goblin 1", 2);
