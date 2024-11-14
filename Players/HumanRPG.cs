@@ -1,5 +1,6 @@
 ﻿using Cards_Games.Models;
 using System.Collections.Generic;
+using static Cards_Games.Enumerations.CharacterRaceEnumueration;
 
 namespace Cards_Games.Players
 {
@@ -7,7 +8,7 @@ namespace Cards_Games.Players
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Race { get; set; }
+        public CharacterRace Race { get; set; }
         public List<string> Skills { get; set; }
         public List<Status> Statuses { get; set; } = new List<Status>();
         public int Team { get; set; }
@@ -38,7 +39,7 @@ namespace Cards_Games.Players
         public List<RPGCard> Action { get; set; }
         public Deck Decklist { get; set; }
         public List<RPGCard> Hand { get; set; }
-        
+
 
         // Can a caster cast faster than a fighter and vise versa....
 
@@ -51,6 +52,28 @@ namespace Cards_Games.Players
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
             Speed = 1;
+        }
+
+        public HumanRPG(string name, CharacterRace race, List<string> skills, CharacterProperties properties)
+        {
+            Name = name;
+            Race = race;
+            Skills = skills;
+            Strength = properties.Strength;
+            Intellect = properties.Intellect;
+            Agility = properties.Agility;
+            Dexterity = properties.Dexterity;
+            Endurance = properties.Endurance;
+            Concentrate = properties.Concentration;
+            Speed = properties.Speed;
+            Haste = properties.Haste;
+            Armor = properties.Armor;
+            Resistance = properties.Resistance;
+            MaxHealth = properties.Endurance * 5;
+            MaxMana = properties.Concentration * 5;
+            Decklist = new Deck("Starter Deck", RPGCard.StartList());
+            Hand = new List<RPGCard>();
+            Action = new List<RPGCard>();
         }
 
         public IRPGPlayer GetTarget(List<IRPGPlayer> possibleTargets)
@@ -105,7 +128,7 @@ namespace Cards_Games.Players
             List<string> dialog = new List<string>();
             dialog.Add($"{Name} will be playing {played[0]}");
 
-           // Display.SimpleDialogBox(dialog);
+            // Display.SimpleDialogBox(dialog);
             return played[0];
 
         }

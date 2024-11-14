@@ -173,7 +173,14 @@ namespace Cards_Games
                 Console.WriteLine($"Name: {player.Name}");
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"Health: {player.Health} / {player.MaxHealth}");
+                
+                float health = player.Health;
+                float maxHealth = player.MaxHealth;
+
+                float healthpercent = (health / maxHealth) * 100;
+                if (healthpercent > 66) { Console.WriteLine($"Health: {Green(player.Health.ToString())} / {player.MaxHealth}"); }
+                else if (healthpercent > 33) { Console.WriteLine($"Health: {Orange(player.Health.ToString())} / {player.MaxHealth}"); }
+                else { Console.WriteLine($"Health: {Red(player.Health.ToString())} / {player.MaxHealth}"); }
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
                 Console.WriteLine($"Mana: {Blue(player.Mana.ToString())} / {player.MaxMana}");
@@ -275,16 +282,90 @@ namespace Cards_Games
             }
         }
 
+        public static void ColorTest()
+        {
+
+
+ 
+                Console.WriteLine($"Mana: {text30("30")}{Red("31")}{Green("32")}{Orange("33")}{Blue("34")}{Purple("35")}{Cyan("36")}");
+
+
+            Console.ReadLine();
+
+        }
+
+        private static string text40(string text)
+        {
+            text = $"\u001b[40m{text}\u001b[0m";
+
+            return text;
+        }
+
+        private static string text39(string text)
+        {
+            text = $"\u001b[39m{text}\u001b[0m";
+
+            return text;
+        }
+
+        private static string text38(string text)
+        {
+            text = $"\u001b[38m{text}\u001b[0m";
+
+            return text;
+        }
+
+        private static string text37(string text)
+        {
+            text = $"\u001b[37m{text}\u001b[0m";
+
+            return text;
+        }
+
+        private static string Cyan(string text)
+        {
+            text = $"\u001b[36m{text}\u001b[0m";
+
+            return text;
+        }
+
+        private static string Purple(string text)
+        {
+            text = $"\u001b[35m{text}\u001b[0m";
+
+            return text;
+        }
+
         private static string Blue(string text)
         {
             text = $"\u001b[34m{text}\u001b[0m";
 
             return text;
-        }0
+        }
+
+        private static string Orange(string text)
+        {
+            text = $"\u001b[33m{text}\u001b[0m";
+
+            return text;
+        }
+        private static string Green(string text)
+        {
+            text = $"\u001b[32m{text}\u001b[0m";
+
+            return text;
+        }
 
         private static string Red(string text)
         {
             text = $"\u001b[31m{text}\u001b[0m";
+
+            return text;
+        }
+
+        private static string text30(string text)
+        {
+            text = $"\u001b[30m{text}\u001b[0m";
 
             return text;
         }

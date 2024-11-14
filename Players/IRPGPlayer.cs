@@ -20,8 +20,8 @@ namespace Cards_Games.Players
         List<Equipment> Equipment { get; set; }
         int Strength { get; set; }          // Increases Bludgeon dmg
         int Intellect { get; set; }         // Increases magical dmg
-        int Agility { get; set; }           // Increases crit chance
-        int Dexterity { get; set; }         // Increases Slashing dmg
+        int Agility { get; set; }           // Increases Slashing chance
+        int Dexterity { get; set; }         // Increases Crit dmg
         int Endurance { get; set; }         // Increases max Health
         int Concentrate { get; set; }       // Increases max Mana
         int Speed { get; set; }             // Increases the rate at which you can play cards

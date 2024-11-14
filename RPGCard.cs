@@ -43,7 +43,7 @@ namespace Cards_Games
             List<RPGCard> start = new List<RPGCard>();
             start.Add(RPGCard.Library["Heal"]);
             start.Add(RPGCard.Library["Burn"]);
-            start.Add(RPGCard.Library["Group Heal"]);
+            start.Add(RPGCard.Library["FireBall"]);
             start.Add(RPGCard.Library["Cleave"]);
             start.Add(RPGCard.Library["Mana Potion"]);
             for (int i = 0; i < 12; i++)
@@ -68,7 +68,7 @@ namespace Cards_Games
             RPGCard punch = new RPGCard("Generic", 0, "Punch", 1, 1,
                 new List<Cost>(),
                 new List<DamageEffect> {
-                    new DamageEffect(Target.Enemy, 1, AttackType.Bludgedeon, CardResource.Health)
+                    new DamageEffect(Target.Enemy, 2, AttackType.Bludgeon, CardResource.Health)
                 },
                 new List<StatusEffect>(),
                 "punches");
@@ -135,7 +135,7 @@ namespace Cards_Games
                 },
                 "burns ");
 
-            RPGCard fireBall = new RPGCard("Mage", 0, "Burn", 4, 1,
+            RPGCard fireBall = new RPGCard("Mage", 0, "Fireball", 4, 1,
                 new List<Cost>
                 {
                     new Cost(CardResource.Mana, 4)
