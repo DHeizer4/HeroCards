@@ -13,15 +13,22 @@ namespace Cards_Games.Players.PlayerUtilities
         {
             string dialog = "";
 
-            switch (status.StatusType)
+            if (status.StatusType == StatusEnum.Burning)
             {
-                case StatusEnum.Burning:
-                    dialog = ApplyBurning(actor, player, status);
-                    break;
-                default:
-                    player.Statuses.Add(status);
-                    dialog = ($"{actor} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
-                    break;
+                status.Display = true;
+                dialog = ApplyBurning(actor, player, status);
+            }
+            else if (IsCharacterPropertyStatus(status))
+            {
+                status.Display = false;
+                player.Statuses.Add(status);
+                dialog = ($"{actor} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
+            }
+            else
+            {
+                status.Display = true;
+                player.Statuses.Add(status);
+                dialog = ($"{actor} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
             }
 
             return dialog;
@@ -75,6 +82,28 @@ namespace Cards_Games.Players.PlayerUtilities
                     }
                 }
             }
+        }
+
+        public static bool IsCharacterPropertyStatus(Status status)
+        {
+            bool isCharacterProperty = false;
+
+            List<StatusEnum> charaterPropertyAffectingStasus = new List<StatusEnum>()
+            {
+                StatusEnum.Strengthen,
+                StatusEnum.Enlightened,
+                StatusEnum.Agile,
+                StatusEnum.Nimble,
+                StatusEnum.Acclerate,
+                StatusEnum.Quickened
+            };
+
+            if (charaterPropertyAffectingStasus.Contains(status.StatusType))
+            {
+                isCharacterProperty = true;
+            }
+
+            return isCharacterProperty;
         }
 
     }

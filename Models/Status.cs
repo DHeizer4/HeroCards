@@ -8,11 +8,13 @@ namespace Cards_Games.Models
     {
         public StatusEnum StatusType { get; set; }
         public int Amount { get; set; }
+        public int OriginalDuration { get; set; }
         public int Duration { get; set; }
         public int Interval { get; set; }
         public AttackType AttackType { get; set; }
         public bool IsStackable { get; set; }
         public bool IsPercent { get; set; }
         public int InternalTracker { get; set; }
+        public bool Display { get; set; }
     }
 }

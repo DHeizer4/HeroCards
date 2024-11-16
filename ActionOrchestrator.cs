@@ -113,6 +113,7 @@ namespace Cards_Games
             {
                 StatusType = statusEffect.StatusType,
                 Amount = statusEffect.Amount,
+                OriginalDuration = statusEffect.Duration,
                 Duration = statusEffect.Duration,
                 Interval = statusEffect.Interval,
                 AttackType = statusEffect.AttackType,
@@ -188,13 +189,14 @@ namespace Cards_Games
                         {
                             if (damageEffect.Resource == CardResource.Health)
                             {
-                                int amt = PlayerProperty.DoDamageToPlayer(actedUpon, damageEffect, damageEffect.Amount);
+                                int modifiedDamaged = PlayerProperty.GetModifiedDamage(action.Actor, damageEffect);
+                                int amt = PlayerProperty.DoDamageToPlayer(actedUpon, damageEffect, modifiedDamaged);
                                 string damageEvent = $"{action.Actor.Name} did {amt} {damageEffect.AttackType.ToString()} to {actedUpon.Name}";
                                 turnLog.Add(damageEvent);
                             }
                             else if (damageEffect.Resource == CardResource.Mana)
                             {
-                                int adjustedResource = actedUpon.Mana - damageEffect.Amount;
+                                int adjustedResource = actedUpon.Mana - (int)damageEffect.Amount;
                                 actedUpon.Mana = adjustedResource < 0 ? 0 : adjustedResource;
 
                                 string manaEvent = $"{action.Actor.Name}'s {action.Card.Name} cuases {actedUpon.Name}'s mana to change to {actedUpon.Mana}";
@@ -202,7 +204,7 @@ namespace Cards_Games
                             }
                             else if (damageEffect.Resource == CardResource.Time)
                             {
-                                int adjustedResource = actedUpon.Time - damageEffect.Amount;
+                                int adjustedResource = actedUpon.Time - (int)damageEffect.Amount;
                                 actedUpon.Time = adjustedResource < 0 ? 0 : adjustedResource;
                                 string timeEvent = $"{action.Actor.Name}'s {action.Card.Name} cuases {actedUpon.Name}'s time to change to {actedUpon.Mana}";
                                 turnLog.Add(timeEvent);

@@ -11,7 +11,7 @@ namespace Cards_Games.Models
     public class DamageEffect
     {
         public Target Target { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
         public AttackType AttackType { get; set; }
         public CardResource Resource { get; set; }
 

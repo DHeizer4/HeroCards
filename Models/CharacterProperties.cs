@@ -6,15 +6,15 @@ namespace Cards_Games.Models
 {
     public class CharacterProperties
     {
-        public int Strength { get; set; }
-        public int Intellect { get; set; }
-        public int Agility { get; set; }
-        public int Dexterity { get; set; }
-        public int Endurance { get; set; }
-        public int Concentration { get; set; }
-        public int Speed { get; set; }
-        public int Haste { get; set; }
-        public int Armor { get; set; }
-        public int Resistance { get; set; }
+        public double Strength { get; set; }
+        public double Intellect { get; set; }
+        public double Agility { get; set; }
+        public double Dexterity { get; set; }
+        public double Endurance { get; set; }
+        public double Concentration { get; set; }
+        public double Speed { get; set; }
+        public double Haste { get; set; }
+        public double Armor { get; set; }
+        public double Resistance { get; set; }
     }
 }

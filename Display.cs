@@ -1,5 +1,6 @@
 ﻿using Cards_Games.Models;
 using Cards_Games.Players;
+using Cards_Games.Players.PlayerUtilities;
 using System;
 using System.Collections.Generic;
 
@@ -177,6 +178,8 @@ namespace Cards_Games
                 float health = player.Health;
                 float maxHealth = player.MaxHealth;
 
+                CharacterProperties characterProperties = PlayerProperty.GetCharacterProperties(player);
+
                 float healthpercent = (health / maxHealth) * 100;
                 if (healthpercent > 66) { Console.WriteLine($"Health: {Green(player.Health.ToString())} / {player.MaxHealth}"); }
                 else if (healthpercent > 33) { Console.WriteLine($"Health: {Orange(player.Health.ToString())} / {player.MaxHealth}"); }
@@ -186,20 +189,46 @@ namespace Cards_Games
                 Console.WriteLine($"Mana: {Blue(player.Mana.ToString())} / {player.MaxMana}");
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"Strength: {player.Strength}");
+                if (characterProperties.Strength < player.Strength) { Console.WriteLine($"Strength: {((int)player.Strength).ToString()} {Red($"-{player.Strength - characterProperties.Strength}")}"); }
+                else if(characterProperties.Strength > player.Strength ) { Console.WriteLine($"Strength: {((int)player.Strength).ToString()} {Green($"+{characterProperties.Strength - player.Strength}")}"); }
+                else { Console.WriteLine($"Strength: {(int)player.Strength}"); } 
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"Intellect: {player.Intellect}");
+                if (characterProperties.Intellect < player.Intellect) { Console.WriteLine($"Intellect: {((int)player.Intellect).ToString()} {Red($"-{player.Intellect - characterProperties.Intellect}")}"); }
+                else if (characterProperties.Intellect > player.Intellect) { Console.WriteLine($"Intellect: {((int)player.Intellect).ToString()} {Green($"+{characterProperties.Intellect - player.Intellect}")}"); }
+                else { Console.WriteLine($"Intellect: {(int)player.Intellect}"); }
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"Armor: {player.Armor}");
+                if (characterProperties.Agility < player.Agility) { Console.WriteLine($"Agility: {((int)player.Agility).ToString()} {Red($"-{player.Agility - characterProperties.Agility}")}"); }
+                else if (characterProperties.Agility > player.Agility) { Console.WriteLine($"Agility: {((int)player.Agility).ToString()} {Green($"+{characterProperties.Agility - player.Agility}")}"); }
+                else { Console.WriteLine($"Agility: {(int)player.Agility}"); }
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                if (characterProperties.Dexterity < player.Dexterity) { Console.WriteLine($"Dexterity: {((int)player.Dexterity).ToString()} {Red($"-{player.Dexterity - characterProperties.Dexterity}")}"); }
+                else if (characterProperties.Dexterity > player.Dexterity) { Console.WriteLine($"Dexterity: {((int)player.Dexterity).ToString()} {Green($"+{characterProperties.Dexterity - player.Dexterity}")}"); }
+                else { Console.WriteLine($"Dexterity: {(int)player.Dexterity}"); }
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                if (characterProperties.Speed < player.Speed) { Console.WriteLine($"Speed: {((int)player.Speed).ToString()} {Red($"-{player.Speed - characterProperties.Speed}")}"); }
+                else if (characterProperties.Speed > player.Speed) { Console.WriteLine($"Speed: {((int)player.Speed).ToString()} {Green($"+{characterProperties.Speed - player.Speed}")}"); }
+                else { Console.WriteLine($"Speed: {(int)player.Speed}"); }
+                offset += 1;
+                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                if (characterProperties.Haste < player.Haste) { Console.WriteLine($"Haste: {((int)player.Haste).ToString()} {Red($"-{player.Haste - characterProperties.Haste}")}"); }
+                else if (characterProperties.Haste > player.Haste) { Console.WriteLine($"Haste: {((int)player.Haste).ToString()} {Green($"+{characterProperties.Haste - player.Haste}")}"); }
+                else { Console.WriteLine($"Haste: {(int)player.Haste}"); }
                 offset += 1;
                 Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
                 Console.WriteLine($"Time: {player.Time}");
+                offset += 1;
                 foreach (Status status in player.Statuses)
                 {
-                    Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                    Console.WriteLine($"{status.StatusType.ToString()} Duration {status.Duration} Amount {status.Amount}");
+                    if (status.Display)
+                    {
+                        Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                        Console.WriteLine($"{status.StatusType.ToString()} Duration {status.Duration} Amount {status.Amount}");
+                        offset += 1;
+                    }
                 }
                 offset += 2;
             }
