@@ -9,7 +9,7 @@ namespace Cards_Games.Players
         public string Id { get; set; }
         public string Name { get; set; }
         public CharacterRace Race { get; set; }
-        public List<string> Skills { get; set; }
+        public List<string> Skills { get; set; }  // improvments not limitations
         public List<Status> Statuses { get; set; } = new List<Status>();
         public int Team { get; set; }
         public int Money { get; set; }
@@ -20,7 +20,7 @@ namespace Cards_Games.Players
         public int MaxMana { get; set; }
         public int Energy { get; set; }
         public Weapon Weapon { get; set; }
-        public List<Equipment> Equipment { get; set; } = new List<Equipment>();
+        public List<Equipment> Equipment { get; set; } = new List<Equipment>();  // special effects?  ex: redirect dmg
         public int Strength { get; set; }
         public int Intellect { get; set; }
         public int Agility { get; set; }
@@ -59,18 +59,18 @@ namespace Cards_Games.Players
             Name = name;
             Race = race;
             Skills = skills;
-            Strength = properties.Strength;
-            Intellect = properties.Intellect;
-            Agility = properties.Agility;
-            Dexterity = properties.Dexterity;
-            Endurance = properties.Endurance;
-            Concentrate = properties.Concentration;
-            Speed = properties.Speed;
-            Haste = properties.Haste;
-            Armor = properties.Armor;
-            Resistance = properties.Resistance;
-            MaxHealth = properties.Endurance * 5;
-            MaxMana = properties.Concentration * 5;
+            Strength = (int)properties.Strength;
+            Intellect = (int)properties.Intellect;
+            Agility = (int)properties.Agility;
+            Dexterity = (int)properties.Dexterity;
+            Endurance = (int)properties.Endurance;
+            Concentrate = (int)properties.Concentration;
+            Speed = (int)properties.Speed;
+            Haste = (int)properties.Haste;
+            Armor = (int)properties.Armor;
+            Resistance = (int)properties.Resistance;
+            MaxHealth = (int)(properties.Endurance * 5);
+            MaxMana = (int)(properties.Concentration * 5);
             Decklist = new Deck("Starter Deck", RPGCard.StartList());
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();

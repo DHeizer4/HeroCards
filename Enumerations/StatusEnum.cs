@@ -13,12 +13,18 @@ namespace Cards_Games.Enumerations
                             Enraged,             // % Dmg increase
                             Bezerk,              // Chooses Target at random for cards that target
                             Strengthen,          // Increases strength
-                            Weakened,            // Decreases strength
+                           // Weakened,            // Decreases strength
                             Enlightened,         // Increases Intellect
-                            Perplexed,           // Decreases Intellect
-                            Quickened,           // Increases Speed for a player
-                            Slowed,              // Decreases Speed for a player
+                           // Perplexed,           // Decreases Intellect
+                            Agile,               // Increases Agility
+                            Nimble,              // Increases Dexterity
+                          //  Clumsy,              // Decreases Dexterity
+                            Acclerate,           // Increases Speed for a player
+                           // Slowed,              // Decreases Speed for a player
+                            Quickened,           // Increase Haste
+                           // Disorientation,      // Decreases Haste
                             Poisoned,            // Debuff that does (Physical) dmg at end of turn
+                            Cleanse,             // Remove status from player
                             Death
         }   
 

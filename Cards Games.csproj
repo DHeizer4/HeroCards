@@ -6,4 +6,8 @@
     <RootNamespace>Cards_Games</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="LootDistributer\" />
+  </ItemGroup>
+
 </Project>
