@@ -1,4 +1,5 @@
 ﻿using Cards_Games.Models;
+using System;
 using System.Collections.Generic;
 using static Cards_Games.Enumerations.AttackTypeEnum;
 using static Cards_Games.Enumerations.CardResourceEnum;
@@ -22,7 +23,7 @@ namespace Cards_Games.Players.PlayerUtilities
             {
                 status.Display = false;
                 player.Statuses.Add(status);
-                dialog = ($"{actor} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
+                dialog = ($"{actor} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration} to {player.Name}");
             }
             else
             {
@@ -106,5 +107,48 @@ namespace Cards_Games.Players.PlayerUtilities
             return isCharacterProperty;
         }
 
+        public static double ResolveEnrageBuff(IRPGPlayer player, double modifiedDamage)
+        {
+            foreach(Status status in player.Statuses)
+            {
+                if (status.StatusType == StatusEnum.Enraged)
+                {
+                    double enragePercent = 1 + (status.Amount / 100);
+                    modifiedDamage = modifiedDamage * enragePercent;
+                }
+            }
+
+            return modifiedDamage;
+        }
+
+        public static List<IRPGPlayer> ResolveTaunting(List<IRPGPlayer> players)
+        {
+            List<IRPGPlayer> modifiedList = new List<IRPGPlayer>();
+
+            foreach(IRPGPlayer player in players)
+            {
+                foreach (Status status in player.Statuses)
+                {
+                    if (status.Equals(StatusEnum.Taunting))
+                    {
+                        // percent chance to taunt
+                        Random random = new Random();
+                        int randomNumber = random.Next(101);
+
+                        if (status.Amount < randomNumber)
+                        {
+                            modifiedList.Add(player);
+                        }
+                    }
+                }
+            }
+
+            if (modifiedList.Count > 0)
+            {
+                return modifiedList;
+            }
+
+            return players;
+        }
     }
 }

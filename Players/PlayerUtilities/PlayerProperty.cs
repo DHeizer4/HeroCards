@@ -122,6 +122,8 @@ namespace Cards_Games.Players.PlayerUtilities
             {
                 modifiedDamage = (damageeffect.Amount * (1 + (properties.Intellect / 100)));
             }
+            
+            modifiedDamage = PlayerBuff.ResolveEnrageBuff(player, modifiedDamage);
 
             return (int)modifiedDamage;
         }
@@ -129,6 +131,8 @@ namespace Cards_Games.Players.PlayerUtilities
         public static int DoDamageToPlayer(IRPGPlayer actedUpon, DamageEffect damageEffect, int modifiedDamageAmt)
         {
             int startingHealth = actedUpon.Health;
+            modifiedDamageAmt = ResolveShield(actedUpon, modifiedDamageAmt);
+
             actedUpon.Health -= modifiedDamageAmt;
 
             if (actedUpon.Health > actedUpon.MaxHealth)
@@ -137,6 +141,23 @@ namespace Cards_Games.Players.PlayerUtilities
             }
 
             return startingHealth - actedUpon.Health;
+        }
+
+        public static int ResolveShield(IRPGPlayer player, int damageAmount)
+        {
+            int postShieldDamage = damageAmount - player.Shield;
+            
+            if (postShieldDamage >= 0)
+            {
+                player.Shield = 0;
+            }
+            else if (postShieldDamage < 0)
+            {
+                player.Shield = -1 * postShieldDamage;
+                postShieldDamage = 0;
+            }
+
+            return postShieldDamage;
         }
 
     }
