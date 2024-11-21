@@ -1,6 +1,7 @@
 ﻿using Cards_Games.Models;
 using Cards_Games.Players;
 using Cards_Games.Players.PlayerUtilities;
+using Cards_Games.Tables;
 using System.Collections.Generic;
 
 namespace Cards_Games
@@ -115,7 +116,11 @@ namespace Cards_Games
                     for (int i = 0; i < playerActions.Count; i++)
                     {
                         _TimeLine.Add(playerActions[i]);
-                        player.NextMove = playerCard.Speed;
+
+                        int hasteFactor = HasteTable.GetFactor(player.Haste);
+                        int hasteValue = playerCard.Speed - hasteFactor;
+
+                        player.NextMove = hasteValue > 0 ? hasteValue : 0;
                     }
 
                     string playerEvent = $"{player.Name} plays {playerActions[0].Card.Name} targeting {actedUpon}will happen on turn: {playerActions[0].When}";
@@ -123,7 +128,13 @@ namespace Cards_Games
                 }
                 else
                 {
-                    player.NextMove -= 1;
+                    int speedFactor = SpeedTable.GetFactor(player.Speed);
+                    player.NextMove -= speedFactor;
+
+                    if (player.NextMove < 0)
+                    {
+                        player.NextMove = 0;
+                    }
                 }
             }
         }
