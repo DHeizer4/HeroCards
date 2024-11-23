@@ -1,0 +1,7 @@
+Test speed
+Test Haste
+Test Taunting
+Test Enrage
+Test Shield
+
+Set Player positions

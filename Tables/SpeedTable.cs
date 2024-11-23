@@ -10,19 +10,19 @@ namespace Cards_Games.Tables
         {
             int speedFactor = 0;
 
-            if (speedValue <= 16)
+            if (speedValue > 16)
             {
                 speedFactor = 1;
             }
-            else if (speedValue <= 32)
+            else if (speedValue >= 32)
             {
                 speedFactor = 2;
             }
-            else if (speedValue <= 64)
+            else if (speedValue >= 64)
             {
                 speedFactor = 3;
             }
-            else if (speedValue <= 128)
+            else if (speedValue >= 128)
             {
                 speedFactor = 4;
             }

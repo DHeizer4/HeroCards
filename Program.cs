@@ -22,7 +22,7 @@ namespace Cards_Games
 
             List<string> header = new List<string>();
             List<string> races = GetCharacterRaceChoice();
-            var choice = Display.DialogWithInput(header, races, "Please choose a race: ");
+            var choice = Display.DialogWithInput(header, races, "Please choose a race: ", "dialog");
             CharacterRace race = (CharacterRace)(choice -1);
 
             var player1 = CharacterCreation.CharacterCreator.CreateBaseRace(name, race, new List<string>());

@@ -1,7 +1,9 @@
 ﻿using Cards_Games.Enumerations;
+using Cards_Games.Logging;
 using Cards_Games.Models;
 using Cards_Games.Players;
 using Cards_Games.Players.PlayerUtilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Cards_Games.Enumerations.CardResourceEnum;
@@ -13,16 +15,24 @@ namespace Cards_Games
     {
 
         //This whole function needs to be rewritten for new card structure
-        public static void ExecuteActions(List<RPGAction> timeLine, List<IRPGPlayer> players, int time, List<string> turnLog)
+        public static void ExecuteActions(List<RPGAction> timeLine, List<IRPGPlayer> players, int time)
         {
             // Do any actions/Cards needs to be exectued
             List<RPGAction> actionsToBeExecuted = CheckForAction(timeLine, players, time);
 
+            foreach (var action in actionsToBeExecuted)
+            {
+                if (action.ActedUpon != null && action.Actor.Team != action.ActedUpon.Team)
+                {
+                    PlayerBuff.ResolveRedirect(action, players);
+                }
+            }
+
             //Execute Buffs / debuffs
-            ApplyBuffs(actionsToBeExecuted, players, turnLog);
+            ApplyBuffs(actionsToBeExecuted, players);
 
             //Execute dmg actions
-            ApplyDamage(actionsToBeExecuted, players, turnLog);
+            ApplyDamage(actionsToBeExecuted, players);
 
 //            Display.SimpleDialogBox(turnLog);
         }
@@ -42,7 +52,7 @@ namespace Cards_Games
             return currentActions;
         }
 
-        public static void ApplyBuffs(List<RPGAction> ActionsToBeExecuted, List<IRPGPlayer> players, List<string> turnLog)
+        public static void ApplyBuffs(List<RPGAction> ActionsToBeExecuted, List<IRPGPlayer> players)
         {
             foreach (var action in ActionsToBeExecuted)
             {
@@ -56,8 +66,8 @@ namespace Cards_Games
                         {
                             if (action.ActedUpon == player)
                             {
-                                string dialog = PlayerBuff.ApplyStatusEffect(action.Actor.Name, player, status);
-                                turnLog.Add(dialog);
+                                PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
+
                             }
                         }
                     }
@@ -67,8 +77,7 @@ namespace Cards_Games
                         {
                             if (action.Actor == player)
                             {
-                                string dialog = PlayerBuff.ApplyStatusEffect(action.Actor.Name, player, status);
-                                turnLog.Add(dialog);
+                                PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
                             }
                         }
                     }
@@ -78,8 +87,7 @@ namespace Cards_Games
                         {
                             if (action.Actor.Team != player.Team)
                             {
-                                string dialog = PlayerBuff.ApplyStatusEffect(action.Actor.Name, player, status);
-                                turnLog.Add(dialog);
+                                PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
                             }
                         }
                     }
@@ -89,8 +97,7 @@ namespace Cards_Games
                         {
                             if (action.Actor.Team == player.Team)
                             {
-                                string dialog = PlayerBuff.ApplyStatusEffect(action.Actor.Name, player, status);
-                                turnLog.Add(dialog);
+                                PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
                             }
                         }
                     }
@@ -98,8 +105,7 @@ namespace Cards_Games
                     {
                         foreach (IRPGPlayer player in players)
                         {
-                            string dialog = PlayerBuff.ApplyStatusEffect(action.Actor.Name, player, status);
-                            turnLog.Add(dialog);
+                            PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
                         }
                     }
                 }
@@ -124,7 +130,7 @@ namespace Cards_Games
             return status;
         }
 
-        public static void ApplyDamage(List<RPGAction> ActionsToBeExecuted, List<IRPGPlayer> players, List<string> turnLog)
+        public static void ApplyDamage(List<RPGAction> ActionsToBeExecuted, List<IRPGPlayer> players)
         {
 
             foreach (var action in ActionsToBeExecuted)
@@ -192,7 +198,7 @@ namespace Cards_Games
                                 int modifiedDamaged = PlayerProperty.GetModifiedDamage(action.Actor, damageEffect);
                                 int amt = PlayerProperty.DoDamageToPlayer(actedUpon, damageEffect, modifiedDamaged);
                                 string damageEvent = $"{action.Actor.Name} did {amt} {damageEffect.AttackType.ToString()} to {actedUpon.Name}";
-                                turnLog.Add(damageEvent);
+                                TurnLog.AddToLog(damageEvent);
                             }
                             else if (damageEffect.Resource == CardResource.Mana)
                             {
@@ -200,14 +206,14 @@ namespace Cards_Games
                                 actedUpon.Mana = adjustedResource < 0 ? 0 : adjustedResource;
 
                                 string manaEvent = $"{action.Actor.Name}'s {action.Card.Name} cuases {actedUpon.Name}'s mana to change to {actedUpon.Mana}";
-                                turnLog.Add(manaEvent);
+                                TurnLog.AddToLog(manaEvent);
                             }
                             else if (damageEffect.Resource == CardResource.Time)
                             {
                                 int adjustedResource = actedUpon.Time - (int)damageEffect.Amount;
                                 actedUpon.Time = adjustedResource < 0 ? 0 : adjustedResource;
                                 string timeEvent = $"{action.Actor.Name}'s {action.Card.Name} cuases {actedUpon.Name}'s time to change to {actedUpon.Mana}";
-                                turnLog.Add(timeEvent);
+                                TurnLog.AddToLog(timeEvent);
                             }
                         }
 

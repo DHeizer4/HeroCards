@@ -1,4 +1,6 @@
-﻿using Cards_Games.Models;
+﻿using Cards_Games.Logging;
+using Cards_Games.Models;
+using Cards_Games.Players.StatusUtilities;
 using System;
 using System.Collections.Generic;
 using static Cards_Games.Enumerations.AttackTypeEnum;
@@ -10,80 +12,39 @@ namespace Cards_Games.Players.PlayerUtilities
 {
     class PlayerBuff
     {
-        public static string ApplyStatusEffect(string actor, IRPGPlayer player, Status status)
+        public static string ApplyStatusEffect(IRPGPlayer actor, IRPGPlayer player, Status status)
         {
             string dialog = "";
 
             if (status.StatusType == StatusEnum.Burning)
             {
                 status.Display = true;
-                dialog = ApplyBurning(actor, player, status);
+                BurningUtil.ApplyBurning(actor.Name, player, status);
             }
             else if (IsCharacterPropertyStatus(status))
             {
                 status.Display = false;
                 player.Statuses.Add(status);
                 dialog = ($"{actor} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration} to {player.Name}");
+                TurnLog.AddToLog(dialog);
+            }
+            else if (status.StatusType == StatusEnum.Shielded)
+            {
+                ShieldedUtil.ApplyShield(actor, player, status);
             }
             else
             {
                 status.Display = true;
                 player.Statuses.Add(status);
                 dialog = ($"{actor} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
+                TurnLog.AddToLog(dialog);
             }
 
             return dialog;
         }
 
-        private static string ApplyBurning(string actor, IRPGPlayer player, Status status)
-        {
-            bool preexisting = false;
-            string dialog = string.Empty;
 
-            foreach (Status existing in player.Statuses)
-            {
-                if (existing.StatusType == StatusEnum.Burning)
-                {
-                    existing.Duration += status.Duration;
-                    existing.Amount += status.Amount;
-                    existing.Interval = status.Interval;
 
-                    preexisting = true;
-                    dialog = ($"{actor} modifies {status.StatusType.ToString()} (Amt: {existing.Amount}, Dur: {existing.Duration}, int: {existing.Interval}) on {player.Name}");
-                }
-            }
-
-            if (!preexisting)
-            {
-                status.InternalTracker = status.Interval;
-                player.Statuses.Add(status);
-                dialog = ($" applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
-            }
-
-            return dialog;
-        }
-
-        public static void ResolveBurningDebuffs(IRPGPlayer player, List<string> turnLog)
-        {
-
-            foreach (Status status in player.Statuses)
-            {
-                if (status.StatusType == StatusEnum.Burning)
-                {
-                    if (status.InternalTracker == 0)
-                    {
-                        DamageEffect damageEffect = new DamageEffect(Target.None, status.Amount, AttackType.Fire, CardResource.Health);
-                        int amt = PlayerProperty.DoDamageToPlayer(player, damageEffect, status.Amount);
-                        turnLog.Add($"{player.Name} takes {amt} Burning Damage");
-                        status.InternalTracker = status.Interval - 1;
-                    }
-                    else
-                    {
-                        status.InternalTracker -= 1;
-                    }
-                }
-            }
-        }
 
         public static bool IsCharacterPropertyStatus(Status status)
         {
@@ -91,12 +52,12 @@ namespace Cards_Games.Players.PlayerUtilities
 
             List<StatusEnum> charaterPropertyAffectingStasus = new List<StatusEnum>()
             {
-                StatusEnum.Strengthen,
-                StatusEnum.Enlightened,
-                StatusEnum.Agile,
-                StatusEnum.Nimble,
-                StatusEnum.Acclerate,
-                StatusEnum.Quickened
+                StatusEnum.StrengthAdj,
+                StatusEnum.IntellectAdj,
+                StatusEnum.AgilityAdj,
+                StatusEnum.DexterityAdj,
+                StatusEnum.SpeedAdj,
+                StatusEnum.HasteAdj
             };
 
             if (charaterPropertyAffectingStasus.Contains(status.StatusType))
@@ -149,6 +110,40 @@ namespace Cards_Games.Players.PlayerUtilities
             }
 
             return players;
+        }
+
+        public static void ResolveRedirect(RPGAction action, List<IRPGPlayer> players)
+        {
+            List<IRPGPlayer> possibleTargets = new List<IRPGPlayer>();
+
+            foreach (IRPGPlayer player in players)
+            {
+                if (player.Team == action.ActedUpon.Team) 
+                {
+                    possibleTargets.Add(player);
+                }
+            }
+
+            if (possibleTargets.Count > 1)
+            {
+                foreach(IRPGPlayer player in possibleTargets)
+                {
+                    foreach(Status status in player.Statuses)
+                    {
+                        if (status.StatusType == StatusEnum.Redirecting && player != action.ActedUpon)
+                        {
+                            action.ActedUpon = player;
+                            status.Amount -= 1;
+
+                            if (status.Amount <= 0)
+                            {
+                                player.Statuses.Remove(status);
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     }
 }
