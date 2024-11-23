@@ -27,13 +27,13 @@ namespace Cards_Games
             When = when + turnNumber;
         }
 
-        public RPGAction(IRPGPlayer aActor, IRPGPlayer aTarget, bool orgin, RPGCard aCard, int turnNumber)
+        public RPGAction(IRPGPlayer actor, IRPGPlayer actedUpon, bool orgin, RPGCard card, int turnNumber)
         {
-            Actor = aActor;
-            ActedUpon = aTarget;
+            Actor = actor;
+            ActedUpon = actedUpon;
             Original = orgin;
-            Card = aCard;
-            When = aCard.Speed + turnNumber;
+            Card = card;
+            When = card.Speed + turnNumber;
         }
 
         public static string GetTarget(RPGCard card, IRPGPlayer activePlayer, List<IRPGPlayer> allPlayers, int turn, ref List<RPGAction> playerActions)

@@ -1,0 +1,95 @@
+This is a guide how to setup a given buff on a card.
+Buffs use that List of Status Effects on a card
+
+The Status effect has the following properties:
+
+Enums:
+StatusType: 	values are the individual buffs that will be discussed below
+			Discussion on this readme will be to what the other values mean and how to set up each Status Type
+
+Target: 	values are: Self, Party, Ally, Enemy, All Enemies, All, None
+Attack Type:	Different type of Damage.  each dmg type is adjusted by a different stat
+
+Amount:		This is an integer value
+Duration:	This is an integer value and always indicates how many rounds a Status lasts for
+Interval:	If a status does not trigger every round this indicates how it triggers... 2 = every 2nd round
+Is Percent:	This is a modifier on amt to indicate the amt is a percentage
+Is Stackable:	
+Is Beneficial:	Is used for Cleansing to determine beneficial from negative effects
+
+
+
+---- Burning ----
+This is to symbolize the player being on fire and is a damage over time effect
+is Displayed in buff box
+
+IsBeneficial: should always be false
+IsPercent:    false
+AttackType:   Fire (could be anything though... shadowFlame??)
+Duration:     How many round a player will be burning for
+Interval:     How often the damage ticks
+Amount:       The Amount of damage that it does when it ticks (a negative amount would be a healing effect)
+IsStackable:  not used (always true) 
+                     Amount adds together 2+2 = 4 
+		     Duration to current duration 2+2 = 4 
+		     Interval is changed to most recent played old interval 2 new card interval 4 interval is now every 4th turn
+
+
+
+---- Character Status Adjustment ----
+These status effects are to adjust the base stats of a character for a duration
+The Player stats this can adjust are Strength, Intellect, Agility, Dexterity, Speed, Haste
+is displayed on the Status bar
+
+StatusEnum:   StrengthAdj, IntellectAdj, AgilityAdj, DexteritAdj, SpeedAdj, HasteAdj
+IsBeneficial: Could be true or false depending if it is lowering or raising a stat
+IsStackable:  Not used (this is always stackable)
+IsPercent:    Could be true or false 
+AttackType:   Should always be StatModify
+Interval:     Not used
+Amount:       Adjusted amount whether percentage amount or static amount
+Duration:     How long the change to the status effect lasts for
+
+
+---- Taunting ----
+Taunting is a percent chance to be the only person on the enemy target list
+
+Amount:		This is the percent chance to be taunting
+IsStackable:    Not Used (always adds on) ???
+IsBeneficial:   True (should always be true)
+IsPercent:	Not used (Always True)
+Duration:	How long you are taunting for
+Interval:	Not used
+AttackType:	None
+
+
+---- Shielded ----
+A temporary health pool that is exhausted before you health is used
+
+Amount:		The amount of temporary Health that is granted
+Duration:	How long the temporary Health is for
+		When duration is over the max amount of the shield is recalculated
+IsBeneficial:	True (should always be true)
+IsPercent:	True or false can be a percentage of the caster's health
+Interval:	1 = if percent use casters health other numbers use the targets health percent
+AttackType:	Heal
+IsStackable:	Not Used (this is always stackable)
+
+
+---- Enraged ----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

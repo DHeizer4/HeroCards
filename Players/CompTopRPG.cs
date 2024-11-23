@@ -9,6 +9,7 @@ namespace Cards_Games.Players
     class CompTopRPG : IRPGPlayer
     {
         public string Id { get; set; }
+        public int DisplayPosition { get; set; }
         public string Name { get; set; }
         public List<Status> Statuses { get; set; } = new List<Status>();
         public int Team { get; set; }

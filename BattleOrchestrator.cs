@@ -1,6 +1,9 @@
-﻿using Cards_Games.Models;
+﻿using Cards_Games.Enumerations;
+using Cards_Games.Logging;
+using Cards_Games.Models;
 using Cards_Games.Players;
 using Cards_Games.Players.PlayerUtilities;
+using Cards_Games.Players.StatusUtilities;
 using Cards_Games.Tables;
 using System.Collections.Generic;
 
@@ -17,27 +20,31 @@ namespace Cards_Games
             _TimeLine.Clear();
 
             ResetPlayers(players);
+            players = BattleOrchestrator.SpeedSort(players);
+            BattleOrchestrator.SetDisplayPositions(players);
             GetOpeningHands(players);
             Display.BattleActionGrid(_TimeLine, _Turn);
 
             do
             {
                 List<string> turnLog = new List<string>() { $"---- Turn: {_Turn} ----"};
+                TurnLog.Erase();
+                TurnLog.AddToLog($"---- Turn: {_Turn} ----");
                 Display.GameInfo(_Turn);
 
                 Display.Players(players);
 
                 players = BattleOrchestrator.SpeedSort(players);
-                ActionOrchestrator.ExecuteActions(_TimeLine, players, _Turn, turnLog);
-                BattleOrchestrator.GetNextActions(players, turnLog);
+                ActionOrchestrator.ExecuteActions(_TimeLine, players, _Turn);
+                BattleOrchestrator.GetNextActions(players);
 
                 Display.Players(players);             // this is sorting the players every time need to set teams once and then handle as teams.  Also need to set display positions.  Also limitation currently here to only have 2 teams
                 Display.BattleActionGrid(_TimeLine, _Turn);
                 Display.Players(players);
 
-                EndOfTurn(players, turnLog);
-
-                Display.SimpleDialogBox(turnLog);
+                EndOfTurn(players);
+                Display.Players(players);
+                Display.SimpleDialogBox(TurnLog.GetLog());
                 _Turn++;
             } while (CheckForWin(players) == -1);
 
@@ -58,11 +65,32 @@ namespace Cards_Games
             }
         }
 
-        public static void EndOfTurn(List<IRPGPlayer> players, List<string> turnLog)
+        public static void SetDisplayPositions(List<IRPGPlayer> players)
+        {
+            int team1DisplayPosition = 1;
+            int team2DisplayPosition = 1;
+
+            foreach(IRPGPlayer player in players)
+            {
+                if (player.Team == 1)
+                {
+                    player.DisplayPosition = team1DisplayPosition;
+                    team1DisplayPosition++;
+                }
+                
+                if (player.Team == 2)
+                {
+                    player.DisplayPosition = team2DisplayPosition;
+                    team2DisplayPosition++;
+                }
+            }
+        }
+
+        public static void EndOfTurn(List<IRPGPlayer> players)
         {
             foreach (IRPGPlayer player in players)
             {
-                PlayerBuff.ResolveBurningDebuffs(player, turnLog);
+                BurningUtil.ResolveBurningDebuffs(player);
                 AddTime(player);
                 RemoveDurationFromBuffs(player);
             }
@@ -86,6 +114,10 @@ namespace Cards_Games
 
             foreach (Status status in statusesToRemove)
             {
+                if(status.StatusType == StatusEnumeration.StatusEnum.Shielded)
+                {
+                    ShieldedUtil.RemoveShield(player, status);
+                }
                 player.Statuses.Remove(status);
             }
         }
@@ -103,7 +135,7 @@ namespace Cards_Games
             }
         }
 
-        public static void GetNextActions(List<IRPGPlayer> players, List<string> turnLog)
+        public static void GetNextActions(List<IRPGPlayer> players)
         {
             foreach (IRPGPlayer player in players)
             {
@@ -124,12 +156,13 @@ namespace Cards_Games
                     }
 
                     string playerEvent = $"{player.Name} plays {playerActions[0].Card.Name} targeting {actedUpon}will happen on turn: {playerActions[0].When}";
-                    turnLog.Add(playerEvent);
+                    TurnLog.AddToLog(playerEvent);
+
                 }
                 else
                 {
                     int speedFactor = SpeedTable.GetFactor(player.Speed);
-                    player.NextMove -= speedFactor;
+                    player.NextMove -= 1 + speedFactor;
 
                     if (player.NextMove < 0)
                     {

@@ -14,7 +14,8 @@ namespace Cards_Games.Enumerations
                             Electric,       // Magical
                             Shadow,         // Magical
                             Heal,           // Generic
-                            StatModify      // Generic
+                            StatModify,     // Generic
+                            None
         }
     }
 }

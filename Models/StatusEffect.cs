@@ -16,8 +16,9 @@ namespace Cards_Games.Models
         public AttackType AttackType { get; set; }
         public bool IsPercent { get; set; }
         public bool IsStackable { get; set; }
+        public bool IsBeneficial { get; set; }
 
-        public StatusEffect(Target target, StatusEnum statusType, int amount, int duration, int interval, AttackType attackType, bool isPercent, bool isStackable)
+        public StatusEffect(Target target, StatusEnum statusType, int amount, int duration, int interval, AttackType attackType, bool isPercent, bool isStackable, bool isBeneficial)
         {
             Target = target;
             StatusType = statusType;
@@ -27,6 +28,7 @@ namespace Cards_Games.Models
             AttackType = attackType;
             IsPercent = isPercent;
             IsStackable = isStackable;
+            IsBeneficial = isBeneficial;
         }
     }
 }

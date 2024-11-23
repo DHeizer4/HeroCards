@@ -7,6 +7,7 @@ namespace Cards_Games.Players
     class HumanRPG : IRPGPlayer
     {
         public string Id { get; set; }
+        public int DisplayPosition { get; set; }
         public string Name { get; set; }
         public CharacterRace Race { get; set; }
         public List<string> Skills { get; set; }  // improvments not limitations
@@ -90,7 +91,7 @@ namespace Cards_Games.Players
             List<string> header = new List<string>() { "The possible targets are..." };
             string prompt = "Please choose a target: ";
 
-            choice = Display.DialogWithInput(header, listOfPlayers, prompt);
+            choice = Display.DialogWithInput(header, listOfPlayers, prompt, "dialog");
 
             target = possibleTargets[choice - 1];
 
@@ -100,6 +101,7 @@ namespace Cards_Games.Players
         public RPGCard PlayCard()
         {
             bool canAfford = true;
+            bool desireToPlay = false;
             int choice = 0;
             List<RPGCard> played = new List<RPGCard>();
             List<string> ListOfCards = CardsInHand();
@@ -108,10 +110,11 @@ namespace Cards_Games.Players
 
             do
             {
-                choice = Display.DialogWithInput(header, ListOfCards, prompt);
+                choice = Display.DialogWithInput(header, ListOfCards, prompt, "dialog");
 
                 played.Add(Hand[choice - 1]);
                 canAfford = PlayerUtilities.CardCost.CanAfford(this, played[0]);
+                desireToPlay = Display.DisplayCard(played[0]);
 
                 if (canAfford == false)
                 {
@@ -119,7 +122,12 @@ namespace Cards_Games.Players
                     played.RemoveAt(0);
                 }
 
-            } while (!canAfford);
+                if (desireToPlay == false)
+                {
+                    played.RemoveAt(0);
+                }
+
+            } while (!canAfford || !desireToPlay);
 
             // We do not want to pay the costs before confirming all costs for the card can be paid
             PlayerUtilities.CardCost.PayCosts(this, played[0]);

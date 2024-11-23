@@ -1,4 +1,5 @@
 ﻿using Cards_Games.Models;
+using Cards_Games.Players.StatusUtilities;
 using static Cards_Games.Enumerations.StatusEnumeration;
 
 namespace Cards_Games.Players.PlayerUtilities
@@ -24,7 +25,7 @@ namespace Cards_Games.Players.PlayerUtilities
             {
                 switch (status.StatusType)
                 {
-                    case StatusEnum.Strengthen:
+                    case StatusEnum.StrengthAdj:
                         if (status.IsPercent)
                         {
                             strengthPercentBonus = status.Amount;
@@ -34,7 +35,7 @@ namespace Cards_Games.Players.PlayerUtilities
                             strengthBonus = status.Amount;
                         }
                         break;
-                    case StatusEnum.Enlightened:
+                    case StatusEnum.IntellectAdj:
                         if (status.IsPercent)
                         {
                             intellegencePercentBonus = status.Amount;
@@ -44,7 +45,7 @@ namespace Cards_Games.Players.PlayerUtilities
                             intellegenceBonus = status.Amount;
                         }
                         break;
-                    case StatusEnum.Agile:
+                    case StatusEnum.AgilityAdj:
                         if (status.IsPercent)
                         {
                             agilityPercentBonus = status.Amount;
@@ -54,7 +55,7 @@ namespace Cards_Games.Players.PlayerUtilities
                             agilityBonus = status.Amount;
                         }
                         break;
-                    case StatusEnum.Nimble:
+                    case StatusEnum.DexterityAdj:
                         if (status.IsPercent)
                         {
                             dexterityPercentBonus = status.Amount;
@@ -64,7 +65,7 @@ namespace Cards_Games.Players.PlayerUtilities
                             dexterityBonus = status.Amount;
                         }
                         break;
-                    case StatusEnum.Acclerate:
+                    case StatusEnum.SpeedAdj:
                         if (status.IsPercent)
                         {
                             speedPercentBonus = status.Amount;
@@ -74,7 +75,7 @@ namespace Cards_Games.Players.PlayerUtilities
                             speedBonus = status.Amount;
                         }
                         break;
-                    case StatusEnum.Quickened:
+                    case StatusEnum.HasteAdj:
                         if (status.IsPercent)
                         {
                             hastePercentBonus = status.Amount;
@@ -131,7 +132,8 @@ namespace Cards_Games.Players.PlayerUtilities
         public static int DoDamageToPlayer(IRPGPlayer actedUpon, DamageEffect damageEffect, int modifiedDamageAmt)
         {
             int startingHealth = actedUpon.Health;
-            modifiedDamageAmt = ResolveShield(actedUpon, modifiedDamageAmt);
+            
+            modifiedDamageAmt = ShieldedUtil.ResolveShield(actedUpon, modifiedDamageAmt);
 
             actedUpon.Health -= modifiedDamageAmt;
 
@@ -141,23 +143,6 @@ namespace Cards_Games.Players.PlayerUtilities
             }
 
             return startingHealth - actedUpon.Health;
-        }
-
-        public static int ResolveShield(IRPGPlayer player, int damageAmount)
-        {
-            int postShieldDamage = damageAmount - player.Shield;
-            
-            if (postShieldDamage >= 0)
-            {
-                player.Shield = 0;
-            }
-            else if (postShieldDamage < 0)
-            {
-                player.Shield = -1 * postShieldDamage;
-                postShieldDamage = 0;
-            }
-
-            return postShieldDamage;
         }
 
     }

@@ -21,11 +21,12 @@ namespace Cards_Games
         public string Description { get; set; }
         public int ChanceToHit { get; set; }
         public int When { get; set; }
+        public string Limitation { get; set; }
 
 
         public static Dictionary<string, RPGCard> Library = new Dictionary<string, RPGCard>();
 
-        public RPGCard(string cardtype, int alevel, string name, int speed, int durability, List<Cost> costs, List<DamageEffect> damageEffects, List<StatusEffect> statusEffects, string aphrase, string description)
+        public RPGCard(string cardtype, int alevel, string name, int speed, int durability, List<Cost> costs, List<DamageEffect> damageEffects, List<StatusEffect> statusEffects, string aphrase, string description, string limitation)
         {
             CardType = cardtype;
             Level = alevel;
@@ -37,11 +38,13 @@ namespace Cards_Games
             Effects = statusEffects;
             Phrase = aphrase;
             Description = description;
+            Limitation = limitation;
         }
 
         public static List<RPGCard> StartList()
         {
             List<RPGCard> start = new List<RPGCard>();
+            start.Add(RPGCard.Library["Bulwark"]);
             start.Add(RPGCard.Library["Heal"]);
             start.Add(RPGCard.Library["Empowering Roar"]);
             start.Add(RPGCard.Library["Burn"]);
@@ -74,7 +77,8 @@ namespace Cards_Games
                 },
                 new List<StatusEffect>(),
                 "punches ",
-                "1 round Hits a single enemy");
+                "1 round Hits a single enemy",
+                "none");
 
             RPGCard heal = new RPGCard("Cleric", 0, "Heal", 5, 1,
                 new List<Cost>
@@ -86,7 +90,8 @@ namespace Cards_Games
                 },
                 new List<StatusEffect>(),
                 "uses the power of light to heal ",
-                "5 rounds 2 mana Heals a single ally");
+                "5 rounds 2 mana Heals a single ally",
+                "none");
 
             RPGCard cataclysm = new RPGCard("Warlock", 0, "Cataclysm", 10, 1,
                 new List<Cost>
@@ -98,7 +103,8 @@ namespace Cards_Games
                 },
                 new List<StatusEffect>(),
                 "splits the earth and lava erupts burning ",
-                "10 rounds 10 mana A Fire Attack that deals damage to everyone");
+                "10 rounds 10 mana A Fire Attack that deals damage to everyone", 
+                "none");
 
             RPGCard groupHeal = new RPGCard("Cleric", 0, "Group Heal", 4, 1,
                 new List<Cost>
@@ -110,7 +116,8 @@ namespace Cards_Games
                 },
                 new List<StatusEffect>(),
                 "causes light to shine on his allies healing ",
-                "5 rounds 6 mana Heals you and all your allies");
+                "5 rounds 6 mana Heals you and all your allies", 
+                "none" );
 
             RPGCard cleave = new RPGCard("Warrior", 0, "Cleave", 5, 1,
                 new List<Cost>(),
@@ -119,7 +126,8 @@ namespace Cards_Games
                 },
                 new List<StatusEffect>(),
                 "swings his weapon cleaving ",
-                "5 rounds Physical attack that hits all enemies");
+                "5 rounds Physical attack that hits all enemies",
+                "none" );
 
             RPGCard manaPotion = new RPGCard("Generic", 0, "Mana Potion", 1, 4,
                 new List<Cost>(),
@@ -129,7 +137,8 @@ namespace Cards_Games
                 },
                 new List<StatusEffect>(),
                 "drinks the potion and gains mana",
-                "restores 10 mana");
+                "restores 10 mana",
+                "none");
 
             RPGCard burn = new RPGCard("Mage", 0, "Burn", 2, 1,
                 new List<Cost>
@@ -139,10 +148,11 @@ namespace Cards_Games
                 new List<DamageEffect>(),
                 new List<StatusEffect>
                 {
-                    new StatusEffect(Target.Enemy, StatusEnum.Burning, 1, 3, 1, AttackType.Fire, false, true)
+                    new StatusEffect(Target.Enemy, StatusEnum.Burning, 1, 3, 1, AttackType.Fire, false, true, false)
                 },
                 "burns ",
-                "2 rounds 2 mana sets an enemy on fire");
+                "2 rounds 2 mana sets an enemy on fire",
+                "none");
 
             RPGCard fireBall = new RPGCard("Mage", 0, "Fireball", 4, 1,
                 new List<Cost>
@@ -155,23 +165,37 @@ namespace Cards_Games
                 },
                 new List<StatusEffect>
                 {
-                    new StatusEffect(Target.AllEnemys, StatusEnum.Burning, 2, 4, 2, AttackType.Fire, false, true)
+                    new StatusEffect(Target.AllEnemys, StatusEnum.Burning, 2, 4, 2, AttackType.Fire, false, true, false)
                 },
                 "casts fireball at ",
-                "4 rounds 4 mana hits an enemy for fire damage and sets all enemies on fire");
+                "4 rounds 4 mana hits an enemy for fire damage and sets all enemies on fire", 
+                "none");
 
             RPGCard empoweringRoar = new RPGCard("Warrior", 0, "Empowering Roar", 1, 1,
                 new List<Cost>(),
                 new List<DamageEffect>(),
                 new List<StatusEffect>
                 {
-                    new StatusEffect(Target.Party, StatusEnum.Strengthen, 10, 10, 1, AttackType.StatModify, false, false),
-                    new StatusEffect(Target.Party, StatusEnum.Agile, 25, 10, 1, AttackType.StatModify, false, false)
+                    new StatusEffect(Target.Party, StatusEnum.StrengthAdj, 10, 10, 1, AttackType.StatModify, false, false, true),
+                    new StatusEffect(Target.Party, StatusEnum.AgilityAdj, 25, 10, 1, AttackType.StatModify, false, false, true)
                 },
                 "roars strengthening ",
-                "1 round Increases Strength and Agility");
+                "1 round Increases Strength and Agility",
+                "none");
 
-
+            RPGCard bulwark = new RPGCard("Tank", 0, "Bulwark", 2, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Health, 5),
+                },
+                new List<DamageEffect>(),
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.Party, StatusEnum.Shielded, 20, 5, 1, AttackType.StatModify, true, true, true)
+                },
+                "Shields ",
+                "2 rounds Shields his allies for 20% of thier health for 5 turns",
+                "Minotaur");
 
 
 
@@ -185,6 +209,7 @@ namespace Cards_Games
             Library.Add("Burn", burn);
             Library.Add("FireBall", fireBall);
             Library.Add("Empowering Roar", empoweringRoar);
+            Library.Add("Bulwark", bulwark);
         }
 
 
