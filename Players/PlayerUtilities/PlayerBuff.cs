@@ -25,7 +25,7 @@ namespace Cards_Games.Players.PlayerUtilities
             {
                 status.Display = false;
                 player.Statuses.Add(status);
-                dialog = ($"{actor} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration} to {player.Name}");
+                dialog = ($"{actor.Name} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration} to {player.Name}");
                 TurnLog.AddToLog(dialog);
             }
             else if (status.StatusType == StatusEnum.Shielded)
@@ -36,7 +36,7 @@ namespace Cards_Games.Players.PlayerUtilities
             {
                 status.Display = true;
                 player.Statuses.Add(status);
-                dialog = ($"{actor} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
+                dialog = ($"{actor.Name} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
                 TurnLog.AddToLog(dialog);
             }
 
@@ -130,7 +130,7 @@ namespace Cards_Games.Players.PlayerUtilities
                 {
                     foreach(Status status in player.Statuses)
                     {
-                        if (status.StatusType == StatusEnum.Redirecting && player != action.ActedUpon)
+                        if (status.StatusType == StatusEnum.Redirecting && player != action.ActedUpon && !DeathUtil.CheckForDeath(player))
                         {
                             action.ActedUpon = player;
                             status.Amount -= 1;

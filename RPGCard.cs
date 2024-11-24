@@ -7,7 +7,7 @@ using static Cards_Games.Enumerations.TargetEnum;
 
 namespace Cards_Games
 {
-    public class RPGCard
+    class RPGCard
     {
         public string CardType { get; set; }
         public string Name { get; set; }
@@ -58,6 +58,32 @@ namespace Cards_Games
             return start;
         }
 
+        public static Deck GoblinScoutDeck()
+        {
+            List<RPGCard> decklist = new List<RPGCard>();
+            for (int i = 0; i < 12; i++)
+            {
+                decklist.Add(RPGCard.Library["Empowering Roar"]);
+                decklist.Add(RPGCard.Library["Cleave"]);
+                decklist.Add(RPGCard.Library["Cleave"]);
+            }
+
+            return new Deck("GoblinScout", decklist);
+        }
+
+        public static Deck GoblinBruiserDeck()
+        {
+            List<RPGCard> decklist = new List<RPGCard>();
+            for (int i = 0; i < 12; i++)
+            {
+                decklist.Add(RPGCard.Library["Empowering Roar"]);
+                decklist.Add(RPGCard.Library["Slam"]);
+                decklist.Add(RPGCard.Library["Slam"]);
+            }
+
+            return new Deck("GoblinBruiser", decklist);
+        }
+
         public static string GetDescription(RPGCard card)
         {
             return "";
@@ -79,6 +105,27 @@ namespace Cards_Games
                 "punches ",
                 "1 round Hits a single enemy",
                 "none");
+
+            RPGCard slam = new RPGCard("Generic", 0, "Slam", 6, 1,
+                new List<Cost>(),
+                new List<DamageEffect> {
+                    new DamageEffect(Target.Enemy, 6, AttackType.Bludgeon, CardResource.Health)
+                },
+                new List<StatusEffect>(),
+                "Slams his fist into ",
+                "6 round Hits a single enemy",
+                "none");
+
+            RPGCard slash = new RPGCard("Generic", 0, "Slash", 4, 1,
+                new List<Cost>(),
+                new List<DamageEffect> {
+                    new DamageEffect(Target.Enemy, 4, AttackType.Slashing, CardResource.Health)
+                },
+                new List<StatusEffect>(),
+                "Slashes at ",
+                "6 round Hits a single enemy",
+                "none");
+
 
             RPGCard heal = new RPGCard("Cleric", 0, "Heal", 5, 1,
                 new List<Cost>
@@ -103,7 +150,7 @@ namespace Cards_Games
                 },
                 new List<StatusEffect>(),
                 "splits the earth and lava erupts burning ",
-                "10 rounds 10 mana A Fire Attack that deals damage to everyone", 
+                "10 rounds 10 mana A Fire Attack that deals damage to everyone",
                 "none");
 
             RPGCard groupHeal = new RPGCard("Cleric", 0, "Group Heal", 4, 1,
@@ -116,8 +163,8 @@ namespace Cards_Games
                 },
                 new List<StatusEffect>(),
                 "causes light to shine on his allies healing ",
-                "5 rounds 6 mana Heals you and all your allies", 
-                "none" );
+                "5 rounds 6 mana Heals you and all your allies",
+                "none");
 
             RPGCard cleave = new RPGCard("Warrior", 0, "Cleave", 5, 1,
                 new List<Cost>(),
@@ -127,7 +174,7 @@ namespace Cards_Games
                 new List<StatusEffect>(),
                 "swings his weapon cleaving ",
                 "5 rounds Physical attack that hits all enemies",
-                "none" );
+                "none");
 
             RPGCard manaPotion = new RPGCard("Generic", 0, "Mana Potion", 1, 4,
                 new List<Cost>(),
@@ -168,7 +215,7 @@ namespace Cards_Games
                     new StatusEffect(Target.AllEnemys, StatusEnum.Burning, 2, 4, 2, AttackType.Fire, false, true, false)
                 },
                 "casts fireball at ",
-                "4 rounds 4 mana hits an enemy for fire damage and sets all enemies on fire", 
+                "4 rounds 4 mana hits an enemy for fire damage and sets all enemies on fire",
                 "none");
 
             RPGCard empoweringRoar = new RPGCard("Warrior", 0, "Empowering Roar", 1, 1,
@@ -210,6 +257,8 @@ namespace Cards_Games
             Library.Add("FireBall", fireBall);
             Library.Add("Empowering Roar", empoweringRoar);
             Library.Add("Bulwark", bulwark);
+            Library.Add("Slam", slam);
+            Library.Add("Slash", slash);
         }
 
 
