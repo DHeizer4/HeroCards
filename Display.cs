@@ -3,7 +3,6 @@ using Cards_Games.Players;
 using Cards_Games.Players.PlayerUtilities;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Cards_Games
 {
@@ -11,7 +10,7 @@ namespace Cards_Games
     {
         private static XYLocation Team1Display = new XYLocation() { XLocation = 0, YLocation = 0 };
         private static XYLocation Team2Display = new XYLocation() { XLocation = 139, YLocation = 0 };
-        private static XYLocation BattleBoxDisplay = new XYLocation() { XLocation = 0, YLocation = 32 };
+        private static XYLocation BattleBoxDisplay = new XYLocation() { XLocation = 0, YLocation = 33 };
         private static XYLocation infoBoxDisplay = new XYLocation() { XLocation = 0, YLocation = 44 };
         private static XYLocation DialogBoxLocation = new XYLocation() { XLocation = 40, YLocation = 4 };
         private static XYLocation CardDisplayBox = new XYLocation() { XLocation = 80, YLocation = 4 };
@@ -34,14 +33,14 @@ namespace Cards_Games
 
             linesOfDialog.Add($"{card.Name}    cooldown {card.Speed}");
             linesOfDialog.Add("Costs:");
-            
+
             foreach (Cost cost in card.Costs)
             {
                 linesOfDialog.Add($"{cost.Amount.ToString()} {cost.Resource.ToString()}");
             }
-            
+
             linesOfDialog.Add("Effects");
-     
+
             foreach (DamageEffect damageEffect in card.DamageEffects)
             {
                 linesOfDialog.Add($"Does {damageEffect.Amount} {damageEffect.AttackType.ToString()} to {damageEffect.Target.ToString()}");
@@ -57,7 +56,7 @@ namespace Cards_Games
 
             int choice = DialogWithInput(linesOfDialog, choices, "", "card");
 
-            if(choice == 1)
+            if (choice == 1)
             {
                 response = true;
             };
@@ -181,36 +180,12 @@ namespace Cards_Games
 
             foreach (IRPGPlayer player in players)
             {
-                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"                  ");
-                offset += 1;
-                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"                           ");
-                offset += 1;
-                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"                  ");
-                offset += 1;
-                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"                  ");
-                offset += 1;
-                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"                  ");
-                offset += 1;
-                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"                  ");
-                offset += 1;
-                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"                  ");
-                offset += 1;
-                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"                  ");
-                offset += 1;
-                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"                  ");
-                offset += 1;
-                Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                Console.WriteLine($"                  ");
-                offset += 2;
+                for (int i = 0; i <= 15; i++)
+                {
+                    Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                    Console.WriteLine($"                              ");
+                    offset += 1;
+                }
             }
 
             offset = 0;
@@ -276,9 +251,17 @@ namespace Cards_Games
                 {
                     if (status.Display)
                     {
-                        Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
-                        Console.WriteLine($"{status.StatusType.ToString()} Duration {status.Duration} Amount {status.Amount}");
-                        offset += 1;
+                        if (status.StatusType == Enumerations.StatusEnumeration.StatusEnum.Death)
+                        {
+                            Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                            Console.WriteLine($"{status.StatusType.ToString()}");
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(location.XLocation, location.YLocation + offset);
+                            Console.WriteLine($"{status.StatusType.ToString()} Duration {status.Duration} Amount {status.Amount}");
+                            offset += 1;
+                        }
                     }
                 }
                 offset += 2;
@@ -308,7 +291,7 @@ namespace Cards_Games
             int i = 1;
             XYLocation xy = new XYLocation();
 
-            if(location == "card")
+            if (location == "card")
             {
                 xy = CardDisplayBox;
             }
@@ -365,7 +348,7 @@ namespace Cards_Games
             int yOffset = 0;
             XYLocation xy = new XYLocation();
 
-            if(location == "card")
+            if (location == "card")
             {
                 xy = CardDisplayBox;
             }

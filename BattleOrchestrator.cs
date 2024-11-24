@@ -27,21 +27,20 @@ namespace Cards_Games
 
             do
             {
-                List<string> turnLog = new List<string>() { $"---- Turn: {_Turn} ----"};
                 TurnLog.Erase();
                 TurnLog.AddToLog($"---- Turn: {_Turn} ----");
                 Display.GameInfo(_Turn);
 
                 Display.Players(players);
-
                 players = BattleOrchestrator.SpeedSort(players);
                 ActionOrchestrator.ExecuteActions(_TimeLine, players, _Turn);
+
+                Display.Players(players);
                 BattleOrchestrator.GetNextActions(players);
 
                 Display.Players(players);             // this is sorting the players every time need to set teams once and then handle as teams.  Also need to set display positions.  Also limitation currently here to only have 2 teams
                 Display.BattleActionGrid(_TimeLine, _Turn);
-                Display.Players(players);
-
+                
                 EndOfTurn(players);
                 Display.Players(players);
                 Display.SimpleDialogBox(TurnLog.GetLog());
@@ -93,11 +92,20 @@ namespace Cards_Games
                 BurningUtil.ResolveBurningDebuffs(player);
                 AddTime(player);
                 RemoveDurationFromBuffs(player);
+                CheckForDeath(player);
             }
 
             //  CreateLogEntry(); // This needs to say everything that took place on a given turn
         }
 
+
+        public static void CheckForDeath(IRPGPlayer player)
+        {
+            if (player.Health <= 0)
+            {
+                DeathUtil.ApplyDeath(player);
+            }
+        }
 
         public static void RemoveDurationFromBuffs(IRPGPlayer player)
         {
@@ -105,10 +113,13 @@ namespace Cards_Games
 
             foreach(Status status in player.Statuses)
             {
-                status.Duration -= 1;
-                if (status.Duration <= 0)
+                if (!DeathUtil.CheckForDeath(player))
                 {
-                    statusesToRemove.Add(status);
+                    status.Duration -= 1;
+                    if (status.Duration <= 0)
+                    {
+                        statusesToRemove.Add(status);
+                    }
                 }
             }
 
@@ -139,6 +150,11 @@ namespace Cards_Games
         {
             foreach (IRPGPlayer player in players)
             {
+                if (DeathUtil.CheckForDeath(player))
+                {
+                    continue;
+                }
+
                 if (player.NextMove == 0)
                 {
                     RPGCard playerCard = player.PlayCard();

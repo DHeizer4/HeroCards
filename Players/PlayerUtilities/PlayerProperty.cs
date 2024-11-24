@@ -28,61 +28,61 @@ namespace Cards_Games.Players.PlayerUtilities
                     case StatusEnum.StrengthAdj:
                         if (status.IsPercent)
                         {
-                            strengthPercentBonus = status.Amount;
+                            strengthPercentBonus += status.Amount;
                         }
                         else
                         {
-                            strengthBonus = status.Amount;
+                            strengthBonus += status.Amount;
                         }
                         break;
                     case StatusEnum.IntellectAdj:
                         if (status.IsPercent)
                         {
-                            intellegencePercentBonus = status.Amount;
+                            intellegencePercentBonus += status.Amount;
                         }
                         else
                         {
-                            intellegenceBonus = status.Amount;
+                            intellegenceBonus += status.Amount;
                         }
                         break;
                     case StatusEnum.AgilityAdj:
                         if (status.IsPercent)
                         {
-                            agilityPercentBonus = status.Amount;
+                            agilityPercentBonus += status.Amount;
                         }
                         else
                         {
-                            agilityBonus = status.Amount;
+                            agilityBonus += status.Amount;
                         }
                         break;
                     case StatusEnum.DexterityAdj:
                         if (status.IsPercent)
                         {
-                            dexterityPercentBonus = status.Amount;
+                            dexterityPercentBonus += status.Amount;
                         }
                         else
                         {
-                            dexterityBonus = status.Amount;
+                            dexterityBonus += status.Amount;
                         }
                         break;
                     case StatusEnum.SpeedAdj:
                         if (status.IsPercent)
                         {
-                            speedPercentBonus = status.Amount;
+                            speedPercentBonus += status.Amount;
                         }
                         else
                         {
-                            speedBonus = status.Amount;
+                            speedBonus += status.Amount;
                         }
                         break;
                     case StatusEnum.HasteAdj:
                         if (status.IsPercent)
                         {
-                            hastePercentBonus = status.Amount;
+                            hastePercentBonus += status.Amount;
                         }
                         else
                         {
-                            hasteBonus = status.Amount;
+                            hasteBonus += status.Amount;
                         }
                         break;
                 }
@@ -132,11 +132,12 @@ namespace Cards_Games.Players.PlayerUtilities
         public static int DoDamageToPlayer(IRPGPlayer actedUpon, DamageEffect damageEffect, int modifiedDamageAmt)
         {
             int startingHealth = actedUpon.Health;
-            
+           
             modifiedDamageAmt = ShieldedUtil.ResolveShield(actedUpon, modifiedDamageAmt);
 
             actedUpon.Health -= modifiedDamageAmt;
 
+            // this makes sure a player cannot be healed above max health
             if (actedUpon.Health > actedUpon.MaxHealth)
             {
                 actedUpon.Health = actedUpon.MaxHealth;

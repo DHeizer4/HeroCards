@@ -30,6 +30,6 @@ namespace Cards_Games.Logging
         {
 
                 _TurnLog.Add(logEntry);
-         }
+        }
     }
 }

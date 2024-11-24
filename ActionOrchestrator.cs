@@ -3,7 +3,7 @@ using Cards_Games.Logging;
 using Cards_Games.Models;
 using Cards_Games.Players;
 using Cards_Games.Players.PlayerUtilities;
-using System;
+using Cards_Games.Players.StatusUtilities;
 using System.Collections.Generic;
 using System.Linq;
 using static Cards_Games.Enumerations.CardResourceEnum;
@@ -14,7 +14,6 @@ namespace Cards_Games
     class ActionOrchestrator
     {
 
-        //This whole function needs to be rewritten for new card structure
         public static void ExecuteActions(List<RPGAction> timeLine, List<IRPGPlayer> players, int time)
         {
             // Do any actions/Cards needs to be exectued
@@ -34,10 +33,8 @@ namespace Cards_Games
             //Execute dmg actions
             ApplyDamage(actionsToBeExecuted, players);
 
-//            Display.SimpleDialogBox(turnLog);
         }
 
-        // Old function from Battel orchestrator
         public static List<RPGAction> CheckForAction(List<RPGAction> timeLine, List<IRPGPlayer> players, int turnNumber)
         {
             List<RPGAction> currentActions = new List<RPGAction>();
@@ -56,9 +53,13 @@ namespace Cards_Games
         {
             foreach (var action in ActionsToBeExecuted)
             {
+                if (DeathUtil.CheckForDeath(action.Actor))
+                {
+                    continue;
+                }
+
                 foreach (StatusEffect statusEffect in action.Card.Effects)
                 {
-                    Status status = ConvertStatusEffectToStatus(statusEffect);
 
                     if (statusEffect.Target == TargetEnum.Target.Ally || statusEffect.Target == Enumerations.TargetEnum.Target.Enemy)
                     {
@@ -66,6 +67,7 @@ namespace Cards_Games
                         {
                             if (action.ActedUpon == player)
                             {
+                                Status status = ConvertStatusEffectToStatus(statusEffect);
                                 PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
 
                             }
@@ -77,6 +79,7 @@ namespace Cards_Games
                         {
                             if (action.Actor == player)
                             {
+                                Status status = ConvertStatusEffectToStatus(statusEffect);
                                 PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
                             }
                         }
@@ -87,6 +90,7 @@ namespace Cards_Games
                         {
                             if (action.Actor.Team != player.Team)
                             {
+                                Status status = ConvertStatusEffectToStatus(statusEffect);
                                 PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
                             }
                         }
@@ -97,6 +101,7 @@ namespace Cards_Games
                         {
                             if (action.Actor.Team == player.Team)
                             {
+                                Status status = ConvertStatusEffectToStatus(statusEffect);
                                 PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
                             }
                         }
@@ -105,6 +110,7 @@ namespace Cards_Games
                     {
                         foreach (IRPGPlayer player in players)
                         {
+                            Status status = ConvertStatusEffectToStatus(statusEffect);
                             PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
                         }
                     }
@@ -135,6 +141,11 @@ namespace Cards_Games
 
             foreach (var action in ActionsToBeExecuted)
             {
+                if (DeathUtil.CheckForDeath(action.Actor))
+                {
+                    continue;
+                }
+
                 List<IRPGPlayer> filteredPlayers = new List<IRPGPlayer>();
 
                 foreach (DamageEffect damageEffect in action.Card.DamageEffects)

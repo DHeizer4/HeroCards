@@ -44,15 +44,25 @@ namespace Cards_Games.Players
 
 
 
-        public CompTopRPG(string aName, int aTeam)
+        public CompTopRPG(string name, int aTeam, Deck deck, CharacterProperties properties)
         {
-            Name = aName;
+            Name = name;
             Team = aTeam;
-            MaxHealth = 10;
-            Decklist = new Deck("Starter Deck", RPGCard.StartList());
+            Strength = (int)properties.Strength;
+            Intellect = (int)properties.Intellect;
+            Agility = (int)properties.Agility;
+            Dexterity = (int)properties.Dexterity;
+            Endurance = (int)properties.Endurance;
+            Concentrate = (int)properties.Concentration;
+            Speed = (int)properties.Speed;
+            Haste = (int)properties.Haste;
+            Armor = (int)properties.Armor;
+            Resistance = (int)properties.Resistance;
+            MaxHealth = (int)(properties.Endurance * 5);
+            MaxMana = (int)(properties.Concentration * 5);
+            Decklist = deck;
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
-            Speed = 2;
         }
 
         public IRPGPlayer GetTarget(List<IRPGPlayer> possibleTargets)

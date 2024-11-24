@@ -17,6 +17,7 @@ namespace Cards_Games.Players.StatusUtilities
             if (status.IsPercent)
             {
                 if (status.Interval == 1) 
+
                 {
                     shieldAmt = actor.Health * status.Amount;
                     shieldAmt = shieldAmt / 100;
