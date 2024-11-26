@@ -113,18 +113,18 @@ namespace Cards_Games.Players.PlayerUtilities
 
             if(damageeffect.AttackType == Enumerations.AttackTypeEnum.AttackType.Bludgeon) 
             {
-                modifiedDamage =  (damageeffect.Amount * (1 + (properties.Strength / 100)));
+                modifiedDamage =  (damageeffect.Amount * (1 + (properties.Strength / 100) * 3));
             }
             else if (damageeffect.AttackType == Enumerations.AttackTypeEnum.AttackType.Slashing)
             {
-                modifiedDamage = (damageeffect.Amount * (1 + (properties.Agility / 100)));
+                modifiedDamage = (damageeffect.Amount * (1 + (properties.Agility / 100) * 3));
             }
             else
             {
-                modifiedDamage = (damageeffect.Amount * (1 + (properties.Intellect / 100)));
+                modifiedDamage = (damageeffect.Amount * (1 + (properties.Intellect / 100) * 3));
             }
             
-            modifiedDamage = PlayerBuff.ResolveEnrageBuff(player, modifiedDamage);
+            modifiedDamage = EnrageUtil.ResolveEnrageBuff(player, modifiedDamage);
 
             return (int)modifiedDamage;
         }

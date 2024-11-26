@@ -6,6 +6,8 @@ using Cards_Games.Players.PlayerUtilities;
 using Cards_Games.Players.StatusUtilities;
 using Cards_Games.Tables;
 using System.Collections.Generic;
+using System.Linq;
+using static Cards_Games.Enumerations.StatusEnumeration;
 
 namespace Cards_Games
 {
@@ -157,6 +159,20 @@ namespace Cards_Games
 
                 if (player.NextMove == 0)
                 {
+                    if(player.Statuses.Any(s => s.StatusType == StatusEnum.Stunned))
+                    {   
+                        Status status = player.Statuses.FirstOrDefault(s => s.StatusType == StatusEnum.Stunned);
+                        status.Amount -= 1;
+                        TurnLog.AddToLog($"{player.Name} is stunned and cannot take action this round");
+
+                        if (status.Amount <= 0)
+                        {
+                            player.Statuses.Remove(status);
+                        }
+
+                        continue;
+                    }
+
                     RPGCard playerCard = player.PlayCard();
                     List<RPGAction> playerActions = new List<RPGAction>();
                     string actedUpon = RPGAction.GetTarget(playerCard, player, players, _Turn, ref playerActions);

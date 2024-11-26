@@ -2,6 +2,7 @@ Test speed
 Test Haste
 Test Taunting
 Test Enrage
-Test Shield
+test Redirect
+test Stun
 
 Set Player positions
