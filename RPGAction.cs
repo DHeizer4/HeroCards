@@ -1,6 +1,7 @@
 ﻿using Cards_Games.Models;
 using Cards_Games.Players;
 using Cards_Games.Players.PlayerUtilities;
+using Cards_Games.Players.StatusUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -198,7 +199,7 @@ namespace Cards_Games
             //if there is only one possible target do not prompt to choose a target
             if (enemies.Count > 1)
             {
-                enemies = PlayerBuff.ResolveTaunting(enemies);
+                enemies = TauntingUtil.ResolveTaunting(enemies);
                 target = activePlayer.GetTarget(enemies);
             }
             else

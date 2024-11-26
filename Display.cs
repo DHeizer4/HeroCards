@@ -52,9 +52,12 @@ namespace Cards_Games
             }
 
             linesOfDialog.Add("");
-            linesOfDialog.Add("Would you like to play this card? ");
+            linesOfDialog.Add($"Description:");
+            linesOfDialog.Add($"{card.Description}");
+            linesOfDialog.Add("");
+            string prompt = "Would you like to play this card? ";
 
-            int choice = DialogWithInput(linesOfDialog, choices, "", "card");
+            int choice = DialogWithInput(linesOfDialog, choices, prompt, "card");
 
             if (choice == 1)
             {

@@ -23,7 +23,7 @@ namespace Cards_Games
             {
                 if (action.ActedUpon != null && action.Actor.Team != action.ActedUpon.Team)
                 {
-                    PlayerBuff.ResolveRedirect(action, players);
+                    RedirectUtil.ResolveRedirect(action, players);
                 }
             }
 

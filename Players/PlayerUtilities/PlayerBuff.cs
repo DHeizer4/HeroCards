@@ -1,12 +1,8 @@
 ﻿using Cards_Games.Logging;
 using Cards_Games.Models;
 using Cards_Games.Players.StatusUtilities;
-using System;
 using System.Collections.Generic;
-using static Cards_Games.Enumerations.AttackTypeEnum;
-using static Cards_Games.Enumerations.CardResourceEnum;
 using static Cards_Games.Enumerations.StatusEnumeration;
-using static Cards_Games.Enumerations.TargetEnum;
 
 namespace Cards_Games.Players.PlayerUtilities
 {
@@ -44,8 +40,6 @@ namespace Cards_Games.Players.PlayerUtilities
         }
 
 
-
-
         public static bool IsCharacterPropertyStatus(Status status)
         {
             bool isCharacterProperty = false;
@@ -68,82 +62,5 @@ namespace Cards_Games.Players.PlayerUtilities
             return isCharacterProperty;
         }
 
-        public static double ResolveEnrageBuff(IRPGPlayer player, double modifiedDamage)
-        {
-            foreach(Status status in player.Statuses)
-            {
-                if (status.StatusType == StatusEnum.Enraged)
-                {
-                    double enragePercent = 1 + (status.Amount / 100);
-                    modifiedDamage = modifiedDamage * enragePercent;
-                }
-            }
-
-            return modifiedDamage;
-        }
-
-        public static List<IRPGPlayer> ResolveTaunting(List<IRPGPlayer> players)
-        {
-            List<IRPGPlayer> modifiedList = new List<IRPGPlayer>();
-
-            foreach(IRPGPlayer player in players)
-            {
-                foreach (Status status in player.Statuses)
-                {
-                    if (status.Equals(StatusEnum.Taunting))
-                    {
-                        // percent chance to taunt
-                        Random random = new Random();
-                        int randomNumber = random.Next(101);
-
-                        if (status.Amount < randomNumber)
-                        {
-                            modifiedList.Add(player);
-                        }
-                    }
-                }
-            }
-
-            if (modifiedList.Count > 0)
-            {
-                return modifiedList;
-            }
-
-            return players;
-        }
-
-        public static void ResolveRedirect(RPGAction action, List<IRPGPlayer> players)
-        {
-            List<IRPGPlayer> possibleTargets = new List<IRPGPlayer>();
-
-            foreach (IRPGPlayer player in players)
-            {
-                if (player.Team == action.ActedUpon.Team) 
-                {
-                    possibleTargets.Add(player);
-                }
-            }
-
-            if (possibleTargets.Count > 1)
-            {
-                foreach(IRPGPlayer player in possibleTargets)
-                {
-                    foreach(Status status in player.Statuses)
-                    {
-                        if (status.StatusType == StatusEnum.Redirecting && player != action.ActedUpon && !DeathUtil.CheckForDeath(player))
-                        {
-                            action.ActedUpon = player;
-                            status.Amount -= 1;
-
-                            if (status.Amount <= 0)
-                            {
-                                player.Statuses.Remove(status);
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
     }
 }

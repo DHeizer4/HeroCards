@@ -28,7 +28,6 @@ namespace Cards_Games.Logging
 
         public static void AddToLog(string logEntry)
         {
-
                 _TurnLog.Add(logEntry);
         }
     }
