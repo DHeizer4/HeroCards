@@ -42,7 +42,7 @@ namespace Cards_Games.Players
 
         void OpeningHand();
         void DrawCard();
-        RPGCard PlayCard();
+        RPGCard PlayCard(List<IRPGPlayer> players);
         IRPGPlayer GetTarget(List<IRPGPlayer> participants);
 
     }

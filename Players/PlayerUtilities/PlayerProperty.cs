@@ -98,8 +98,8 @@ namespace Cards_Games.Players.PlayerUtilities
                 Concentration = player.Concentrate,
                 Speed = ((player.Speed + speedBonus) * speedPercentBonus) < 0 ? 0 : (player.Speed + speedBonus) * speedPercentBonus,
                 Haste = ((player.Haste + hasteBonus) * hastePercentBonus) < 0 ? 0 : (player.Haste + hasteBonus) * hastePercentBonus,
-                Armor = 0,
-                Resistance = 0
+                Armor = player.Armor,
+                Resistance = player.Resistance,
             };
 
             return properties;

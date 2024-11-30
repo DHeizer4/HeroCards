@@ -69,7 +69,6 @@ namespace Cards_Games
                             {
                                 Status status = ConvertStatusEffectToStatus(statusEffect);
                                 PlayerBuff.ApplyStatusEffect(action.Actor, player, status);
-
                             }
                         }
                     }

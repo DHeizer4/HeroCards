@@ -1,4 +1,5 @@
 ﻿using Cards_Games.Models;
+using Cards_Games.Players;
 using System.Collections.Generic;
 using static Cards_Games.Enumerations.AttackTypeEnum;
 using static Cards_Games.Enumerations.CardResourceEnum;
@@ -14,6 +15,7 @@ namespace Cards_Games
         public List<Cost> Costs { get; set; }
         public List<StatusEffect> Effects { get; set; }
         public List<DamageEffect> DamageEffects { get; set; }
+        public List<IRPGPlayer> Summons { get; set; }
         public int Durability { get; set; }  // item can be used x times
         public int Speed { get; set; }
         public int Level { get; set; }
@@ -40,49 +42,22 @@ namespace Cards_Games
             Description = description;
             Limitation = limitation;
         }
-
-        public static List<RPGCard> StartList()
+        public RPGCard(string cardtype, int alevel, string name, int speed, int durability, List<Cost> costs, List<DamageEffect> damageEffects, List<StatusEffect> statusEffects, List<IRPGPlayer> summons, string aphrase, List<string> description, string limitation)
         {
-            List<RPGCard> start = new List<RPGCard>();
-            start.Add(RPGCard.Library["Bulwark"]);
-            start.Add(RPGCard.Library["Heal"]);
-            start.Add(RPGCard.Library["Empowering Roar"]);
-            start.Add(RPGCard.Library["Burn"]);
-            start.Add(RPGCard.Library["FireBall"]);
-            start.Add(RPGCard.Library["Cleave"]);
-            start.Add(RPGCard.Library["Mana Potion"]);
-            for (int i = 0; i < 12; i++)
-            {
-                start.Add(RPGCard.Library["Punch"]);
-            }
-            return start;
+            CardType = cardtype;
+            Level = alevel;
+            Name = name;
+            Speed = speed;
+            Durability = durability;
+            Costs = costs;
+            DamageEffects = damageEffects;
+            Effects = statusEffects;
+            Phrase = aphrase;
+            Description = description;
+            Limitation = limitation;
         }
 
-        public static Deck GoblinScoutDeck()
-        {
-            List<RPGCard> decklist = new List<RPGCard>();
-            for (int i = 0; i < 12; i++)
-            {
-                decklist.Add(RPGCard.Library["Empowering Roar"]);
-                decklist.Add(RPGCard.Library["Cleave"]);
-                decklist.Add(RPGCard.Library["Cleave"]);
-            }
 
-            return new Deck("GoblinScout", decklist);
-        }
-
-        public static Deck GoblinBruiserDeck()
-        {
-            List<RPGCard> decklist = new List<RPGCard>();
-            for (int i = 0; i < 12; i++)
-            {
-                decklist.Add(RPGCard.Library["Empowering Roar"]);
-                decklist.Add(RPGCard.Library["Slam"]);
-                decklist.Add(RPGCard.Library["Slam"]);
-            }
-
-            return new Deck("GoblinBruiser", decklist);
-        }
 
         public static string GetDescription(RPGCard card)
         {
@@ -96,6 +71,14 @@ namespace Cards_Games
 
         public static void MakeLibrary()
         {
+            RPGCard exampleCard = new RPGCard("cardType", 0, "Name", 1, 1,
+                new List<Cost>(),
+                new List<DamageEffect>(),
+                new List<StatusEffect>(),
+                "action phrase: a pharse that is said when the card activates",
+                new List<string> { "a text a human can read that tells what a card does" },
+                "Restrict to a certain race?");
+
             RPGCard punch = new RPGCard("Generic", 0, "Punch", 1, 1,
                 new List<Cost>(),
                 new List<DamageEffect> {
@@ -187,6 +170,28 @@ namespace Cards_Games
                 new List<string> { "restores 10 mana" },
                 "none");
 
+            RPGCard healthPotion = new RPGCard("Generic", 0, "Health Potion", 1, 4,
+                new List<Cost>(),
+                new List<DamageEffect>
+                {
+                    new DamageEffect(Target.Self, -10, AttackType.StatModify, CardResource.Health)
+                },
+                new List<StatusEffect>(),
+                "drinks the potion and gains Health",
+                new List<string> { "restores 10 Health" },
+                "none");
+
+            RPGCard greaterHealthPotion = new RPGCard("Generic", 0, "Greater Health Potion", 1, 2,
+                new List<Cost>(),
+                new List<DamageEffect>
+                {
+                    new DamageEffect(Target.Self, -20, AttackType.StatModify, CardResource.Health)
+                },
+                new List<StatusEffect>(),
+                "drinks the potion and gains Health",
+                new List<string> { "restores 20 Health" },
+                "none");
+
             RPGCard burn = new RPGCard("Mage", 0, "Burn", 2, 1,
                 new List<Cost>
                 {
@@ -215,7 +220,8 @@ namespace Cards_Games
                     new StatusEffect(Target.AllEnemys, StatusEnum.Burning, 2, 4, 2, AttackType.Fire, false, true, false)
                 },
                 "casts fireball at ",
-                new List<string> { "A fire balls hits one enemy and sets all enemies on fire" },
+                new List<string> { "A fire balls hits one enemy",
+                                    "and sets all enemies on fire" },
                 "none");
 
             RPGCard empoweringRoar = new RPGCard("Warrior", 0, "Empowering Roar", 1, 1,
@@ -227,7 +233,8 @@ namespace Cards_Games
                     new StatusEffect(Target.Party, StatusEnum.AgilityAdj, 10, 10, 1, AttackType.StatModify, false, false, true)
                 },
                 "roars strengthening ",
-                new List<string> { "Increases Strength and Agility by 10 for you and all your allies" },
+                new List<string> { "Increases Strength and Agility by 10 for you",
+                                    "and all your allies" },
                 "none");
 
             RPGCard bulwark = new RPGCard("Tank", 0, "Bulwark", 2, 1,
@@ -241,7 +248,8 @@ namespace Cards_Games
                     new StatusEffect(Target.Party, StatusEnum.Shielded, 20, 5, 1, AttackType.StatModify, true, true, true)
                 },
                 "Shields ",
-                new List<string> { "Shield you and your allies for 20% of your health for 5 turns" },
+                new List<string> { "Shield you and your allies for 20% of your health",
+                                    "for 5 turns" },
                 "Minotaur");
 
             RPGCard insultingShout = new RPGCard("Tank", 0, "Insulting Shout", 1, 1,
@@ -253,12 +261,105 @@ namespace Cards_Games
                     new StatusEffect(Target.Self, StatusEnum.Redirecting, 2, 10, 1, AttackType.StatModify, false, true, true)
                 },
                 "Shouts loudly drawing the enemies attention ",
-                new List<string> { "For the next 10 rounds new cards that only target 1 enemy targets you", 
-                                    "and the next 2 cards that do not target are redirected to you " },
+                new List<string> { "For the next 10 rounds",
+                                    "new cards that only target 1 enemy targets you",
+                                    "and the next 2 cards that would hit an ally",
+                                    "are re-directed to you " },
                 "none");
 
+            RPGCard clawSwipe = new RPGCard("Dragon", 0, "Claw Swipe", 4, 1,
+                new List<Cost>(),
+                new List<DamageEffect>
+                {
+                    new DamageEffect(Target.AllEnemys, 5, AttackType.Bludgeon, CardResource.Health)
+                },
+                new List<StatusEffect>(),
+                "swipes his claw hiting ",
+                new List<string> { "an attack that does 5 base dmg to all enemies" },
+                "claws");
 
+            RPGCard fireBreath = new RPGCard("Dragon", 0, "Fire Breath", 7, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 10)
+                },
+                new List<DamageEffect>(),
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.AllEnemys, StatusEnum.Burning, 5, 20, 5, AttackType.Fire, false, true, false)
+                },
+                "opens his mouth blowing fire at all his enemies ",
+                new List<string> { "sets all enemies on fire for 20 turns", "doing 5 fire damage to them every 5 turns" },
+                "Dragon");
 
+            RPGCard decimatingClaw = new RPGCard("Dragon", 0, "Decimating Claw", 10, 1,
+                new List<Cost>(),
+                new List<DamageEffect>
+                {
+                    new DamageEffect(Target.Enemy, 25, AttackType.Bludgeon, CardResource.Health)
+                },
+                new List<StatusEffect>(),
+                "opens his mouth blowing fire at all his enemies ",
+                new List<string> { "sets all enemies on fire for 20 turns", "doing 5 fire damage to them every 5 turns" },
+                "claws");
+
+            RPGCard wingBuffet = new RPGCard("Warrior", 0, "Wing Buffet", 3, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 5)
+                },
+                new List<DamageEffect>(),
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.AllEnemys, StatusEnum.Stunned, 1, 3, 1, AttackType.None, false, false, false)
+                },
+                "flaps his wings blowing air at ",
+                new List<string> { "Uses your wings to blow your enemies back", 
+                                    "stunning them for 1 attack in the next 3 rounds" },
+                "wings");
+
+            RPGCard warStomp = new RPGCard("Warrior", 0, "War Stomp", 3, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 5)
+                },
+                new List<DamageEffect>(),
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.AllEnemys, StatusEnum.Stunned, 1, 5, 1, AttackType.None, false, false, false)
+                },
+                "Stomp your hooves stunning enemies ",
+                new List<string> { "Stomp your hooves on the ground", 
+                                    "stunning them for 1 attack in the next 5 rounds" },
+                "wings");
+
+            RPGCard sap = new RPGCard("Assassin", 0, "Sap", 3, 1,
+                new List<Cost>(),
+                new List<DamageEffect>
+                {
+                    new DamageEffect(Target.Enemy, 5, AttackType.Slashing, CardResource.Health)
+                },
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.Enemy, StatusEnum.StrengthAdj, -15, 10, 1, AttackType.StatModify, false, false, true),
+                    new StatusEffect(Target.Enemy, StatusEnum.AgilityAdj, -15, 10, 1, AttackType.StatModify, false, false, true)
+                },
+                "strikes at a weak spot on ",
+                new List<string> { "Stomp your hooves on the ground",
+                                    "stunning them for 1 attack in the next 5 rounds" },
+                "wings");
+
+            RPGCard harden = new RPGCard("Tank", 0, "Harden", 2, 1,
+                new List<Cost>(),
+                new List<DamageEffect>(),
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.Self, StatusEnum.Shielded, 25, 5, 1, AttackType.StatModify, true, true, true)
+                },
+                "Concentrates hardening himself from incoming damage ",
+                new List<string> { "You concentrate bracing for incoming damage creating a",
+                                    "tempoary shield for 25% of your current health" },
+                "none");
 
 
             Library.Add("Punch", punch);
@@ -274,6 +375,13 @@ namespace Cards_Games
             Library.Add("Slam", slam);
             Library.Add("Slash", slash);
             Library.Add("Insulting Shout", insultingShout);
+            Library.Add("Health Potion", healthPotion);
+            Library.Add("Claw Swipe", clawSwipe);
+            Library.Add("Fire Breath", fireBreath);
+            Library.Add("Decimating Claw", decimatingClaw);
+            Library.Add("Greater Health Potion", greaterHealthPotion);
+            Library.Add("Wing Buffet", wingBuffet);
+
         }
 
 

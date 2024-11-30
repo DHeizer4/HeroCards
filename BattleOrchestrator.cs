@@ -159,6 +159,7 @@ namespace Cards_Games
 
                 if (player.NextMove == 0)
                 {
+                    //Stun check
                     if(player.Statuses.Any(s => s.StatusType == StatusEnum.Stunned))
                     {   
                         Status status = player.Statuses.FirstOrDefault(s => s.StatusType == StatusEnum.Stunned);
@@ -173,10 +174,15 @@ namespace Cards_Games
                         continue;
                     }
 
-                    RPGCard playerCard = player.PlayCard();
+                    RPGCard playerCard = player.PlayCard(players);
                     List<RPGAction> playerActions = new List<RPGAction>();
                     string actedUpon = RPGAction.GetTarget(playerCard, player, players, _Turn, ref playerActions);
-                    player.DrawCard();
+                    
+                    if (player.Hand.Count < 5)
+                    {
+                        player.DrawCard();
+                    }
+
                     for (int i = 0; i < playerActions.Count; i++)
                     {
                         _TimeLine.Add(playerActions[i]);

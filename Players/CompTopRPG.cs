@@ -89,7 +89,7 @@ namespace Cards_Games.Players
             Console.WriteLine($"Health: {Health}   Mana: {Mana}   Time: {Time}");
         }
 
-        public RPGCard PlayCard()
+        public RPGCard PlayCard(List<IRPGPlayer> players)
         {
             List<RPGCard> played = new List<RPGCard>();
             bool canAfford = false;

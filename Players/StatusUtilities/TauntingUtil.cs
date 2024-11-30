@@ -2,7 +2,6 @@
 using Cards_Games.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using static Cards_Games.Enumerations.StatusEnumeration;
 
 namespace Cards_Games.Players.StatusUtilities

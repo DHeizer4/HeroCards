@@ -32,7 +32,7 @@ namespace Cards_Games.Players.PlayerUtilities
             {
                 status.Display = true;
                 player.Statuses.Add(status);
-                dialog = ($"{actor.Name} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
+                dialog = ($"{actor.Name} applies {status.StatusType.ToString()} to {player.Name} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) ");
                 TurnLog.AddToLog(dialog);
             }
 

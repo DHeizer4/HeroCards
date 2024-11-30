@@ -21,6 +21,7 @@ namespace Cards_Games.Enumerations
                             Poisoned,            // Debuff that does (Physical) dmg at end of turn
                             Cleanse,             // Remove status from player
                             Shielded,
+                            DeadlyWound,         // Healing debuff prevents a percentage of healing
                             Death
         }   
 

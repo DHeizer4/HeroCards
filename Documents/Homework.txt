@@ -4,5 +4,18 @@ Test Taunting
 Test Enrage
 test Redirect
 test Stun
+test healing with a shield
 
 Set Player positions
+implment deadly wound (debuff to healing)
+place a marker on the timeline as when buffs wear off of a player
+
+Create healer AI
+Create Character Save and Load
+
+
+Create Deck building system
+Create Charachter control menu with level up
+
+
+

@@ -49,7 +49,7 @@ namespace Cards_Games.Players
             Name = aName;
             Team = aTeam;
             MaxHealth = 10;
-            Decklist = new Deck("Starter Deck", RPGCard.StartList());
+            Decklist = new Deck("Starter Deck", Deck.StartList());
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
             Speed = 1;
@@ -72,7 +72,7 @@ namespace Cards_Games.Players
             Resistance = (int)properties.Resistance;
             MaxHealth = (int)(properties.Endurance * 5);
             MaxMana = (int)(properties.Concentration * 5);
-            Decklist = new Deck("Starter Deck", RPGCard.StartList());
+            Decklist = new Deck("Starter Deck", Deck.StartList());
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
         }
@@ -98,7 +98,7 @@ namespace Cards_Games.Players
             return target;
         }
 
-        public RPGCard PlayCard()
+        public RPGCard PlayCard(List<IRPGPlayer> players)
         {
             bool canAfford = true;
             bool desireToPlay = false;
@@ -132,7 +132,16 @@ namespace Cards_Games.Players
             // We do not want to pay the costs before confirming all costs for the card can be paid
             PlayerUtilities.CardCost.PayCosts(this, played[0]);
 
-            Hand.RemoveAt(choice - 1);
+            if(played[0].Durability == 1)
+            {
+                Hand.RemoveAt(choice - 1);
+                Decklist.Discard(played[0]);
+            }
+            else
+            {
+                played[0].Durability -= 1;
+            }
+            
             List<string> dialog = new List<string>();
             dialog.Add($"{Name} will be playing {played[0]}");
 

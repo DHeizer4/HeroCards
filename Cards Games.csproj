@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <Folder Include="LootDistributer\" />
+    <Folder Include="Save\Characters\" />
+    <Folder Include="Save\Decks\" />
   </ItemGroup>
 
 </Project>

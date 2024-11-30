@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Cards_Games
@@ -6,6 +7,7 @@ namespace Cards_Games
     class Deck
     {
         private List<RPGCard> _cards;
+        private List<RPGCard> _discard;
         private string _name;
 
         public Deck(string deckname, List<RPGCard> cards)
@@ -53,6 +55,11 @@ namespace Cards_Games
             return top;
         }
 
+        public void Discard(RPGCard card)
+        {
+            _discard.Add(card);
+        }
+
         public int Count()
         {
             return _cards.Count;
@@ -80,6 +87,70 @@ namespace Cards_Games
             {
                 _cards.Add(templist[i]);
             }
+        }
+
+ 
+
+        public static List<RPGCard> StartList()
+        {
+            List<RPGCard> start = new List<RPGCard>();
+            start.Add(RPGCard.Library["Bulwark"]);
+            start.Add(RPGCard.Library["Heal"]);
+            start.Add(RPGCard.Library["Empowering Roar"]);
+            start.Add(RPGCard.Library["Burn"]);
+            start.Add(RPGCard.Library["FireBall"]);
+            start.Add(RPGCard.Library["Cleave"]);
+            start.Add(RPGCard.Library["Mana Potion"]);
+            for (int i = 0; i < 12; i++)
+            {
+                start.Add(RPGCard.Library["Punch"]);
+            }
+            return start;
+        }
+
+        public static Deck GoblinBruiserDeck()
+        {
+            List<RPGCard> decklist = new List<RPGCard>();
+            for (int i = 0; i < 12; i++)
+            {
+                decklist.Add(RPGCard.Library["Empowering Roar"]);
+                decklist.Add(RPGCard.Library["Slam"]);
+                decklist.Add(RPGCard.Library["Slam"]);
+            }
+
+            return new Deck("GoblinBruiser", decklist);
+        }
+
+        public static Deck GoblinScoutDeck()
+        {
+            List<RPGCard> decklist = new List<RPGCard>();
+            for (int i = 0; i < 12; i++)
+            {
+                decklist.Add(RPGCard.Library["Empowering Roar"]);
+                decklist.Add(RPGCard.Library["Cleave"]);
+                decklist.Add(RPGCard.Library["Cleave"]);
+            }
+
+            return new Deck("GoblinScout", decklist);
+        }
+
+        public static Deck FireDragonDeck()
+        {
+            List<RPGCard> decklist = new List<RPGCard>();
+            for (int i = 0; i < 5; i++)
+            {
+                decklist.Add(RPGCard.Library["Empowering Roar"]);
+                decklist.Add(RPGCard.Library["Wing Buffet"]);
+                decklist.Add(RPGCard.Library["Decimating Claw"]);
+                decklist.Add(RPGCard.Library["Fire Breath"]);
+                decklist.Add(RPGCard.Library["Claw Swipe"]);
+                decklist.Add(RPGCard.Library["Burn"]);
+            }
+            
+            decklist.Add(RPGCard.Library["Mana Potion"]);
+            decklist.Add(RPGCard.Library["Mana Potion"]);
+
+            return new Deck("FireDragon", decklist);
         }
 
     }

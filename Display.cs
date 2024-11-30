@@ -32,28 +32,35 @@ namespace Cards_Games
             choices.Add("No");
 
             linesOfDialog.Add($"{card.Name}    cooldown {card.Speed}");
+            if (card.Durability > 1)
+            {
+                linesOfDialog.Add($"Can be used {card.Durability} times.");
+            }
             linesOfDialog.Add("Costs:");
 
             foreach (Cost cost in card.Costs)
             {
-                linesOfDialog.Add($"{cost.Amount.ToString()} {cost.Resource.ToString()}");
+                linesOfDialog.Add($"  {cost.Amount.ToString()} {cost.Resource.ToString()}");
             }
 
             linesOfDialog.Add("Effects");
 
             foreach (DamageEffect damageEffect in card.DamageEffects)
             {
-                linesOfDialog.Add($"Does {damageEffect.Amount} {damageEffect.AttackType.ToString()} to {damageEffect.Target.ToString()}");
+                linesOfDialog.Add($"  Does {damageEffect.Amount} {damageEffect.AttackType.ToString()} to {damageEffect.Target.ToString()}");
             };
 
             foreach (StatusEffect status in card.Effects)
             {
-                linesOfDialog.Add($"Places {status.StatusType.ToString()} {status.Amount} for {status.Duration} turns");
+                linesOfDialog.Add($"  Places {status.StatusType.ToString()} {status.Amount} for {status.Duration} turns");
             }
 
             linesOfDialog.Add("");
-            linesOfDialog.Add($"Description:");
-            linesOfDialog.Add($"{card.Description}");
+            foreach( string line in card.Description)
+            {
+                linesOfDialog.Add(line);
+            }
+            
             linesOfDialog.Add("");
             string prompt = "Would you like to play this card? ";
 
