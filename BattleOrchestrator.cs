@@ -1,4 +1,5 @@
-﻿using Cards_Games.Enumerations;
+﻿using Cards_Games.Cards;
+using Cards_Games.Enumerations;
 using Cards_Games.Logging;
 using Cards_Games.Models;
 using Cards_Games.Players;
@@ -8,6 +9,7 @@ using Cards_Games.Tables;
 using System.Collections.Generic;
 using System.Linq;
 using static Cards_Games.Enumerations.StatusEnumeration;
+using static Cards_Games.Logging.LogTypeEnum;
 
 namespace Cards_Games
 {
@@ -26,11 +28,11 @@ namespace Cards_Games
             BattleOrchestrator.SetDisplayPositions(players);
             GetOpeningHands(players);
             Display.BattleActionGrid(_TimeLine, _Turn);
+            TurnLog.Delete();
 
             do
             {
-                TurnLog.Erase();
-                TurnLog.AddToLog($"---- Turn: {_Turn} ----");
+                TurnLog.SetTurn(_Turn);
                 Display.GameInfo(_Turn);
 
                 Display.Players(players);
@@ -45,7 +47,8 @@ namespace Cards_Games
                 
                 EndOfTurn(players);
                 Display.Players(players);
-                Display.SimpleDialogBox(TurnLog.GetLog());
+                TurnLog.DisplayTurnLog();
+                
                 _Turn++;
             } while (CheckForWin(players) == -1);
 
@@ -115,7 +118,7 @@ namespace Cards_Games
 
             foreach(Status status in player.Statuses)
             {
-                if (!DeathUtil.CheckForDeath(player))
+                if (!DeathUtil.IsPlayerDead(player))
                 {
                     status.Duration -= 1;
                     if (status.Duration <= 0)
@@ -152,7 +155,7 @@ namespace Cards_Games
         {
             foreach (IRPGPlayer player in players)
             {
-                if (DeathUtil.CheckForDeath(player))
+                if (DeathUtil.IsPlayerDead(player))
                 {
                     continue;
                 }
@@ -164,7 +167,7 @@ namespace Cards_Games
                     {   
                         Status status = player.Statuses.FirstOrDefault(s => s.StatusType == StatusEnum.Stunned);
                         status.Amount -= 1;
-                        TurnLog.AddToLog($"{player.Name} is stunned and cannot take action this round");
+                        TurnLog.AddToLog(LogType.StatusTrigger, $"{player.Name} is stunned and cannot take action this round");
 
                         if (status.Amount <= 0)
                         {
@@ -194,7 +197,7 @@ namespace Cards_Games
                     }
 
                     string playerEvent = $"{player.Name} plays {playerActions[0].Card.Name} targeting {actedUpon}will happen on turn: {playerActions[0].When}";
-                    TurnLog.AddToLog(playerEvent);
+                    TurnLog.AddToLog(LogType.CardPlayed, playerEvent);
 
                 }
                 else

@@ -1,4 +1,5 @@
-﻿using Cards_Games.Models;
+﻿using Cards_Games.Cards;
+using Cards_Games.Models;
 using System.Collections.Generic;
 
 namespace Cards_Games.Players

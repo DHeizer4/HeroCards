@@ -2,6 +2,7 @@
 using Cards_Games.Models;
 using System.Linq;
 using static Cards_Games.Enumerations.StatusEnumeration;
+using static Cards_Games.Logging.LogTypeEnum;
 
 namespace Cards_Games.Players.StatusUtilities
 {
@@ -19,12 +20,12 @@ namespace Cards_Games.Players.StatusUtilities
 
                 string logEntry = $"{player.Name} has Died!";
 
-                TurnLog.AddToLog(logEntry);
+                TurnLog.AddToLog(LogType.Death, logEntry);
             }
 
         }
 
-        public static bool CheckForDeath(IRPGPlayer player)
+        public static bool IsPlayerDead(IRPGPlayer player)
         {
             bool isDead = false;
             foreach (var status in player.Statuses)

@@ -8,6 +8,7 @@ using static Cards_Games.Enumerations.AttackTypeEnum;
 using static Cards_Games.Enumerations.CardResourceEnum;
 using static Cards_Games.Enumerations.StatusEnumeration;
 using static Cards_Games.Enumerations.TargetEnum;
+using static Cards_Games.Logging.LogTypeEnum;
 
 namespace Cards_Games.Players.StatusUtilities
 {
@@ -28,7 +29,7 @@ namespace Cards_Games.Players.StatusUtilities
 
                     preexisting = true;
                     dialog = ($"{actor} modifies {status.StatusType.ToString()} (Amt: {existing.Amount}, Dur: {existing.Duration}, int: {existing.Interval}) on {player.Name}");
-                    TurnLog.AddToLog(dialog);
+                    TurnLog.AddToLog(LogType.StatusApplied, dialog);
                 }
             }
 
@@ -37,7 +38,7 @@ namespace Cards_Games.Players.StatusUtilities
                 status.InternalTracker = status.Interval;
                 player.Statuses.Add(status);
                 dialog = ($" applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) to {player.Name}");
-                TurnLog.AddToLog(dialog);
+                TurnLog.AddToLog(LogType.StatusApplied, dialog);
             }
 
             return dialog;
@@ -55,7 +56,7 @@ namespace Cards_Games.Players.StatusUtilities
                         DamageEffect damageEffect = new DamageEffect(Target.None, status.Amount, AttackType.Fire, CardResource.Health);
                         int amt = PlayerProperty.DoDamageToPlayer(player, damageEffect, status.Amount);
                         string dialog = $"{player.Name} takes {amt} Burning Damage";
-                        TurnLog.AddToLog(dialog);
+                        TurnLog.AddToLog(LogType.DamageEvent, dialog);
 
                         status.InternalTracker = status.Interval - 1;
                     }

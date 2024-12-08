@@ -1,4 +1,5 @@
-﻿using Cards_Games.Models;
+﻿using Cards_Games.Cards;
+using Cards_Games.Models;
 using Cards_Games.Players;
 using Cards_Games.Players.PlayerUtilities;
 using Cards_Games.Players.StatusUtilities;
@@ -46,6 +47,7 @@ namespace Cards_Games
             int allAllies = 0;
             int everyone = 0;
             int self = 0;
+            int random = 0;
             string actedUpon = "Nobody";
 
             foreach (DamageEffect damageEffect in card.DamageEffects) 
@@ -60,11 +62,11 @@ namespace Cards_Games
 
             foreach ( Target target in targets)
             {
-                if (target == Target.Ally)
+                if (target == Target.Ally || target == Target.RandomAlly)
                 {
                     ally++;
                 }
-                else if (target == Target.Enemy)
+                else if (target == Target.Enemy || target == Target.RandomEnemy)
                 {
                     enemy++;
                 }
@@ -83,6 +85,10 @@ namespace Cards_Games
                 else if (target == Target.All)
                 {
                     everyone++;
+                }
+                else if(target == Target.Random)
+                {
+                    random++;
                 }
             }
 
@@ -160,7 +166,7 @@ namespace Cards_Games
             List<IRPGPlayer> allies = new List<IRPGPlayer>();
             foreach (IRPGPlayer player in allPlayers)
             {
-                if (player.Team == activePlayer.Team)
+                if (player.Team == activePlayer.Team && !DeathUtil.IsPlayerDead(player))
                 {
                     allies.Add(player);
                 }
@@ -188,7 +194,7 @@ namespace Cards_Games
             List<IRPGPlayer> enemies = new List<IRPGPlayer>();
             foreach (IRPGPlayer player in allPlayers)
             {
-                if (player.Team != activePlayer.Team)
+                if (player.Team != activePlayer.Team && !DeathUtil.IsPlayerDead(player))
                 {
                     enemies.Add(player);
                 }

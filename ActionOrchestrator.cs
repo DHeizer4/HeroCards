@@ -4,10 +4,12 @@ using Cards_Games.Models;
 using Cards_Games.Players;
 using Cards_Games.Players.PlayerUtilities;
 using Cards_Games.Players.StatusUtilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Cards_Games.Enumerations.CardResourceEnum;
 using static Cards_Games.Enumerations.StatusEnumeration;
+using static Cards_Games.Logging.LogTypeEnum;
 
 namespace Cards_Games
 {
@@ -53,7 +55,7 @@ namespace Cards_Games
         {
             foreach (var action in ActionsToBeExecuted)
             {
-                if (DeathUtil.CheckForDeath(action.Actor))
+                if (DeathUtil.IsPlayerDead(action.Actor))
                 {
                     continue;
                 }
@@ -140,7 +142,7 @@ namespace Cards_Games
 
             foreach (var action in ActionsToBeExecuted)
             {
-                if (DeathUtil.CheckForDeath(action.Actor))
+                if (DeathUtil.IsPlayerDead(action.Actor))
                 {
                     continue;
                 }
@@ -149,7 +151,7 @@ namespace Cards_Games
 
                 foreach (DamageEffect damageEffect in action.Card.DamageEffects)
                 {
-                    if (damageEffect.Target == TargetEnum.Target.Ally || damageEffect.Target == Enumerations.TargetEnum.Target.Enemy)
+                    if (damageEffect.Target == TargetEnum.Target.Ally || damageEffect.Target == TargetEnum.Target.Enemy)
                     {
                         foreach (IRPGPlayer player in players)
                         {
@@ -165,38 +167,57 @@ namespace Cards_Games
                     {
                         foreach (IRPGPlayer player in players)
                         {
-                            if (action.Actor == player)
+                            if (action.Actor == player && !DeathUtil.IsPlayerDead(player))
                             {
                                 filteredPlayers.Add(player);
                             }
                         }
                     }
-                    else if (damageEffect.Target == TargetEnum.Target.AllEnemys)
+                    else if (damageEffect.Target == TargetEnum.Target.AllEnemys 
+                        || damageEffect.Target == TargetEnum.Target.RandomEnemy)
                     {
                         foreach (IRPGPlayer player in players)
                         {
-                            if (action.Actor.Team != player.Team)
+                            if (action.Actor.Team != player.Team && !DeathUtil.IsPlayerDead(player))
                             {
                                 filteredPlayers.Add(player);
                             }
                         }
                     }
-                    else if (damageEffect.Target == TargetEnum.Target.Party)
+                    else if (damageEffect.Target == TargetEnum.Target.Party 
+                        || damageEffect.Target == TargetEnum.Target.RandomAlly)
                     {
                         foreach (IRPGPlayer player in players)
                         {
-                            if (action.Actor.Team == player.Team)
+                            if (action.Actor.Team == player.Team && !DeathUtil.IsPlayerDead(player))
                             {
                                 filteredPlayers.Add(player);
                             }
                         }
                     }
-                    else if (damageEffect.Target == TargetEnum.Target.All)
+                    else if (damageEffect.Target == TargetEnum.Target.All 
+                        || damageEffect.Target == TargetEnum.Target.Random)
                     {
                         foreach (IRPGPlayer player in players)
                         {
-                            filteredPlayers.Add(player);
+                            if (!DeathUtil.IsPlayerDead(player))
+                            {
+                                filteredPlayers.Add(player);
+                            }
                         }
+                    }
+
+                    if(damageEffect.Target == TargetEnum.Target.RandomEnemy 
+                        || damageEffect.Target == TargetEnum.Target.RandomAlly 
+                        || damageEffect.Target == TargetEnum.Target.Random)
+                    {
+                        Random random = new Random();
+                        int randomNumber = random.Next(filteredPlayers.Count);
+
+                        IRPGPlayer randomTarget = filteredPlayers[randomNumber];
+                        filteredPlayers.Clear();
+
+                        filteredPlayers.Add(randomTarget);
                     }
 
                     foreach (IRPGPlayer actedUpon in filteredPlayers)
@@ -208,7 +229,7 @@ namespace Cards_Games
                                 int modifiedDamaged = PlayerProperty.GetModifiedDamage(action.Actor, damageEffect);
                                 int amt = PlayerProperty.DoDamageToPlayer(actedUpon, damageEffect, modifiedDamaged);
                                 string damageEvent = $"{action.Actor.Name} did {amt} {damageEffect.AttackType.ToString()} to {actedUpon.Name}";
-                                TurnLog.AddToLog(damageEvent);
+                                TurnLog.AddToLog(LogType.DamageEvent , damageEvent);
                             }
                             else if (damageEffect.Resource == CardResource.Mana)
                             {
@@ -216,14 +237,14 @@ namespace Cards_Games
                                 actedUpon.Mana = adjustedResource < 0 ? 0 : adjustedResource;
 
                                 string manaEvent = $"{action.Actor.Name}'s {action.Card.Name} cuases {actedUpon.Name}'s mana to change to {actedUpon.Mana}";
-                                TurnLog.AddToLog(manaEvent);
+                                TurnLog.AddToLog(LogType.ManaEvent, manaEvent);
                             }
                             else if (damageEffect.Resource == CardResource.Time)
                             {
                                 int adjustedResource = actedUpon.Time - (int)damageEffect.Amount;
                                 actedUpon.Time = adjustedResource < 0 ? 0 : adjustedResource;
                                 string timeEvent = $"{action.Actor.Name}'s {action.Card.Name} cuases {actedUpon.Name}'s time to change to {actedUpon.Mana}";
-                                TurnLog.AddToLog(timeEvent);
+                                TurnLog.AddToLog(LogType.TimeEvent, timeEvent);
                             }
                         }
 

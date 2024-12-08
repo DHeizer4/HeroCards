@@ -1,9 +1,7 @@
 ﻿using Cards_Games.Logging;
 using Cards_Games.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static Cards_Games.Enumerations.StatusEnumeration;
+using static Cards_Games.Logging.LogTypeEnum;
 
 namespace Cards_Games.Players.StatusUtilities
 {
@@ -16,7 +14,7 @@ namespace Cards_Games.Players.StatusUtilities
 
             if (status.IsPercent)
             {
-                if (status.Interval == 1) 
+                if (status.Interval == 1)
 
                 {
                     shieldAmt = actor.Health * status.Amount;
@@ -36,7 +34,7 @@ namespace Cards_Games.Players.StatusUtilities
 
             dialog = $"{player.Name} shielded {player.Name} for {status.Amount} lasting {status.Duration} rounds";
 
-            TurnLog.AddToLog(dialog);
+            TurnLog.AddToLog(LogType.StatusApplied, dialog);
         }
 
         public static int ResolveShield(IRPGPlayer player, int damageAmount)
@@ -56,12 +54,12 @@ namespace Cards_Games.Players.StatusUtilities
             return postShieldDamage;
         }
 
-        public static void RemoveShield(IRPGPlayer player, Status status) 
+        public static void RemoveShield(IRPGPlayer player, Status status)
         {
             int remainingShield = player.Shield;
             int totalShieldValue = 0;
 
-            foreach(Status playerStatus in player.Statuses)
+            foreach (Status playerStatus in player.Statuses)
             {
                 if (playerStatus.StatusType == StatusEnum.Shielded)
                 {

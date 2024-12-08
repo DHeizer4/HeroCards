@@ -1,4 +1,5 @@
-﻿using Cards_Games.Models;
+﻿using Cards_Games.Cards;
+using Cards_Games.Models;
 using System.Collections.Generic;
 using static Cards_Games.Enumerations.CharacterRaceEnumueration;
 
@@ -122,7 +123,7 @@ namespace Cards_Games.Players
                     played.RemoveAt(0);
                 }
 
-                if (desireToPlay == false)
+                if (played.Count > 0 && desireToPlay == false)
                 {
                     played.RemoveAt(0);
                 }
