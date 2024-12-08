@@ -1,4 +1,5 @@
-﻿using Cards_Games.Enumerations;
+﻿using Cards_Games.Cards;
+using Cards_Games.Enumerations;
 using Cards_Games.Models;
 using System;
 using System.Collections.Generic;

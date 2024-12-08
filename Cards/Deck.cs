@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Cards_Games
+namespace Cards_Games.Cards
 {
     class Deck
     {
@@ -14,6 +14,7 @@ namespace Cards_Games
         {
             _name = deckname;
             _cards = cards;
+            _discard = new List<RPGCard>();
         }
 
         public void DisplayDeck()
@@ -49,7 +50,7 @@ namespace Cards_Games
 
         public RPGCard DealCard()
         {
-            
+
             RPGCard top = _cards[0];
             _cards.RemoveAt(0);
             return top;
@@ -73,7 +74,7 @@ namespace Cards_Games
         {
             List<RPGCard> templist = new List<RPGCard>();
             int count = _cards.Count;
-            for(int i = 0; i< deckindex; i++)
+            for (int i = 0; i < deckindex; i++)
             {
                 templist.Add(_cards[i]);
             }
@@ -83,27 +84,27 @@ namespace Cards_Games
                 templist.Add(_cards[i]);
             }
             _cards.Clear();
-            for(int i = 0; i <= count; i++)
+            for (int i = 0; i <= count; i++)
             {
                 _cards.Add(templist[i]);
             }
         }
 
- 
+
 
         public static List<RPGCard> StartList()
         {
             List<RPGCard> start = new List<RPGCard>();
-            start.Add(RPGCard.Library["Bulwark"]);
-            start.Add(RPGCard.Library["Heal"]);
-            start.Add(RPGCard.Library["Empowering Roar"]);
-            start.Add(RPGCard.Library["Burn"]);
-            start.Add(RPGCard.Library["FireBall"]);
-            start.Add(RPGCard.Library["Cleave"]);
-            start.Add(RPGCard.Library["Mana Potion"]);
+            start.Add(CardLibrary.Library["Lightning Dance"]);
+            start.Add(CardLibrary.Library["Harden"]);
+            start.Add(CardLibrary.Library["Empowering Roar"]);
+            start.Add(CardLibrary.Library["War Stomp"]);
+            start.Add(CardLibrary.Library["Double Strike"]);
+            start.Add(CardLibrary.Library["Sap"]);
+            start.Add(CardLibrary.Library["Greater Health Potion"]);
             for (int i = 0; i < 12; i++)
             {
-                start.Add(RPGCard.Library["Punch"]);
+                start.Add(CardLibrary.Library["Punch"]);
             }
             return start;
         }
@@ -113,9 +114,9 @@ namespace Cards_Games
             List<RPGCard> decklist = new List<RPGCard>();
             for (int i = 0; i < 12; i++)
             {
-                decklist.Add(RPGCard.Library["Empowering Roar"]);
-                decklist.Add(RPGCard.Library["Slam"]);
-                decklist.Add(RPGCard.Library["Slam"]);
+                decklist.Add(CardLibrary.Library["Empowering Roar"]);
+                decklist.Add(CardLibrary.Library["Slam"]);
+                decklist.Add(CardLibrary.Library["Slam"]);
             }
 
             return new Deck("GoblinBruiser", decklist);
@@ -126,9 +127,9 @@ namespace Cards_Games
             List<RPGCard> decklist = new List<RPGCard>();
             for (int i = 0; i < 12; i++)
             {
-                decklist.Add(RPGCard.Library["Empowering Roar"]);
-                decklist.Add(RPGCard.Library["Cleave"]);
-                decklist.Add(RPGCard.Library["Cleave"]);
+                decklist.Add(CardLibrary.Library["Empowering Roar"]);
+                decklist.Add(CardLibrary.Library["Cleave"]);
+                decklist.Add(CardLibrary.Library["Cleave"]);
             }
 
             return new Deck("GoblinScout", decklist);
@@ -139,16 +140,16 @@ namespace Cards_Games
             List<RPGCard> decklist = new List<RPGCard>();
             for (int i = 0; i < 5; i++)
             {
-                decklist.Add(RPGCard.Library["Empowering Roar"]);
-                decklist.Add(RPGCard.Library["Wing Buffet"]);
-                decklist.Add(RPGCard.Library["Decimating Claw"]);
-                decklist.Add(RPGCard.Library["Fire Breath"]);
-                decklist.Add(RPGCard.Library["Claw Swipe"]);
-                decklist.Add(RPGCard.Library["Burn"]);
+                decklist.Add(CardLibrary.Library["Empowering Roar"]);
+                decklist.Add(CardLibrary.Library["Wing Buffet"]);
+                decklist.Add(CardLibrary.Library["Decimating Claw"]);
+                decklist.Add(CardLibrary.Library["Fire Breath"]);
+                decklist.Add(CardLibrary.Library["Claw Swipe"]);
+                decklist.Add(CardLibrary.Library["Burn"]);
             }
-            
-            decklist.Add(RPGCard.Library["Mana Potion"]);
-            decklist.Add(RPGCard.Library["Mana Potion"]);
+
+            decklist.Add(CardLibrary.Library["Mana Potion"]);
+            decklist.Add(CardLibrary.Library["Mana Potion"]);
 
             return new Deck("FireDragon", decklist);
         }

@@ -1,0 +1,15 @@
+C:\Users\heize\source\repos\HeroCards\bin\Debug\net8.0\Cards Games.exe
+C:\Users\heize\source\repos\HeroCards\bin\Debug\net8.0\Cards Games.deps.json
+C:\Users\heize\source\repos\HeroCards\bin\Debug\net8.0\Cards Games.runtimeconfig.json
+C:\Users\heize\source\repos\HeroCards\bin\Debug\net8.0\Cards Games.dll
+C:\Users\heize\source\repos\HeroCards\bin\Debug\net8.0\Cards Games.pdb
+C:\Users\heize\source\repos\HeroCards\obj\Debug\net8.0\Cards Games.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\heize\source\repos\HeroCards\obj\Debug\net8.0\Cards Games.AssemblyInfoInputs.cache
+C:\Users\heize\source\repos\HeroCards\obj\Debug\net8.0\Cards Games.AssemblyInfo.cs
+C:\Users\heize\source\repos\HeroCards\obj\Debug\net8.0\Cards Games.csproj.CoreCompileInputs.cache
+C:\Users\heize\source\repos\HeroCards\obj\Debug\net8.0\Cards Games.sourcelink.json
+C:\Users\heize\source\repos\HeroCards\obj\Debug\net8.0\Cards Games.dll
+C:\Users\heize\source\repos\HeroCards\obj\Debug\net8.0\refint\Cards Games.dll
+C:\Users\heize\source\repos\HeroCards\obj\Debug\net8.0\Cards Games.pdb
+C:\Users\heize\source\repos\HeroCards\obj\Debug\net8.0\Cards Games.genruntimeconfig.cache
+C:\Users\heize\source\repos\HeroCards\obj\Debug\net8.0\ref\Cards Games.dll

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Dynamic;
+using System.Text.Json;
+using Cards_Games.Cards;
 using Cards_Games.Enumerations;
 using Cards_Games.Players;
 using static Cards_Games.Enumerations.CharacterRaceEnumueration;
@@ -16,18 +19,24 @@ namespace Cards_Games
             // Display.ColorTest();
             Display.SimpleDialogBox(WelcomeMessage);
 
-            RPGCard.MakeLibrary();
+            CardLibrary.MakeLibrary();
             Console.Write("What is your name?: ");
             string name = Console.ReadLine();
 
             List<string> header = new List<string>();
             List<string> races = GetCharacterRaceChoice();
-            var choice = Display.DialogWithInput(header, races, "Please choose a race: ", "dialog");
+            int choice = Display.DialogWithInput(header, races, "Please choose a race: ", "dialog");
             CharacterRace race = (CharacterRace)(choice -1);
 
-            var player1 = CharacterCreation.CharacterCreator.CreateBaseRace(name, race, new List<string>());
-
+            HumanRPG player1 = CharacterCreation.CharacterCreator.CreateBaseRace(name, race, new List<string>());
             Console.Clear();
+
+           // var jsonString = JsonSerializer.Serialize(player1);
+           // Console.WriteLine(jsonString);
+
+
+           // string filePath = $"C:\\Users\\heize\\source\\repos\\HeroCards\\Save\\Characters\\Stuff.txt";
+           // string result = InputOutput.FileHandler.ReadFromFile(filePath);
 
             RPGCardGame Game = new RPGCardGame();
             Game.StartGame(player1);

@@ -5,6 +5,7 @@ Test Enrage
 test Redirect
 test Stun
 test healing with a shield
+test random target
 
 Set Player positions
 implment deadly wound (debuff to healing)

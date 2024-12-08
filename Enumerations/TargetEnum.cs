@@ -12,6 +12,9 @@ namespace Cards_Games.Enumerations
                             Enemy, 
                             AllEnemys, 
                             All,
+                            RandomEnemy,
+                            RandomAlly,
+                            Random,
                             None}
     }
 }

@@ -3,6 +3,7 @@ using Cards_Games.Models;
 using Cards_Games.Players.StatusUtilities;
 using System.Collections.Generic;
 using static Cards_Games.Enumerations.StatusEnumeration;
+using static Cards_Games.Logging.LogTypeEnum;
 
 namespace Cards_Games.Players.PlayerUtilities
 {
@@ -22,7 +23,7 @@ namespace Cards_Games.Players.PlayerUtilities
                 status.Display = false;
                 player.Statuses.Add(status);
                 dialog = ($"{actor.Name} applies {status.StatusType.ToString()} (Amt: {status.Amount}, Dur: {status.Duration} to {player.Name}");
-                TurnLog.AddToLog(dialog);
+                TurnLog.AddToLog(LogType.StatusApplied, dialog);
             }
             else if (status.StatusType == StatusEnum.Shielded)
             {
@@ -33,7 +34,7 @@ namespace Cards_Games.Players.PlayerUtilities
                 status.Display = true;
                 player.Statuses.Add(status);
                 dialog = ($"{actor.Name} applies {status.StatusType.ToString()} to {player.Name} (Amt: {status.Amount}, Dur: {status.Duration}, int: {status.Interval}) ");
-                TurnLog.AddToLog(dialog);
+                TurnLog.AddToLog(LogType.StatusApplied, dialog);
             }
 
             return dialog;
