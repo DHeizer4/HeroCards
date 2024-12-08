@@ -17,6 +17,7 @@ namespace Cards_Games
     {
         private static List<RPGAction> _TimeLine = new List<RPGAction>();
         private static int _Turn = 0;
+        private static string _Version = "0.0.1";
 
         public static void Start(List<IRPGPlayer> players)
         {
@@ -33,7 +34,7 @@ namespace Cards_Games
             do
             {
                 TurnLog.SetTurn(_Turn);
-                Display.GameInfo(_Turn);
+                Display.GameInfo(_Turn, _Version);
 
                 Display.Players(players);
                 players = BattleOrchestrator.SpeedSort(players);

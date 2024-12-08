@@ -131,9 +131,13 @@ namespace Cards_Games.Players.PlayerUtilities
 
         public static int DoDamageToPlayer(IRPGPlayer actedUpon, DamageEffect damageEffect, int modifiedDamageAmt)
         {
+            
             int startingHealth = actedUpon.Health;
            
-            modifiedDamageAmt = ShieldedUtil.ResolveShield(actedUpon, modifiedDamageAmt);
+            if(modifiedDamageAmt > 0)
+            {
+                modifiedDamageAmt = ShieldedUtil.ResolveShield(actedUpon, modifiedDamageAmt);
+            }
 
             actedUpon.Health -= modifiedDamageAmt;
 
