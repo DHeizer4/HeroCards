@@ -16,11 +16,11 @@ namespace Cards_Games
         private static XYLocation DialogBoxLocation = new XYLocation() { XLocation = 40, YLocation = 4 };
         private static XYLocation CardDisplayBox = new XYLocation() { XLocation = 80, YLocation = 4 };
 
-        public static void GameInfo(int turn)
+        public static void GameInfo(int turn, string version)
         {
             Console.SetCursorPosition(infoBoxDisplay.XLocation, infoBoxDisplay.YLocation);
             Console.WriteLine($"Turn: {turn}");
-            Console.WriteLine("Version 0.0.1");
+            Console.WriteLine($"Version {version}");
         }
 
         public static bool DisplayCard(RPGCard card)
