@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Cards_Games.Enumerations.AttackTypeEnum;
 using static Cards_Games.Enumerations.CardResourceEnum;
+using static Cards_Games.Enumerations.StatusEnumeration;
 using static Cards_Games.Enumerations.TargetEnum;
 
 namespace Cards_Games.Cards.Strength
@@ -17,7 +18,7 @@ namespace Cards_Games.Cards.Strength
             RPGCard punch = new RPGCard("Strength", 0, "Punch", 1, 1,
                 new List<Cost>(),
                 new List<DamageEffect> {
-                    new DamageEffect(Target.Enemy, 2, AttackType.Bludgeon, CardResource.Health)
+                    new DamageEffect(Target.Enemy, 3, AttackType.Bludgeon, CardResource.Health)
                 },
                 new List<StatusEffect>(),
                 "punches ",
@@ -70,11 +71,27 @@ namespace Cards_Games.Cards.Strength
                     new DamageEffect(Target.Enemy, 25, AttackType.Bludgeon, CardResource.Health)
                 },
                 new List<StatusEffect>(),
-                "opens his mouth blowing fire at all his enemies ",
-                new List<string> { "sets all enemies on fire for 20 turns", "doing 5 fire damage to them every 5 turns" },
+                "Slams down his claw striking ",
+                new List<string> { "Strikes an enemy for heavy damage" },
                 "claws");
 
             CardLibrary.Library.Add("Decimating Claw", decimatingClaw);
+
+            RPGCard empoweringStrike = new RPGCard("Strength", 0, "Empowering Strike", 6, 1,
+                new List<Cost>(),
+                new List<DamageEffect> {
+                    new DamageEffect(Target.Enemy, 9, AttackType.Bludgeon, CardResource.Health)
+                },
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.Self, StatusEnum.StrengthAdj, 10, 20, 1, AttackType.None, false, false, true)
+                },
+                "feels his battle powress rise as you strike ",
+                new List<string> { "Hit an emeny for 9 bludgeoning dmg", 
+                                    "and raise your strength by 10" },
+                "none");
+
+            CardLibrary.Library.Add("Empowering Strike", empoweringStrike);
         }
 
     }

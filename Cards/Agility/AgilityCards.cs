@@ -59,6 +59,22 @@ namespace Cards_Games.Cards.Agility
 
             CardLibrary.Library.Add("Double Strike", doubleStrike);
 
+            RPGCard agileStrike = new RPGCard("Assassin", 0, "Agile Strike", 5, 1,
+                new List<Cost>(),
+                new List<DamageEffect>
+                {
+                    new DamageEffect(Target.Enemy, 7, AttackType.Slashing, CardResource.Health)
+                },
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.Self, StatusEnum.AgilityAdj, 15, 10, 1, AttackType.StatModify, false, false, true)
+                },
+                "strikes ",
+                new List<string> { "Focus yourself increases your agility by 15 for 10 rounds",
+                                    "and striking your enemy for 7 slashing damage" },
+                "wings");
+
+            CardLibrary.Library.Add("Agile Strike", agileStrike);
         }
     }
 }
