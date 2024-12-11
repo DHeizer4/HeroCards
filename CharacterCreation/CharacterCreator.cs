@@ -1,4 +1,5 @@
-﻿using Cards_Games.Models;
+﻿using Cards_Games.Cards;
+using Cards_Games.Models;
 using Cards_Games.Players;
 using System.Collections.Generic;
 using static Cards_Games.Enumerations.CharacterRaceEnumueration;
@@ -7,7 +8,7 @@ namespace Cards_Games.CharacterCreation
 {
     class CharacterCreator
     {
-        public static HumanRPG CreateBaseRace(string name, CharacterRace race, List<string> skills)
+        public static HumanRPG CreateBaseRace(string name, CharacterRace race, List<string> skills, Deck deck)
         {
             CharacterProperties properties = new CharacterProperties();
 
@@ -52,7 +53,7 @@ namespace Cards_Games.CharacterCreation
 
             }
 
-            HumanRPG character = new HumanRPG(name, race, skills, properties);
+            HumanRPG character = new HumanRPG(name, race, skills, properties, deck);
 
             return character;
         }

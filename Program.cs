@@ -28,7 +28,17 @@ namespace Cards_Games
             int choice = Display.DialogWithInput(header, races, "Please choose a race: ", "dialog");
             CharacterRace race = (CharacterRace)(choice -1);
 
-            HumanRPG player1 = CharacterCreation.CharacterCreator.CreateBaseRace(name, race, new List<string>());
+            List<Deck> decks = Deck.GetStarterDecks();
+            List<string> deckchoices = new List<string>();
+            
+            foreach (Deck deck in decks)
+            {
+                deckchoices.Add(deck.GetDeckName());
+            }
+            choice = Display.DialogWithInput(header, deckchoices, "Please choose a starter deck: ", "dialog");
+            Deck chosenDeck = decks[choice - 1];
+
+            HumanRPG player1 = CharacterCreation.CharacterCreator.CreateBaseRace(name, race, new List<string>(), chosenDeck);
             Console.Clear();
 
            // var jsonString = JsonSerializer.Serialize(player1);

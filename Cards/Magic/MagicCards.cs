@@ -1,9 +1,5 @@
 ﻿using Cards_Games.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Cards_Games.Enumerations.AttackTypeEnum;
 using static Cards_Games.Enumerations.CardResourceEnum;
 using static Cards_Games.Enumerations.StatusEnumeration;
@@ -82,6 +78,63 @@ namespace Cards_Games.Cards.Magic
                 "none");
 
             CardLibrary.Library.Add("Cataclysm", cataclysm);
+
+            RPGCard fireBlade = new RPGCard("Mage", 0, "Fire Blade", 4, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 2)
+                },
+                new List<DamageEffect>
+                {
+                    new DamageEffect(Target.Enemy, 4, AttackType.Fire, CardResource.Health),
+                    new DamageEffect(Target.All, 4, AttackType.Slashing, CardResource.Health)
+                },
+                new List<StatusEffect>(),
+                "conjures a sword of fire and strikes ",
+                new List<string> { "you create a sword of fire", "and deal 4 fire damage and", "4 slashing damage to enemy target" },
+                "none");
+
+            CardLibrary.Library.Add("Fire Blade", fireBlade);
+
+            RPGCard blazingSpeed = new RPGCard("Mage", 0, "Blazing Speed", 4, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 5)
+                },
+                new List<DamageEffect>(),
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.All, StatusEnum.Burning, 1, 3, 1, AttackType.Fire, false, true, false),
+                    new StatusEffect(Target.Self, StatusEnum.SpeedAdj, 10, 15, 1, AttackType.None, false, true, true)
+                },
+                "runs around setting everyone on fire ",
+                new List<string> { "you run around applying burning to everyone", "also increeases your speed by 10" },
+                "none");
+
+            CardLibrary.Library.Add("Blazing Speed", blazingSpeed);
+
+            RPGCard burningThought = new RPGCard("Mage", 0, "Burning Thought", 4, 1,
+                new List<Cost>
+                {
+                    new Cost(CardResource.Mana, 4)
+                },
+                new List<DamageEffect>
+                {
+                    new DamageEffect(Target.Enemy, 5, AttackType.Fire, CardResource.Health)
+                },
+                new List<StatusEffect>
+                {
+                    new StatusEffect(Target.Enemy, StatusEnum.Burning, 2, 4, 2, AttackType.Fire, false, true, false),
+                    new StatusEffect(Target.Self, StatusEnum.IntellectAdj, 10, 20, 1, AttackType.Fire, false, true, true)
+                },
+                "sears ",
+                new List<string> { "Do 5 fire damage to target enemy",
+                                    "and sets him on fre for 4 damage over 4 rounds",
+                                    "and raise your intyellect by 10"},
+                "none");
+
+            CardLibrary.Library.Add("Burning Thought", burningThought);
+
         }
     }
 }

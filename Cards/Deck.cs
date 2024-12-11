@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Cards_Games.Cards
@@ -15,6 +14,11 @@ namespace Cards_Games.Cards
             _name = deckname;
             _cards = cards;
             _discard = new List<RPGCard>();
+        }
+
+        public string GetDeckName()
+        {
+            return _name;
         }
 
         public void DisplayDeck()
@@ -61,6 +65,15 @@ namespace Cards_Games.Cards
             _discard.Add(card);
         }
 
+        public void ShuffleDiscardIntoDeck()
+        {
+            foreach (RPGCard card in _discard) 
+            {
+                _cards.Add(card);
+            }
+
+        }
+
         public int Count()
         {
             return _cards.Count;
@@ -90,23 +103,70 @@ namespace Cards_Games.Cards
             }
         }
 
-
-
-        public static List<RPGCard> StartList()
+        public static List<Deck> GetStarterDecks()
         {
-            List<RPGCard> start = new List<RPGCard>();
-            start.Add(CardLibrary.Library["Lightning Dance"]);
-            start.Add(CardLibrary.Library["Harden"]);
-            start.Add(CardLibrary.Library["Empowering Roar"]);
-            start.Add(CardLibrary.Library["War Stomp"]);
-            start.Add(CardLibrary.Library["Double Strike"]);
-            start.Add(CardLibrary.Library["Sap"]);
-            start.Add(CardLibrary.Library["Greater Health Potion"]);
+            List<Deck> starterDecks = new List<Deck>();
+
+            starterDecks.Add(AgilityDeck());
+            starterDecks.Add(StrengthDeck());
+            starterDecks.Add(FireMageDeck());
+
+            return starterDecks;
+        }
+
+        public static Deck FireMageDeck()
+        {
+            List<RPGCard> decklist = new List<RPGCard>();
+
+            decklist.Add(CardLibrary.Library["Fire Breath"]);
+            decklist.Add(CardLibrary.Library["Burning Thought"]);
+            decklist.Add(CardLibrary.Library["FireBall"]);
+            decklist.Add(CardLibrary.Library["Blazing Speed"]);
+            decklist.Add(CardLibrary.Library["Cataclysm"]);
+            decklist.Add(CardLibrary.Library["Fire Blade"]);
+            decklist.Add(CardLibrary.Library["Mana Potion"]);
             for (int i = 0; i < 12; i++)
             {
-                start.Add(CardLibrary.Library["Punch"]);
+                decklist.Add(CardLibrary.Library["Burn"]);
             }
-            return start;
+            return new Deck("Fire Magic based starter", decklist);
+        }
+
+        public static Deck AgilityDeck()
+        {
+            List<RPGCard> decklist = new List<RPGCard>();
+
+            decklist.Add(CardLibrary.Library["Lightning Dance"]);
+            decklist.Add(CardLibrary.Library["Harden"]);
+            decklist.Add(CardLibrary.Library["Empowering Roar"]);
+            decklist.Add(CardLibrary.Library["Agile Strike"]);
+            decklist.Add(CardLibrary.Library["Double Strike"]);
+            decklist.Add(CardLibrary.Library["Sap"]);
+            decklist.Add(CardLibrary.Library["Health Potion"]);
+            for (int i = 0; i < 12; i++)
+            {
+                decklist.Add(CardLibrary.Library["Slash"]);
+            }
+            return new Deck("Agility based starter", decklist);
+        }
+
+        public static Deck StrengthDeck()
+        {
+            List<RPGCard> decklist = new List<RPGCard>();
+
+            decklist.Add(CardLibrary.Library["Slam"]);
+            decklist.Add(CardLibrary.Library["Harden"]);
+            decklist.Add(CardLibrary.Library["Empowering Roar"]);
+            decklist.Add(CardLibrary.Library["War Stomp"]);
+            decklist.Add(CardLibrary.Library["Cleave"]);
+            decklist.Add(CardLibrary.Library["Empowering Strike"]);
+            decklist.Add(CardLibrary.Library["Greater Health Potion"]);
+            for (int i = 0; i < 12; i++)
+            {
+                decklist.Add(CardLibrary.Library["Punch"]);
+            }
+
+            return new Deck("Strength based Starter", decklist);
         }
 
         public static Deck GoblinBruiserDeck()

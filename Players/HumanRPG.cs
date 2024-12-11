@@ -45,18 +45,8 @@ namespace Cards_Games.Players
 
         // Can a caster cast faster than a fighter and vise versa....
 
-        public HumanRPG(string aName, int aTeam)
-        {
-            Name = aName;
-            Team = aTeam;
-            MaxHealth = 10;
-            Decklist = new Deck("Starter Deck", Deck.StartList());
-            Hand = new List<RPGCard>();
-            Action = new List<RPGCard>();
-            Speed = 1;
-        }
 
-        public HumanRPG(string name, CharacterRace race, List<string> skills, CharacterProperties properties)
+        public HumanRPG(string name, CharacterRace race, List<string> skills, CharacterProperties properties, Deck deck)
         {
             Name = name;
             Race = race;
@@ -73,7 +63,7 @@ namespace Cards_Games.Players
             Resistance = (int)properties.Resistance;
             MaxHealth = (int)(properties.Endurance * 5);
             MaxMana = (int)(properties.Concentration * 5);
-            Decklist = new Deck("Starter Deck", Deck.StartList());
+            Decklist = deck;
             Hand = new List<RPGCard>();
             Action = new List<RPGCard>();
         }
@@ -161,6 +151,12 @@ namespace Cards_Games.Players
 
         public void DrawCard()
         {
+            if (Decklist.Count() <= 0)
+            {
+                Decklist.ShuffleDiscardIntoDeck();
+                Decklist.RandomShuffle(4);
+            }
+
             Hand.Add(Decklist.DealCard());
         }
 
