@@ -1,9 +1,5 @@
 ﻿using Cards_Games.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Cards_Games.Enumerations.AttackTypeEnum;
 using static Cards_Games.Enumerations.CardResourceEnum;
 using static Cards_Games.Enumerations.StatusEnumeration;

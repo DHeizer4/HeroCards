@@ -22,6 +22,10 @@ namespace Cards_Games.Enumerations
                             Cleanse,             // Remove status from player
                             Shielded,
                             DeadlyWound,         // Healing debuff prevents a percentage of healing
+                            Vulnerable,          // Debuff that increases the damager a player takes
+                            Slowed,             // Debuff that makes someone cards take longer to play
+                            Evasion,            // A chance to avoid a attack
+                            LifeStealing,       // % of damage done heals the person doing the dmg
                             Death
         }   
 
