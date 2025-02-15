@@ -10,6 +10,7 @@ namespace Cards_Games
     {
         public void StartGame(IRPGPlayer player1)
         {
+            
             List<IRPGPlayer> players = new List<IRPGPlayer>();
             player1.Team = 1;
             players.Add(player1);

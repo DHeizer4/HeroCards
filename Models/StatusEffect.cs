@@ -1,6 +1,4 @@
-﻿using Cards_Games.Enumerations;
-using static Cards_Games.Enumerations.AttackTypeEnum;
-using static Cards_Games.Enumerations.CharacterStatEnum;
+﻿using static Cards_Games.Enumerations.AttackTypeEnum;
 using static Cards_Games.Enumerations.StatusEnumeration;
 using static Cards_Games.Enumerations.TargetEnum;
 

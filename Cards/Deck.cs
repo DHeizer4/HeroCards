@@ -119,13 +119,19 @@ namespace Cards_Games.Cards
             List<RPGCard> decklist = new List<RPGCard>();
 
             decklist.Add(CardLibrary.Library["Fire Breath"]);
+            decklist.Add(CardLibrary.Library["Fire Breath"]);
+            decklist.Add(CardLibrary.Library["Burning Thought"]);
             decklist.Add(CardLibrary.Library["Burning Thought"]);
             decklist.Add(CardLibrary.Library["FireBall"]);
+            decklist.Add(CardLibrary.Library["FireBall"]);
+            decklist.Add(CardLibrary.Library["FireBall"]);
+            decklist.Add(CardLibrary.Library["Blazing Speed"]);
             decklist.Add(CardLibrary.Library["Blazing Speed"]);
             decklist.Add(CardLibrary.Library["Cataclysm"]);
             decklist.Add(CardLibrary.Library["Fire Blade"]);
             decklist.Add(CardLibrary.Library["Mana Potion"]);
-            for (int i = 0; i < 12; i++)
+            decklist.Add(CardLibrary.Library["Health Potion"]);
+            for (int i = 0; i < 6; i++)
             {
                 decklist.Add(CardLibrary.Library["Burn"]);
             }
@@ -140,10 +146,16 @@ namespace Cards_Games.Cards
             decklist.Add(CardLibrary.Library["Harden"]);
             decklist.Add(CardLibrary.Library["Empowering Roar"]);
             decklist.Add(CardLibrary.Library["Agile Strike"]);
+            decklist.Add(CardLibrary.Library["Agile Strike"]);
+            decklist.Add(CardLibrary.Library["Agile Strike"]);
+            decklist.Add(CardLibrary.Library["Double Strike"]);
             decklist.Add(CardLibrary.Library["Double Strike"]);
             decklist.Add(CardLibrary.Library["Sap"]);
+            decklist.Add(CardLibrary.Library["Sap"]);
+            decklist.Add(CardLibrary.Library["Sap"]);
             decklist.Add(CardLibrary.Library["Health Potion"]);
-            for (int i = 0; i < 12; i++)
+            decklist.Add(CardLibrary.Library["Greater Health Potion"]);
+            for (int i = 0; i < 6; i++)
             {
                 decklist.Add(CardLibrary.Library["Slash"]);
             }
@@ -155,13 +167,19 @@ namespace Cards_Games.Cards
             List<RPGCard> decklist = new List<RPGCard>();
 
             decklist.Add(CardLibrary.Library["Slam"]);
+            decklist.Add(CardLibrary.Library["Slam"]);
+            decklist.Add(CardLibrary.Library["Slam"]);
             decklist.Add(CardLibrary.Library["Harden"]);
             decklist.Add(CardLibrary.Library["Empowering Roar"]);
+            decklist.Add(CardLibrary.Library["Empowering Roar"]);
             decklist.Add(CardLibrary.Library["War Stomp"]);
+            decklist.Add(CardLibrary.Library["War Stomp"]);
+            decklist.Add(CardLibrary.Library["Cleave"]);
             decklist.Add(CardLibrary.Library["Cleave"]);
             decklist.Add(CardLibrary.Library["Empowering Strike"]);
             decklist.Add(CardLibrary.Library["Greater Health Potion"]);
-            for (int i = 0; i < 12; i++)
+            decklist.Add(CardLibrary.Library["Health Potion"]);
+            for (int i = 0; i < 6; i++)
             {
                 decklist.Add(CardLibrary.Library["Punch"]);
             }

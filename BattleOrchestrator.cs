@@ -17,7 +17,7 @@ namespace Cards_Games
     {
         private static List<RPGAction> _TimeLine = new List<RPGAction>();
         private static int _Turn = 0;
-        private static string _Version = "0.0.2";
+        private static string _Version = "0.0.3";
 
         public static void Start(List<IRPGPlayer> players)
         {
@@ -54,8 +54,17 @@ namespace Cards_Games
             } while (CheckForWin(players) == -1);
 
             List<string> winMessage = new List<string>();
-            winMessage.Add($"Team {CheckForWin(players).ToString()} has won");
-
+            int winningTeam = CheckForWin(players);
+            
+            if(winningTeam != -2)
+            {
+                winMessage.Add($"Team {winningTeam} has won");
+            }
+            else
+            {
+                winMessage.Add("All participants have died");
+            }
+            
             Display.SimpleDialogBox(winMessage);
 
         }
@@ -67,6 +76,7 @@ namespace Cards_Games
                 player.Health = player.MaxHealth;
                 player.Mana = player.MaxMana;
                 player.Statuses = new List<Status>();
+                player.Decklist.RandomShuffle(7);
             }
         }
 
@@ -231,6 +241,11 @@ namespace Cards_Games
                 {
                     teamNumbersWithLivingPlayers.Add(player.Team);
                 }
+            }
+
+            if (teamNumbersWithLivingPlayers.Count == 0)
+            {
+                return -2;
             }
 
             int compare = -1;

@@ -1,0 +1,61 @@
+playing strength deck
+
+Floating letter clean up on deck selector screen
+
+color ascii code not working on other computer for health mana
+space between All enemies
+run copy on cards
+
+Turn 0 rename
+
+Turn log fast forward is a win
+new card marking???
+sort cards in hand.... by turns????
+
+Battle box run on 
+
+make apply buff custom messages (confusion with interval which is only used on burn)
+less filler cards and shuffle  (40 card deck )
+
+make on next turn if turn + 1
+
+Health potion took strength modifier into account??  gave 21 health not 20???
+
+Gravitation to Minotaur to start with
+
+
+------------------------------------
+Fire magic deck 
+
+streamline burning de-buff word
+Fire Blade seems off play pattern I want to encourage for fire
+
+The different play pattern is not obvious to others
+
+The dragon is really strong the modifier
+put race indicator on display
+
+Take cataclysm out of fire starter deck  let people find out and let the world burn
+
+Everyone dying at the same time breaks the game
+
+
+-----------------------------------
+Agility Deck
+
+Handle the not being able to pay costs differently
+multiple cannot pay the cost message needs to be fixed
+
+closing parenthesis for status adjustment 
+
+call out base damage
+powerful cards make joy
+
+
+
+Card Confirmation screen turn off?
+event loop for multiple battles without closing
+
+race starter deck vs generic starter deck.
+demo experience maybe one dungeon
+
