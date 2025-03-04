@@ -98,7 +98,7 @@ namespace Cards_Games
             properties.Agility = 15;
             properties.Dexterity = 0;
             properties.Endurance = 40;
-            properties.Concentration = 0;
+            properties.Concentration = 20;
             properties.Speed = 0;
             properties.Haste = 0;
             properties.Armor = 0;
