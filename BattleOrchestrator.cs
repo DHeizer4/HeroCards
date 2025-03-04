@@ -17,7 +17,7 @@ namespace Cards_Games
     {
         private static List<RPGAction> _TimeLine = new List<RPGAction>();
         private static int _Turn = 0;
-        private static string _Version = "0.0.3";
+        private static string _Version = "0.0.4";
 
         public static void Start(List<IRPGPlayer> players)
         {

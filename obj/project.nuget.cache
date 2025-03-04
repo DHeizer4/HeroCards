@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Vydq1+o00n1nTCD2miNUOVozOrd4+2UIgp3iuwDg6yBy/b/rnkzh+er5RaCqYK6Rmfp1Kfuh1EBKfXat9jafsw==",
+  "dgSpecHash": "GemFyB/2sp4ChUImIexAMlHVOUJESBnA7TlLzOAWCPDD6CkGHR5WwlHDxMsFYv9M/PfdG1e2Ql3dWdr2Hg02Ww==",
   "success": true,
   "projectFilePath": "C:\\Users\\heize\\source\\repos\\HeroCards\\Cards Games.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\heize\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.1\\microsoft.net.illink.tasks.8.0.1.nupkg.sha512",
+    "C:\\Users\\heize\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\8.0.1\\microsoft.netcore.app.crossgen2.win-x64.8.0.1.nupkg.sha512"
+  ],
   "logs": []
 }
